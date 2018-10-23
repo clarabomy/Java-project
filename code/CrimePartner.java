@@ -32,7 +32,7 @@ public class CrimePartner extends Suspect implements Lie {
     }
 
     @Override
-    public boolean beIncoherent() {
+    public boolean correctLie() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

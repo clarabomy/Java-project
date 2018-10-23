@@ -10,10 +10,10 @@ package project;
  * @author ISEN
  */
 public class Console {
-    Boolean multipleChoice;
+    Boolean multiChoice;
 
-    public Console(Boolean isMultipleChoice) {
-        this.multipleChoice = isMultipleChoice;
+    public Console(Boolean isMultiChoice) {
+        this.multiChoice = isMultiChoice;
     }
     
     public void display(String text){
