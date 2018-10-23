@@ -9,16 +9,12 @@ package project;
  *
  * @author ISEN
  */
-public class CrimeWeapon extends InvestigationElement {
-    String weaponType;
+public class CrimeScene extends InvestElement {
+    int penalty;
 
-    public CrimeWeapon(String weaponType, int[] refProof) {
+    public CrimeScene(int penalty, int[] refProof) {
         super(refProof);
-        this.weaponType = weaponType;
-    }
-
-    public String getWeaponType() {
-        return weaponType;
+        this.penalty = penalty;
     }
     
 }

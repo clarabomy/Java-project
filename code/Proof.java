@@ -10,9 +10,9 @@ package project;
  * @author ISEN
  */
 public class Proof extends Clue {
-    InvestigationElement element;
+    InvestElement element;
 
-    public Proof(InvestigationElement element, String content, boolean isFounded) {
+    public Proof(InvestElement element, String content, boolean isFounded) {
         super(content, isFounded);
         this.element = element;
     }
@@ -22,9 +22,9 @@ public class Proof extends Clue {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    void assignClue(InvestigationElement element){
+    void assignClue(InvestElement elt){
     }
     
-    void assignClue(Victim victim){
+    void assignClue(Victim corpse){
     }
 }

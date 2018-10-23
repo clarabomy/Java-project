@@ -10,8 +10,8 @@ package project;
  * @author ISEN
  */
 public abstract class Suspect extends LiveCharacter {
-    int stressLevel;
-    int cooperationLevel;
+    int stress;
+    int cooperation;
     String personality;
     String look;
     String physicalAspect;
@@ -20,8 +20,8 @@ public abstract class Suspect extends LiveCharacter {
 
     public Suspect(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
         super(name, sex, age);
-        this.stressLevel = stressLevel;
-        this.cooperationLevel = cooperationLevel;
+        this.stress = stressLevel;
+        this.cooperation = cooperationLevel;
         this.personality = personality;
         this.look = look;
         this.physicalAspect = physicalAspect;
@@ -30,12 +30,12 @@ public abstract class Suspect extends LiveCharacter {
         System.arraycopy(testimonyRef, 0, this.testimonyRef, 0, testimonyRef.length);
     }
 
-    public int getStressLevel() {
-        return stressLevel;
+    public int getStress() {
+        return stress;
     }
 
-    public int getCooperationLevel() {
-        return cooperationLevel;
+    public int getCooperation() {
+        return cooperation;
     }
     
     abstract void BeInterrogated();

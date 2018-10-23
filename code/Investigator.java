@@ -10,32 +10,32 @@ package project;
  * @author ISEN
  */
 public class Investigator extends LiveCharacter {
-    int manipulationLevel;
-    int intelligenceLevel;
-    int popularityLevel;
+    int manipulation;
+    int intelligence;
+    int popularity;
     Clue[] cluesList;
     String progress;
 
     public Investigator(String name, boolean sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
         super(name, sex, age);
-        this.manipulationLevel = manipulationLevel;
-        this.intelligenceLevel = intelligenceLevel;
-        this.popularityLevel = popularityLevel;
+        this.manipulation = manipulationLevel;
+        this.intelligence = intelligenceLevel;
+        this.popularity = popularityLevel;
         this.cluesList = new Clue[cluesList.length];
         System.arraycopy(cluesList, 0, this.cluesList, 0, cluesList.length);
         this.progress = progress;
     }
 
-    public int getManipulationLevel() {
-        return manipulationLevel;
+    public int getManipulation() {
+        return manipulation;
     }
 
-    public int getIntelligenceLevel() {
-        return intelligenceLevel;
+    public int getIntelligence() {
+        return intelligence;
     }
 
-    public int getPopularityLevel() {
-        return popularityLevel;
+    public int getPopularity() {
+        return popularity;
     }
 
     public Clue[] getCluesList() {

@@ -12,18 +12,20 @@ package project;
 public class Console {
     Boolean multipleChoice;
 
-    public Console(Boolean multipleChoice) {
-        this.multipleChoice = multipleChoice;
+    public Console(Boolean isMultipleChoice) {
+        this.multipleChoice = isMultipleChoice;
     }
     
-    public void display(){
+    public void display(String text){
     }
     
-    public void add(Boolean choice){     
+    public void addChoices(String[] text){     
     }
     
-    /*int[] PlayerChoices(){
-    }*/
+    int[] PlayerChoices(){
+        int[] tmp = { 0 };
+        return tmp;
+    }
     
 
 }

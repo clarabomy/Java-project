@@ -9,10 +9,10 @@ package project;
  *
  * @author ISEN
  */
-public class InvestigationElement implements NoticeClues {
+public class InvestElement implements NoticeClues {
     int[] refProof;
 
-    public InvestigationElement(int[] refProof) {
+    public InvestElement(int[] refProof) {
         this.refProof = new int[refProof.length];
         System.arraycopy(refProof, 0, this.refProof, 0, refProof.length);
     }

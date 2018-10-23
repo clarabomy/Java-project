@@ -10,10 +10,16 @@ package project;
  * @author ISEN
  */
 public interface Lie {
-    final int CREDIBILITY_MIN = 60;
-    final int COHERENCE_MIN = 60;
+    final int CREDIBILITY_MIN_SIMPLE = 40;
+    final int COHERENCE_MIN_SIMPLE = 40;
     
-    abstract boolean beIncoherent();
+    final int CREDIBILITY_MIN_MEDIUM = 60;
+    final int COHERENCE_MIN_MEDIUM = 60;
+    
+    final int CREDIBILITY_MIN_DIFFICULT = 80;
+    final int COHERENCE_MIN_DIFFICULT = 80;
+    
+    abstract boolean correctLie();
     abstract void createFalseLead();
     abstract void addTestimony();
     

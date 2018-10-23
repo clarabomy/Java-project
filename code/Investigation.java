@@ -13,14 +13,14 @@ public class Investigation {
     Investigator player;
     Suspect[] suspectsList;
     Victim corpse;
-    InvestigationElement[] elements;
+    InvestElement[] elements;
 
-    public Investigation(Investigator player, Suspect[] suspectsList, Victim corpse, InvestigationElement[] elements) {
+    public Investigation(Investigator player, Suspect[] suspectsList, Victim corpse, InvestElement[] elements) {
         this.player = player;
         this.suspectsList = new Suspect[suspectsList.length];
         System.arraycopy(suspectsList, 0, this.suspectsList, 0, suspectsList.length);
         this.corpse = corpse;
-        this.elements = new InvestigationElement[elements.length];
+        this.elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.elements, 0, elements.length);
     }
     
