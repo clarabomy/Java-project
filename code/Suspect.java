@@ -55,4 +55,8 @@ public abstract class Suspect extends LiveCharacter {
     
     void BeArrested(){
     }
+    
+    public String display() {
+        return "tmp";
+    }
 }

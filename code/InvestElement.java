@@ -17,6 +17,10 @@ public class InvestElement implements NoticeClues {
         System.arraycopy(refProof, 0, this.refProof, 0, refProof.length);
     }
 
+    public String display() {
+        return "tmp";
+    }
+    
     @Override
     public void analyse(Investigator player) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

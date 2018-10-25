@@ -23,4 +23,9 @@ public abstract class Clue {
     }
     
     abstract void assign();
+    
+    
+    public String display() {
+        return "tmp";
+    }
 }
