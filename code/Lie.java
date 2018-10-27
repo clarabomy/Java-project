@@ -19,8 +19,8 @@ public interface Lie {
     final int CREDIBILITY_MIN_DIFFICULT = 80;
     final int COHERENCE_MIN_DIFFICULT = 80;
     
-    abstract boolean correctLie();
-    abstract void createFalseLead();
-    abstract void addTestimony();
-    
+    abstract void all_Lie();
+    abstract void alibi_FalseLead();
+    abstract void testimony_addTestimony();
+
 }

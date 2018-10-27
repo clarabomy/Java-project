@@ -20,13 +20,13 @@ public class Game {
         this.window = window;
     }//end constructor
     
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         // TODO code application logic here
         int[] tab = {1,2,3};
         System.out.println(tab.length);
         Victim victim = new Victim("21 janvier", "meurtre", tab, "Olivier", false, 32);
     }//end main
-    
+    */
     public void gameMenu() {//menu général du jeu
         boolean exitGame = false;
         do {

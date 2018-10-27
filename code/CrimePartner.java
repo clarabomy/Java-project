@@ -11,10 +11,12 @@ package project;
  */
 public class CrimePartner extends Suspect implements Lie {
     String alibi;
+    int cooperation;
 
-    public CrimePartner(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
-        super(name, sex, age, stressLevel, cooperationLevel, personality, look, physicalAspect, findedInnocent, testimonyRef);
+    public CrimePartner(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
+        super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.alibi = alibi;
+        this.cooperation = cooperationLevel;
     }
 
     public String getAlibi() {
@@ -22,27 +24,38 @@ public class CrimePartner extends Suspect implements Lie {
     }
 
     @Override
-    void BeInterrogated() {
+    public void all_Lie() {
+        //Afficher le suspect a dit des choses contradictoires mais n'a pas l'air inquiet..
+       // + isLie = false
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void displayInfos() {
+    public void alibi_FalseLead() {
+        //modifie son alibi + isLie = true
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean correctLie() {
+    public void testimony_addTestimony() {
+         //Ajouter un témoignage
+        //Phrase : le suspect n'avait pas l'air très inquiet
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void createFalseLead() {
+    void giveAlibi() {
+        //Lance dé pour stress, cohérence 
+            //Si ok, créer fausse piste (donner faux alibi)
+            //sinon, seContredit() + donne son vrai alibi
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addTestimony() {
+    void giveTestimony() {
+         //Lance dé pour stress, crédibilité et cohérence
+           //Si ok, inventeTémoignage() en n'ayant pas l'air inquiet
+           //sinon, seContredit() et finit par donner son vrai témoignage
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

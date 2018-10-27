@@ -15,6 +15,6 @@ public abstract class LiveCharacter extends Character {
         super(name, sex, age);
     }
     
-    public abstract int diceThrow();
+    public abstract int rollDice();
     
 }

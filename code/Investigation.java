@@ -33,7 +33,7 @@ public class Investigation {
                                     "M'occuper des suspects.", 
                                     "Lister les indices.\n",
                                     "Voir mon supérieur."}; //menu du jeu
-            switch (window.display("Aujourd'huit, je vais...", choicesList).playerSingleChoice()) {//choix unique
+            switch (window.display("Aujourd'hui, je vais...", choicesList).playerSingleChoice()) {//choix unique
                 case 0:
                     elementsMenu();
                     break;
@@ -51,7 +51,7 @@ public class Investigation {
     }//end mainMenu()
     
     public void elementsMenu() {
-        for (int index = 0; index < elements.length; index++) System.out.print(new StringBuilder("Elément ").append(index + 1).append(" : ").append(elements[index].display()).toString());
+        for (int index = 0; index < elements.length; index++) System.out.print(new StringBuilder("Element ").append(index + 1).append(" : ").append(elements[index].display()).toString());
         
         String[] choicesList = {"Analyser l'arme du crime.", 
                                 "Autopsier la victime.", 

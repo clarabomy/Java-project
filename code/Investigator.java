@@ -15,6 +15,7 @@ public class Investigator extends LiveCharacter {
     int popularity;
     Clue[] cluesList;
     String progress;
+    static final int SIDES = 100;
 
     public Investigator(String name, boolean sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
         super(name, sex, age);
@@ -47,8 +48,10 @@ public class Investigator extends LiveCharacter {
     }
     
     @Override
-    public int diceThrow() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int rollDice() {
+        int roll = (int) (Math.random() * SIDES) + 1;
+        System.out.println(roll);
+        return(roll); 
     }
 
     @Override
