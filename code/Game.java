@@ -5,20 +5,26 @@
  */
 package project;
 
+import project.game.Difficulties;
+import project.game.Investigation;
+import project.game.UserInterface;
+
 /**
  *
  * @author ISEN
  */
 public class Game {
-    Investigation currentGame;
-    Difficulties levelChoice;
-    /*protected?*/ Console window;
+    Investigation m_currentGame;//memberOfClass_attributeName
+    Difficulties m_levelChoice;
+    UserInterface m_console;
 
-    public Game(Investigation currentGame, Difficulties levelChoice, Console window) {
-        this.currentGame = currentGame;
-        this.levelChoice = levelChoice;
-        this.window = window;
+    
+    public Game(Investigation currentGame, Difficulties levelChoice) {
+        this.m_currentGame = currentGame;
+        this.m_levelChoice = levelChoice;
+        this.m_console = new UserInterface();
     }//end constructor
+    
     
    /* public static void main(String[] args) {
         // TODO code application logic here
@@ -27,6 +33,7 @@ public class Game {
         Victim victim = new Victim("21 janvier", "meurtre", tab, "Olivier", false, 32);
     }//end main
     */
+    
     public void gameMenu() {//menu général du jeu
         boolean exitGame = false;
         do {
@@ -36,7 +43,7 @@ public class Game {
                                     "Déposer un rapport d'enquête",     //sauvegarder partie
                                     "Abandonner une enquête\n",         //abandonner partie
                                     "Quitter le bureau d'enquête"};     //quitter jeu
-            switch (window.display("Menu principal", choicesList).playerSingleChoice()) {
+            switch (m_console.display("Menu principal", choicesList).playerSingleChoice("action")) {
                 case 0:
                     gameRules();
                     break;
@@ -59,6 +66,7 @@ public class Game {
         } while (!exitGame);//sort en choisissant l'option dédiée
     }//end void gameMenu()
     
+    
     public void gameRules(){
         //affiche lecture en fichier
     }//end void gameRules
@@ -72,7 +80,7 @@ public class Game {
                                     {"Ouvrir le dossier"}};
         
         //intro
-        switch (window.display(intro[0], choices[0]).playerSingleChoice()) {
+        switch (m_console.display(intro[0], choices[0]).playerSingleChoice("enquête")) {
             case 0:
                 //levelChoice.SIMPLE;
                 break;
@@ -84,22 +92,25 @@ public class Game {
                 break;
         }
         
-        window.display(intro[1], choices[1]).playerSingleChoice();//appel chaîné : renvoie this en fin de fonction
+        m_console.display(intro[1], choices[1]).playerContinue();//appel chaîné : renvoie this en fin de fonction
         
         //initialise classes avec aléatoire
         
-        currentGame.mainMenu();
+        m_currentGame.mainMenu();
     }//end void newInvestigation()
   
+    
     public void continueInvestigation(){
         //initialise classes avec lecture fichier
         
-        currentGame.mainMenu();
+        m_currentGame.mainMenu();
     }//end void continueInvestigation()
+    
     
     public void submitReport(){
         //ecrit en fichier contenu de classes
     }//end void submitReport()
+    
     
     public void dropInvestigation(){
         //supprime le fichier ou vide son contenu

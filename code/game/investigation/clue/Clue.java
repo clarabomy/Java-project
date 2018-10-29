@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package project.game.investigation.clue;
 
 /**
  *
  * @author ISEN
  */
 public abstract class Clue {
-    String content;
-    boolean isFounded;
+    String m_content;
+    public boolean m_isFounded;
 
     public Clue(String content, boolean isFounded) {
-        this.content = content;
-        this.isFounded = isFounded;
+        this.m_content = content;
+        this.m_isFounded = isFounded;
     }
     
     
-    void BeFounded(){
+    public void BeFounded(){
     }
     
     abstract void assign();

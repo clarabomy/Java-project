@@ -3,33 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package project.game.investigation;
 
 /**
  *
  * @author ISEN
  */
 public abstract class Character {
-    String name;
-    boolean sex;
-    int age;
+    String m_name;
+    boolean m_sex;
+    int m_age;
 
     public Character(String name, boolean sex, int age) {
-        this.name = name;
-        this.sex = sex;
-        this.age = age;
+        this.m_name = name;
+        this.m_sex = sex;
+        this.m_age = age;
     }
 
-    public String getName() {
-        return name;
+    public String getM_name() {
+        return m_name;
     }
 
-    public boolean isSex() {
-        return sex;
+    public boolean isM_sex() {
+        return m_sex;
     }
 
-    public int getAge() {
-        return age;
+    public int getM_age() {
+        return m_age;
     }
     
     public abstract void displayInfos();

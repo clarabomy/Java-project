@@ -5,6 +5,12 @@
  */
 package project;
 
+import project.game.investigation.Investigator;
+import project.game.investigation.clue.Clue;
+import project.game.investigation.clue.Proof;
+import project.game.investigation.investElement.InvestElement;
+
+
 /**
  *
  * @author ISEN

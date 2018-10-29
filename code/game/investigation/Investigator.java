@@ -3,53 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package project.game.investigation;
+
+import project.game.investigation.clue.Clue;
 
 /**
  *
  * @author ISEN
  */
 public class Investigator extends LiveCharacter {
-    int manipulation;
-    int intelligence;
-    int popularity;
-    Clue[] cluesList;
-    String progress;
-    static final int SIDES = 100;
+    int m_manipulation;
+    int m_intelligence;
+    int m_popularity;
+    public Clue[] m_cluesList;
+    String m_progress;
 
     public Investigator(String name, boolean sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
         super(name, sex, age);
-        this.manipulation = manipulationLevel;
-        this.intelligence = intelligenceLevel;
-        this.popularity = popularityLevel;
-        this.cluesList = new Clue[cluesList.length];
-        System.arraycopy(cluesList, 0, this.cluesList, 0, cluesList.length);
-        this.progress = progress;
+        this.m_manipulation = manipulationLevel;
+        this.m_intelligence = intelligenceLevel;
+        this.m_popularity = popularityLevel;
+        this.m_cluesList = new Clue[cluesList.length];
+        System.arraycopy(cluesList, 0, this.m_cluesList, 0, cluesList.length);
+        this.m_progress = progress;
     }
 
-    public int getManipulation() {
-        return manipulation;
+    public int getM_manipulation() {
+        return m_manipulation;
     }
 
-    public int getIntelligence() {
-        return intelligence;
+    public int getM_intelligence() {
+        return m_intelligence;
     }
 
-    public int getPopularity() {
-        return popularity;
+    public int getM_popularity() {
+        return m_popularity;
     }
 
-    public Clue[] getCluesList() {
-        return cluesList;
+    public Clue[] getM_cluesList() {
+        return m_cluesList;
     }
 
-    public String getProgress() {
-        return progress;
+    public String getM_progress() {
+        return m_progress;
     }
     
     @Override
     public int rollDice() {
-        int roll = (int) (Math.random() * SIDES) + 1;
+        int roll = (int) (Math.random() * M_SIDES) + 1;
         System.out.println(roll);
         return(roll); 
     }

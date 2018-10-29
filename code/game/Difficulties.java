@@ -3,18 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package project.game;
 
 /**
  *
  * @author ISEN
  */
-public class CrimeScene extends InvestElement {
-    int penalty;
-
-    public CrimeScene(int penalty, int[] refProof) {
-        super(refProof);
-        this.penalty = penalty;
-    }
-    
-}
+public enum Difficulties {SIMPLE, MEDIUM, DIFFICULT};
