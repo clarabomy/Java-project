@@ -13,8 +13,8 @@ import project.game.investigation.suspect.Suspect;
  * @author ISEN
  */
 public class Testimony extends Clue {
-    Suspect m_suspect;
-    boolean m_isLie;
+    protected Suspect m_suspect;
+    protected boolean m_isLie;
 
     public Testimony(Suspect suspect, boolean isLie, String content, boolean isFounded) {
         super(content, isFounded);

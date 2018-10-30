@@ -14,7 +14,7 @@ import project.game.investigation.investElement.InvestElement;
  * @author ISEN
  */
 public class Proof extends Clue {
-    InvestElement m_element;
+    protected InvestElement m_element;
 
     
     public Proof(InvestElement element, String content, boolean isFounded) {

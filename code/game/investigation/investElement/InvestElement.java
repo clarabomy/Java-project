@@ -13,7 +13,7 @@ import project.game.investigation.NoticeClues;
  * @author Thibaut
  */
 public class InvestElement implements NoticeClues {
-    int[] m_refProof;
+    protected int[] m_refProof;
 
     
     public InvestElement(int[] refProof) {

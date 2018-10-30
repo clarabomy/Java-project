@@ -12,11 +12,11 @@ import project.game.investigation.clue.Clue;
  * @author ISEN
  */
 public class Investigator extends LiveCharacter {
-    int m_manipulation;
-    int m_intelligence;
-    int m_popularity;
-    public Clue[] m_cluesList;
-    String m_progress;
+    protected int m_manipulation;
+    protected int m_intelligence;
+    protected int m_popularity;
+    public Clue[] m_cluesList;// faire un getter et ou un setter
+    protected String m_progress;
 
     public Investigator(String name, boolean sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
         super(name, sex, age);

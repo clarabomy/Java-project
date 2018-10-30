@@ -10,8 +10,8 @@ package project.game.investigation.suspect;
  * @author Thibaut
  */
 public class CrimePartner extends Suspect implements Lie {
-    String m_alibi;
-    int m_cooperation;
+    protected String m_alibi;
+    protected int m_cooperation;
 
     public CrimePartner(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
         super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);

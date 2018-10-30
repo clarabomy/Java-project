@@ -14,9 +14,9 @@ import project.game.UserInterface;
  * @author ISEN
  */
 public class Game {
-    Investigation m_currentGame;//memberOfClass_attributeName
-    Difficulties m_levelChoice;
-    UserInterface m_console;
+    protected Investigation m_currentGame;//memberOfClass_attributeName
+    protected Difficulties m_levelChoice;
+    protected UserInterface m_console;
 
     
     public Game(Investigation currentGame, Difficulties levelChoice) {
@@ -26,13 +26,10 @@ public class Game {
     }//end constructor
     
     
-   /* public static void main(String[] args) {
-        // TODO code application logic here
-        int[] tab = {1,2,3};
-        System.out.println(tab.length);
-        Victim victim = new Victim("21 janvier", "meurtre", tab, "Olivier", false, 32);
-    }//end main
-    */
+    public Difficulties getLevelChoice() {
+        return m_levelChoice;
+    }
+    
     
     public void gameMenu() {//menu général du jeu
         boolean exitGame = false;
@@ -43,7 +40,7 @@ public class Game {
                                     "Déposer un rapport d'enquête",     //sauvegarder partie
                                     "Abandonner une enquête\n",         //abandonner partie
                                     "Quitter le bureau d'enquête"};     //quitter jeu
-            switch (m_console.display("Menu principal", choicesList).playerSingleChoice("action")) {
+            switch (m_console.display("Menu principal", choicesList).execSingleChoice("action")) {
                 case 0:
                     gameRules();
                     break;
@@ -80,7 +77,7 @@ public class Game {
                                     {"Ouvrir le dossier"}};
         
         //intro
-        switch (m_console.display(intro[0], choices[0]).playerSingleChoice("enquête")) {
+        switch (m_console.display(intro[0], choices[0]).execSingleChoice("enquête")) {
             case 0:
                 //levelChoice.SIMPLE;
                 break;
@@ -92,7 +89,7 @@ public class Game {
                 break;
         }
         
-        m_console.display(intro[1], choices[1]).playerContinue();//appel chaîné : renvoie this en fin de fonction
+        m_console.display(intro[1], choices[1]).execContinue();//appel chaîné : renvoie this en fin de fonction
         
         //initialise classes avec aléatoire
         

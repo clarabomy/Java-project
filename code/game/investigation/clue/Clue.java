@@ -10,8 +10,8 @@ package project.game.investigation.clue;
  * @author ISEN
  */
 public abstract class Clue {
-    String m_content;
-    public boolean m_isFounded;
+    protected String m_content;
+    public boolean m_isFounded;//faire un getter et ou un setter
 
     public Clue(String content, boolean isFounded) {
         this.m_content = content;

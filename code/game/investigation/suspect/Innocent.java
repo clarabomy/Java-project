@@ -11,8 +11,8 @@ package project.game.investigation.suspect;
  */
 
 public class Innocent extends Suspect {
-    String m_alibi;
-    int m_cooperation;
+    protected String m_alibi;
+    protected int m_cooperation;
 
     public Innocent(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
         super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);

@@ -10,7 +10,7 @@ package project.game.investigation.investElement;
  * @author Thibaut
  */
 public class CrimeWeapon extends InvestElement {
-    String m_weaponType;
+    protected String m_weaponType;
 
     
     public CrimeWeapon(String weaponType, int[] refProof) {

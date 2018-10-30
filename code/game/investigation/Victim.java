@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * @author Thibaut
  */
 public class Victim extends Character implements NoticeClues {
-    String m_deathDate;
-    String m_deathCause;
-    int[] m_refProof;
+    protected String m_deathDate;
+    protected String m_deathCause;
+    protected int[] m_refProof;
 
 
     public Victim(String deathDate, String deathCause, int[] refProof, String name, boolean sex, int age) {

@@ -10,9 +10,9 @@ package project.game.investigation;
  * @author ISEN
  */
 public abstract class Character {
-    String m_name;
-    boolean m_sex;
-    int m_age;
+    protected String m_name;
+    protected boolean m_sex;
+    protected int m_age;
 
     public Character(String name, boolean sex, int age) {
         this.m_name = name;

@@ -10,7 +10,7 @@ package project.game.investigation.investElement;
  * @author Thibaut
  */
 public class CrimeScene extends InvestElement {
-    int m_penality;
+    protected int m_penality;
 
     
     public CrimeScene(int penalty, int[] refProof) {

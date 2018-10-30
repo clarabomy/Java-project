@@ -13,11 +13,11 @@ import project.game.investigation.LiveCharacter;
  * @author Thibaut
  */
 public abstract class Suspect extends LiveCharacter {
-    int m_stress;
-    String m_look;
-    String m_physicalAspect;
-    boolean m_findedInnocent;
-    int[] m_testimonyRef;
+    protected int m_stress;
+    protected String m_look;
+    protected String m_physicalAspect;
+    protected boolean m_findedInnocent;
+    protected int[] m_testimonyRef;
 
     
     public Suspect(String name, boolean sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
@@ -31,7 +31,7 @@ public abstract class Suspect extends LiveCharacter {
     }
 
     
-    public int getM_stress() {
+    public int getStress() {
         return m_stress;
     }
     
