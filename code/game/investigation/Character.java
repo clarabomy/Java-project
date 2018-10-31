@@ -14,24 +14,32 @@ public abstract class Character {
     protected boolean m_sex;
     protected int m_age;
 
+    
+    /*$$ CONSTRUCTOR $$*/
     public Character(String name, boolean sex, int age) {
         this.m_name = name;
         this.m_sex = sex;
         this.m_age = age;
     }
 
-    public String getM_name() {
+    
+    /*$$ GETTERS & SETTERS $$*/
+    public String getName() {
         return m_name;
     }
 
-    public boolean isM_sex() {
+    
+    public boolean isSex() {
         return m_sex;
     }
 
-    public int getM_age() {
+    
+    public int getAge() {
         return m_age;
     }
     
+    
+    /*$$ METHODS $$*/
     public abstract void displayInfos();
     public abstract void presentCharacter();
 }

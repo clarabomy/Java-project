@@ -17,22 +17,24 @@ public class Proof extends Clue {
     protected InvestElement m_element;
 
     
+    /*$$ CONSTRUCTOR $$*/
     public Proof(InvestElement element, String content, boolean isFounded) {
         super(content, isFounded);
         this.m_element = element;
     }
     
     
+    /*$$ METHODS $$*/
     @Override
-    void assign() {
+    public void assign() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }//end void assign
     
     
-    void assignClue(InvestElement elt){
-    }
+    public void assignClue(InvestElement elt){
+    }//end void assignClue
     
     
-    void assignClue(Victim corpse){
-    }
+    public void assignClue(Victim corpse){
+    }//end void assignClue
 }

@@ -13,15 +13,16 @@ public class CrimeWeapon extends InvestElement {
     protected String m_weaponType;
 
     
+    /*$$ CONSTRUCTOR $$*/
     public CrimeWeapon(String weaponType, int[] refProof) {
         super(refProof);
         this.m_weaponType = weaponType;
     }
 
     
-    public String getM_weaponType() {
+    /*$$ GETTERS & SETTERS $$*/
+    public String getWeaponType() {
         return m_weaponType;
     }
-    
 }
 

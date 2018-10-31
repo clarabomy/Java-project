@@ -12,43 +12,12 @@ package project;
  */
 public class Source {
     public static void main(String[] args) {
-        //débug du plus précis au plus général
-        Test debug = new Test();
-        debug.test1();//à répartir dans les catégories testées
+        //Débug du jeu
+        Test unitTest = new Test();
+        unitTest.debug();
         
-        
-        //project.game.investigation.investElement
-        debug.testCrimeScene();
-        debug.testCrimeWeapon();
-        debug.testInvestElement();
-        //project.game.investigation.clue
-        debug.testProof();
-        debug.testTestimony();
-        
-        
-        //project.game.investigation.investElement
-        debug.testCrimeScene();
-        debug.testCrimeWeapon();
-        debug.testInvestElement();
-        
-        
-        //project.game.investigation.suspect
-        debug.testCrimePartner();
-        debug.testInnocent();
-        debug.testMurderer();
-        
-        
-        //project.game.investigation
-        debug.testInvestigator();
-        debug.testVictim();
-        
-        
-        //project.game
-        debug.testInvestigation();
-        debug.testUserInterface();
-        
-        
-        //project
-        debug.testGame();
+        //Exécution du jeu
+        //Game thread = new Game();
+        //thread.gameMenu();
     }
 }

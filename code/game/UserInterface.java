@@ -14,19 +14,20 @@ public class UserInterface {
     protected static final int M_CONSOLE_SIZE = 20;
     
     
+    /*$$ METHODS $$*/
     public UserInterface clean() {
         String swipe = "";
         for (int i = 0; i < M_CONSOLE_SIZE; i++) swipe = new StringBuilder("\n").append("\n").toString();//concatène tous les retours à la ligne
         System.out.println(swipe);//affiche tout d'un coup
         return this;
-    }
+    }//end UserInterface clean
     
     
     public UserInterface display(String text, String choice){
         System.out.println(new StringBuilder(text).append('\n').append(choice).toString());
 
         return this;
-    }//end UserInterface display()
+    }//end UserInterface display
     
     
     public UserInterface display(String text, String[] choices){
@@ -36,13 +37,13 @@ public class UserInterface {
         for (int index = 0; index < m_nbChoices; index++) System.out.println(new StringBuilder("Choix ").append(index + 1).append(" : ").append(choices[index]).toString());
         
         return this;
-    }//end UserInterface display()
+    }//end UserInterface display
     
     
     public void execContinue() {
         System.out.println("\t Passer à la suite...");
         //saisie bloquante d'un caractère au pif
-    }
+    }//end void execContinue
     
             
     public int execSingleChoice(String categorie) {
@@ -52,11 +53,11 @@ public class UserInterface {
         do choice = /*something*/1; while (1 < choice && choice < m_nbChoices);
         
         return choice;
-    }//end int playerSingleChoice()
+    }//end int playerSingleChoice
     
     
     public int[] execMultiChoice(){//nécéssaire? peut réutiliser single choices
         int[] tmp = { 0 };
         return tmp;
-    }//end int[] playerMultiChoices()
+    }//end int[] playerMultiChoices
 }

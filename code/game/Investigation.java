@@ -23,6 +23,8 @@ public class Investigation {
     protected InvestElement[] m_elements;
     protected UserInterface m_console;//provisoire => pas hérité de Game?
 
+    
+    /*$$ CONSTRUCTOR $$*/
     public Investigation(Investigator player, Suspect[] suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
         this.m_suspectsList = new Suspect[suspectsList.length];
@@ -30,9 +32,10 @@ public class Investigation {
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);
-    }//end constructor
+    }
     
     
+    /*$$ METHODS $$*/
     public void mainMenu() {//menu général de la partie
         boolean gameMenu = false;
         do {
@@ -55,7 +58,7 @@ public class Investigation {
                     break;
             }
         } while (!gameMenu);//retours au menu principal (touche échap donne -1 => mécanisme implémentable?)
-    }//end mainMenu()
+    }//end mainMenu
     
     
     public void elementsMenu() {
@@ -67,7 +70,8 @@ public class Investigation {
                                 "Faire autre chose."};  //menu principal
         int action = m_console.display("C'est parti pour...", choicesList).execSingleChoice("action");
         if (action < choicesList.length) m_elements[action].analyse(m_player);
-    }//end elementsMenu()
+    }//end elementsMenu
+    
     
     public void suspectsMenu() {
         int nbSuspects = m_suspectsList.length;
@@ -95,15 +99,16 @@ public class Investigation {
                     break;
             }
         }
-    }//end void suspectsMenu()
+    }//end void suspectsMenu
+    
     
     public void cluesMenu() {
-        int nbClues = m_player.m_cluesList.length;
+        int nbClues = m_player.getClueList().length;
         int indexClues = 0;
         for (int index = 0; index < nbClues; index++) {
-            do indexClues++; while (indexClues < nbClues && m_player.m_cluesList[indexClues].m_isFounded == false);
+            do indexClues++; while (indexClues < nbClues && m_player.getClue(indexClues).isFounded() == false);
             if (indexClues < nbClues) {
-                System.out.print(new StringBuilder("Indice ").append(index + 1).append(" : ").append(m_player.m_cluesList[indexClues].display()).toString());
+                System.out.print(new StringBuilder("Indice ").append(index + 1).append(" : ").append(m_player.getClue(indexClues).display()).toString());
                 indexClues++;
             }
         }
@@ -120,16 +125,15 @@ public class Investigation {
 
             switch(action) {
                 case 0:
-                    //player.cluesList[indexClues].something();
+                    //player.getClue(indexClues).something();
                     break;
                 case 1:
-                    //player.cluesList[indexClues].something();
+                    //player.getClue(indexClues).something();
                     break;
                 case 2:
-                    //player.cluesList[indexClues].something();
+                    //player.getClue(indexClues).something();
                     break;
             }
         }
-    }//end void cluesMenu()
-    
+    }//end void cluesMenu
 }

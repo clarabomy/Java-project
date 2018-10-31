@@ -10,17 +10,12 @@ package project.game.investigation.suspect;
  * @author Thibaut
  */
 public interface Lie {
-    final int M_CREDIBILITY_MIN_SIMPLE = 40;
-    final int M_COHERENCE_MIN_SIMPLE = 40;
+    final int[] M_CREDIBILITY_MIN   = {40, 60, 80};//simple, medium, difficult
+    final int[] M_COHERENCE_MIN     = {40, 60, 80};//same
     
-    final int M_CREDIBILITY_MIN_MEDIUM = 60;
-    final int M_COHERENCE_MIN_MEDIUM = 60;
     
-    final int M_CREDIBILITY_MIN_DIFFICULT = 80;
-    final int M_COHERENCE_MIN_DIFFICULT = 80;
-    
+    /*$$ METHODS $$*/
     abstract void all_Lie();
     abstract void alibi_FalseLead();
     abstract void testimony_addTestimony();
-
 }

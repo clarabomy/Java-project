@@ -16,6 +16,7 @@ public class Victim extends Character implements NoticeClues {
     protected int[] m_refProof;
 
 
+    /*$$ CONSTRUCTOR $$*/
     public Victim(String deathDate, String deathCause, int[] refProof, String name, boolean sex, int age) {
         super(name, sex, age);
         this.m_deathDate = deathDate;
@@ -25,31 +26,32 @@ public class Victim extends Character implements NoticeClues {
     }
 
     
-    public String getM_deathDate() {
+    /*$$ GETTERS & SETTERS $$*/
+    public String getDeathDate() {
         return m_deathDate;
     }
 
     
-    public String getM_deathCause() {
+    public String getDeathCause() {
         return m_deathCause;
     }
     
     
+    /*$$ METHODS $$*/
     @Override
     public void displayInfos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }//end void displayInfos
 
     
     @Override
     public void presentCharacter() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }//end void presentCharacter
 
     
     @Override
     public void analyse(Investigator player) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    }//end void analyse
 }

@@ -12,10 +12,13 @@ package project.game.investigation;
 public abstract class LiveCharacter extends Character {
     protected static final int M_SIDES = 100;
 
+    
+    /*$$ CONSTRUCTOR $$*/
     public LiveCharacter(String name, boolean sex, int age) {
         super(name, sex, age);
     }
     
-    public abstract int rollDice();
     
+    /*$$ METHODS $$*/
+    public abstract int rollDice();
 }

@@ -17,8 +17,8 @@ import project.game.investigation.investElement.InvestElement;
  * @author ISEN
  */
 public class Test {
-    public void test1() {
-        int[] tab = {1,2,3};//à répartir dans les catégories testées
+    public void test1() {//à répartir dans les catégories testées
+        int[] tab = {1,2,3};
         InvestElement sang = new InvestElement(tab);
         Proof clue = new Proof(sang, "sang", false);
         Proof clue2 = new Proof(sang, "sang", false);
@@ -27,6 +27,46 @@ public class Test {
         player.rollDice();
     }
     
+    public void debug() {
+        //débug du plus précis au plus général
+        Test debug = new Test();
+        debug.test1();//à répartir dans les catégories testées
+        
+        
+        //project.game.investigation.investElement
+        debug.testCrimeScene();
+        debug.testCrimeWeapon();
+        debug.testInvestElement();
+        //project.game.investigation.clue
+        debug.testProof();
+        debug.testTestimony();
+        
+        
+        //project.game.investigation.investElement
+        debug.testCrimeScene();
+        debug.testCrimeWeapon();
+        debug.testInvestElement();
+        
+        
+        //project.game.investigation.suspect
+        debug.testCrimePartner();
+        debug.testInnocent();
+        debug.testMurderer();
+        
+        
+        //project.game.investigation
+        debug.testInvestigator();
+        debug.testVictim();
+        
+        
+        //project.game
+        debug.testInvestigation();
+        debug.testUserInterface();
+        
+        
+        //project
+        debug.testGame();
+    }
     
     
     //project.game.investigation.clue

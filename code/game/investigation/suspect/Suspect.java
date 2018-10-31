@@ -20,6 +20,7 @@ public abstract class Suspect extends LiveCharacter {
     protected int[] m_testimonyRef;
 
     
+    /*$$ CONSTRUCTOR $$*/
     public Suspect(String name, boolean sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
         super(name, sex, age);
         this.m_stress = stressLevel;
@@ -31,9 +32,36 @@ public abstract class Suspect extends LiveCharacter {
     }
 
     
+    /*$$ GETTERS & SETTERS $$*/
     public int getStress() {
         return m_stress;
     }
+    
+    
+    /*$$ METHODS $$*/
+    abstract void giveAlibi();
+    abstract void giveTestimony();
+    
+    
+    @Override
+    public void displayInfos() {
+        //Affiche les niveaux de stress et de coopération du suspect
+    }//end void displayInfos
+    
+    
+    @Override
+    public int rollDice() {
+        int roll = (int) (Math.random() * M_SIDES) + 1;
+        System.out.println(roll);
+        return(roll); 
+    }//end int rollDice
+    
+    
+    @Override
+    public void presentCharacter(){
+        //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }//end void presentCharacter
     
     
     public void BeInterrogated() {
@@ -47,43 +75,16 @@ public abstract class Suspect extends LiveCharacter {
                 //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    abstract void giveAlibi();
-    
-    
-    abstract void giveTestimony();
-    
-    
-    @Override
-    public int rollDice() {
-        int roll = (int) (Math.random() * M_SIDES) + 1;
-        System.out.println(roll);
-        return(roll); 
-    }
-    
-    
-    @Override
-    public void presentCharacter(){
-        //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }//end void BeInterrogated
     
     
     public void BeDisculpated(){
         //on modifie findedInnocent + vous avez décidé de disculpté ... 
-    }
+    }//end void BeDisculpated
     
     
     public void BeArrested(){
         //si c'est coupable = bonne fin => enquête réussi
         //sinon => il y a eu de nouveaux meurtres => vous êtes virés !
-    }
-    
-    
-    @Override
-    public void displayInfos() {
-        //Affiche les niveaux de stress et de coopération du suspect
-    }
+    }//end void BeArrested
 }

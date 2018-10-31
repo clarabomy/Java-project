@@ -13,9 +13,9 @@ public class CrimeScene extends InvestElement {
     protected int m_penality;
 
     
+    /*$$ CONSTRUCTOR $$*/
     public CrimeScene(int penalty, int[] refProof) {
         super(refProof);
         this.m_penality = penalty;
     }
-    
 }

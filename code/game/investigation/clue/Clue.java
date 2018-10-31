@@ -11,21 +11,31 @@ package project.game.investigation.clue;
  */
 public abstract class Clue {
     protected String m_content;
-    public boolean m_isFounded;//faire un getter et ou un setter
+    protected boolean m_isFounded;//faire un getter et ou un setter
 
+    
+    /*$$ CONSTRUCTOR $$*/
     public Clue(String content, boolean isFounded) {
         this.m_content = content;
         this.m_isFounded = isFounded;
     }
+
     
+    /*$$ GETTERS & SETTERS $$*/
+    public boolean isFounded() {
+        return m_isFounded;
+    }
+
     
-    public void BeFounded(){
+    public void setFounded(boolean isFounded) {
+        this.m_isFounded = isFounded;
     }
     
+    
+    /*$$ METHODS $$*/
     abstract void assign();
-    
-    
+
     public String display() {
-        return "tmp";
-    }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }//end String display
 }

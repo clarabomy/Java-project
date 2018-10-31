@@ -19,18 +19,19 @@ public class Game {
     protected UserInterface m_console;
 
     
-    public Game(Investigation currentGame, Difficulties levelChoice) {
-        this.m_currentGame = currentGame;
-        this.m_levelChoice = levelChoice;
+    /*$$ CONSTRUCTOR $$*/
+    public Game() {
         this.m_console = new UserInterface();
-    }//end constructor
+    }
     
     
+    /*$$ GETTERS & SETTERS $$*/
     public Difficulties getLevelChoice() {
         return m_levelChoice;
     }
     
     
+    /*$$ METHODS $$*/
     public void gameMenu() {//menu général du jeu
         boolean exitGame = false;
         do {
@@ -61,7 +62,7 @@ public class Game {
                     break;
             }
         } while (!exitGame);//sort en choisissant l'option dédiée
-    }//end void gameMenu()
+    }//end void gameMenu
     
     
     public void gameRules(){
@@ -94,22 +95,22 @@ public class Game {
         //initialise classes avec aléatoire
         
         m_currentGame.mainMenu();
-    }//end void newInvestigation()
+    }//end void newInvestigation
   
     
     public void continueInvestigation(){
         //initialise classes avec lecture fichier
         
         m_currentGame.mainMenu();
-    }//end void continueInvestigation()
+    }//end void continueInvestigation
     
     
     public void submitReport(){
         //ecrit en fichier contenu de classes
-    }//end void submitReport()
+    }//end void submitReport
     
     
     public void dropInvestigation(){
         //supprime le fichier ou vide son contenu
-    }//end void dropInvestigation()
+    }//end void dropInvestigation
 }
