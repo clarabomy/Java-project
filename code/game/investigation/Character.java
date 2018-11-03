@@ -5,6 +5,8 @@
  */
 package project.game.investigation;
 
+import project.game.UserInterface;
+
 /**
  *
  * @author ISEN
@@ -13,6 +15,8 @@ public abstract class Character {
     protected String m_name;
     protected boolean m_sex;
     protected int m_age;
+    protected int m_diff;
+    protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/

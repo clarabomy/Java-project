@@ -80,13 +80,13 @@ public class Game {
         //intro
         switch (m_console.display(intro[0], choices[0]).execSingleChoice("enquête")) {
             case 0:
-                //levelChoice.SIMPLE;
+                m_levelChoice = Difficulties.SIMPLE;
                 break;
             case 1:
-                //levelChoice.MEDIUM;
+                m_levelChoice = Difficulties.MEDIUM;
                 break;
             case 2:
-                //levelChoice.DIFFICULT;
+                m_levelChoice = Difficulties.DIFFICULT;
                 break;
         }
         

@@ -15,12 +15,23 @@ public class UserInterface {
     
     
     /*$$ METHODS $$*/
+    private String constructPerso(String perso) {
+        return new StringBuilder("(").append(perso).append(") ").toString();
+    }
+    
     public UserInterface clean() {
         String swipe = "";
         for (int i = 0; i < M_CONSOLE_SIZE; i++) swipe = new StringBuilder("\n").append("\n").toString();//concatène tous les retours à la ligne
         System.out.println(swipe);//affiche tout d'un coup
         return this;
     }//end UserInterface clean
+    
+    
+    public UserInterface display(String text){
+        System.out.println(text);
+
+        return this;
+    }//end UserInterface display
     
     
     public UserInterface display(String text, String choice){
@@ -30,6 +41,12 @@ public class UserInterface {
     }//end UserInterface display
     
     
+    public UserInterface display(String perso, String text, String choice){
+        System.out.println(new StringBuilder(constructPerso(perso)).append(text).append('\n').append(choice).toString());
+
+        return this;
+    }//end UserInterface display
+    
     public UserInterface display(String text, String[] choices){
         System.out.println(new StringBuilder(text).append('\n').toString());
         
@@ -38,6 +55,25 @@ public class UserInterface {
         
         return this;
     }//end UserInterface display
+    
+    
+    public UserInterface display(String perso, String text, String[] choices){
+        System.out.println(new StringBuilder(constructPerso(perso)).append(text).append('\n').toString());
+        
+        m_nbChoices = choices.length;
+        for (int index = 0; index < m_nbChoices; index++) System.out.println(new StringBuilder("Choix ").append(index + 1).append(" : ").append(choices[index]).toString());
+        
+        return this;
+    }//end UserInterface display
+    
+    
+    public UserInterface displayThrow(String[] category, int[] value, int result) {
+        for (int i = 0; i < category.length; i++) this.display(new StringBuilder("Lancer de dés pour ").append(category[i]).append("... ").append(String.valueOf(value[i])).toString(), "Continuer");
+        System.out.println();
+        this.display(((result <= 2)? "Réussite": "Echec") + ((result == 1 || result == 4)? " critique" : ""), "continuer");
+        
+        return this;
+    }//end UserInterface displayThrow
     
     
     public void execContinue() {
