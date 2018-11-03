@@ -15,7 +15,7 @@ public abstract class Character {
     protected String m_name;
     protected boolean m_sex;
     protected int m_age;
-    protected int m_diff;
+    protected int m_diffGame;
     protected UserInterface m_console;
 
     

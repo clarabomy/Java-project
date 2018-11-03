@@ -10,8 +10,8 @@ package project.game.investigation.suspect;
  * @author Thibaut
  */
 public interface Lie {
-    final int[] M_CREDIBILITY_MIN   = {40, 60, 80};//simple, medium, difficult
-    final int[] M_COHERENCE_MIN     = {40, 60, 80};//same
+    final int[] M_CREDIBILITY_VALID   = {40, 60, 80};//simple, medium, difficult
+    final int[] M_COHERENCE_VALID     = {40, 60, 80};//same
     
     
     /*$$ METHODS $$*/
