@@ -20,7 +20,7 @@ public class Investigator extends LiveCharacter {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigator(String name, boolean sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
+    public Investigator(String name, Sex sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
         super(name, sex, age);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
@@ -67,34 +67,47 @@ public class Investigator extends LiveCharacter {
     }
 
     
-    /*$$ METHODS $$*/
+    /*$$ METHODS $$*/    
     @Override
-    public int rollDice() {
-        int roll = (int) (Math.random() * M_SIDES) + 1;
-        System.out.println(roll);
-        return(roll); 
-    }//end int rollDice
-
-    
-    @Override
-    public void displayInfos() {
+    public void displayStats() {
+        //afficher niveau manipulation, intelligence et popularité;
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void displayInfos
     
     
     @Override
     public void presentCharacter() {
+        //Description de l'enqueteur : nom, age, sexe
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void presentCharacter
     
     
-    public void lookForClues(){
+    public void consultClues(){ //consulter indices
+        //affiche les indices ayant été trouvés 
     }//end void lookForClues
     
-    /*
-    String crossClues(){
-    }*/
+    //public String crossClue(){
+        /*
+        joueur voit tous les indices et témoignages //consultClues()
+        joueur voit phrase de display progress //displayProgress()
+        joueur peut remplir phrase de display progress et peut se tromper donc remodifier
+            joueur choisit trou à remplir
+            joueur choisit une des possibilités
+        */
+    //}
     
     public void displayProgress(){
+        //<tueur> a tué <victime> avec <arme> pour <mobile> raison.
+        //Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
     }//end void displayProgress
+    
+    public void checkContradiction(){
+        //lance le dé d'intelligence 
+        /*
+        réussite critique : intique combien d'erreurs dans progress
+        réussite : indique si erreur
+        echec : ne sait pas
+        echec critique : indique un nombre d erreurs au hasard
+        */
+    }
 }

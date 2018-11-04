@@ -5,6 +5,8 @@
  */
 package project.game.investigation.suspect;
 
+import project.game.investigation.Sex;
+
 /**
  *
  * @author Thibaut
@@ -16,7 +18,7 @@ public class Innocent extends Suspect {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
+    public Innocent(String name, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
         super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_alibi = alibi;
         this.m_cooperation = cooperationLevel;
@@ -32,8 +34,8 @@ public class Innocent extends Suspect {
     /*$$ METHODS $$*/
     @Override
     public void BeInterrogated() {
-        //Présentation du personnage presenterPerso() = description littéraire de qui il est
-        //AfficherInfos() = stats du perso + description physique
+        //Présentation du personnage presenterPerso() = description littéraire de qui il est + description physique 
+        //AfficherInfos() = stats du perso 
         
         //Menu => 2 fonctions
             //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
@@ -42,13 +44,7 @@ public class Innocent extends Suspect {
 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void BeInterrogated
-
     
-    @Override
-    public void displayInfos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }//end void displayInfos
-
     
     @Override
     public void giveAlibi() {

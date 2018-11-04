@@ -5,10 +5,9 @@
  */
 package project.game.investigation;
 
-import java.util.ArrayList;
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public class Victim extends Character implements NoticeClues {
     protected String m_deathDate;
@@ -17,7 +16,7 @@ public class Victim extends Character implements NoticeClues {
 
 
     /*$$ CONSTRUCTOR $$*/
-    public Victim(String deathDate, String deathCause, int[] refProof, String name, boolean sex, int age) {
+    public Victim(String name, Sex sex, int age, String deathDate, String deathCause, int[] refProof) {
         super(name, sex, age);
         this.m_deathDate = deathDate;
         this.m_deathCause = deathCause;
@@ -38,20 +37,18 @@ public class Victim extends Character implements NoticeClues {
     
     
     /*$$ METHODS $$*/
-    @Override
-    public void displayInfos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }//end void displayInfos
-
     
     @Override
     public void presentCharacter() {
+        //Victime : nom, sexe, age (phrase différente) 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void presentCharacter
 
     
     @Override
-    public void analyse(Investigator player) {
+    public void analyse(Investigator player) { //autopsie
+        //donne la cause de la mort + date de la mort
+        //+ indices associées (passeront de non trouvé à trouvé)
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void analyse
 }

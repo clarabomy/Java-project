@@ -7,7 +7,7 @@ package project.game;
 
 import project.game.investigation.Investigator;
 import project.game.investigation.Victim;
-import project.game.investigation.investElement.InvestElement;
+import project.game.investigation.InvestElement;
 import project.game.investigation.suspect.Suspect;
 
 

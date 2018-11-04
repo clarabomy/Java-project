@@ -13,14 +13,14 @@ import project.game.UserInterface;
  */
 public abstract class Character {
     protected String m_name;
-    protected boolean m_sex;
+    protected Sex m_sex;
     protected int m_age;
     protected int m_diffGame;
     protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Character(String name, boolean sex, int age) {
+    public Character(String name, Sex sex, int age) {
         this.m_name = name;
         this.m_sex = sex;
         this.m_age = age;
@@ -33,7 +33,7 @@ public abstract class Character {
     }
 
     
-    public boolean isSex() {
+    public Sex getSex() {
         return m_sex;
     }
 
@@ -44,6 +44,5 @@ public abstract class Character {
     
     
     /*$$ METHODS $$*/
-    public abstract void displayInfos();
     public abstract void presentCharacter();
 }

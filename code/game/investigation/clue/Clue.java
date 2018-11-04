@@ -12,7 +12,7 @@ package project.game.investigation.clue;
 public abstract class Clue {
     protected String m_content;
     protected boolean m_isFounded;//faire un getter et ou un setter
-
+    
     
     /*$$ CONSTRUCTOR $$*/
     public Clue(String content, boolean isFounded) {
@@ -33,9 +33,5 @@ public abstract class Clue {
     
     
     /*$$ METHODS $$*/
-    abstract void assign();
-
-    public String display() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }//end String display
+    public abstract String display();
 }

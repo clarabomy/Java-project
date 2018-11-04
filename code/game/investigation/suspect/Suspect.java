@@ -6,6 +6,7 @@
 package project.game.investigation.suspect;
 
 import project.game.investigation.LiveCharacter;
+import project.game.investigation.Sex;
 
 
 /**
@@ -21,7 +22,7 @@ public abstract class Suspect extends LiveCharacter {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Suspect(String name, boolean sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
+    public Suspect(String name, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
         super(name, sex, age);
         this.m_stress = stressLevel;
         this.m_look = look;
@@ -44,17 +45,9 @@ public abstract class Suspect extends LiveCharacter {
     
     
     @Override
-    public void displayInfos() {
-        //Affiche les niveaux de stress et de coopération du suspect
+    public void displayStats() {
+        //Affiche les niveaux de stress du suspect
     }//end void displayInfos
-    
-    
-    @Override
-    public int rollDice() {
-        int roll = (int) (Math.random() * M_SIDES) + 1;
-        System.out.println(roll);
-        return(roll); 
-    }//end int rollDice
     
     
     @Override

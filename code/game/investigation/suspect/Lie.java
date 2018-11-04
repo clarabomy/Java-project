@@ -15,7 +15,7 @@ public interface Lie {
     
     
     /*$$ METHODS $$*/
-    abstract void all_Lie();
+    abstract void contradiction();
     abstract void alibi_FalseLead();
     abstract void testimony_addTestimony();
 }

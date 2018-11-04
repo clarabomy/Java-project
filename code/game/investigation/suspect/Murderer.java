@@ -5,6 +5,8 @@
  */
 package project.game.investigation.suspect;
 
+import project.game.investigation.Sex;
+
 /**
  *
  * @author Thibaut
@@ -14,7 +16,7 @@ public class Murderer extends Suspect implements Lie  {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Murderer(String name, boolean sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
+    public Murderer(String name, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
         super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_motive = motive;
     }
@@ -36,17 +38,17 @@ public class Murderer extends Suspect implements Lie  {
         
         if (coherenceThrow >= M_CRITICAL_FAILURE) action = 4;
         else if ((coherenceThrow <= M_COHERENCE_VALID[m_diffGame] && 
-            credibThrow <= M_CREDIBILITY_VALID[m_diffGame] + ((coherenceThrow < M_CRITICAL_SUCCESS)? M_BONUS[m_diffGame] : 0))
+            credibThrow <= M_CREDIBILITY_VALID[m_diffGame] + ((coherenceThrow < M_CRITICAL_SUCCESS)? m_bonus : 0))
             ||
             (coherenceThrow > M_COHERENCE_VALID[m_diffGame] && //coherenceThrow < M_CRITICAL_FAILURE && déjà vérifié
-            credibThrow <= M_CREDIBILITY_VALID[m_diffGame] - M_MALUS[m_diffGame])) {
+            credibThrow <= M_CREDIBILITY_VALID[m_diffGame] - m_malus)) {
             action = (credibThrow <= M_CRITICAL_SUCCESS)? 1 : 2 ;
         }
         else if ((coherenceThrow <= M_COHERENCE_VALID[m_diffGame] &&
-            credibThrow > M_CREDIBILITY_VALID[m_diffGame] + ((coherenceThrow < M_CRITICAL_SUCCESS)? M_BONUS[m_diffGame] : 0))
+            credibThrow > M_CREDIBILITY_VALID[m_diffGame] + ((coherenceThrow < M_CRITICAL_SUCCESS)? m_bonus : 0))
             ||
             (coherenceThrow > M_COHERENCE_VALID[m_diffGame] && //coherenceThrow < M_CRITICAL_FAILURE && déjà vérifié
-            credibThrow > M_CREDIBILITY_VALID[m_diffGame] - M_MALUS[m_diffGame])) {
+            credibThrow > M_CREDIBILITY_VALID[m_diffGame] - m_malus)) {
             action = (credibThrow < M_CRITICAL_FAILURE)? 3 : 4 ;
         }
         
@@ -94,17 +96,18 @@ public class Murderer extends Suspect implements Lie  {
         //Lance dé pour crédibilité et cohérence
         //Si ok : créer fausse piste (donner faux alibi) | sinon : seContredit()
         switch (throwForCoherenceAndCredib()) {
-            case 1:
+            case 1: //réussite critique
                 //semble dire la vérité / envie de le croire..
                 break;
-            case 2:
+            case 2: //réussite
                 //crée fausse piste
                 break;
-            case 3:
+            case 3: //échec
                 //se contredit
                 m_console.display("Enquêteur", "Le suspect semble mal à l'aise. Il cache quelque chose...",  "continuer").execContinue();
+                this.contradiction();
                 break;
-            case 4:
+            case 4: //échec critique
                 //passe aux aveux
                 m_console.display("Enquêteur", "Le suspect semble mal à l'aise. Il cache quelque chose...",  "continuer").execContinue();
                 m_console.display(this.m_name, "Je n'y arrive plus, je vais tout vous avouer...",  "continuer").execContinue();
@@ -143,7 +146,7 @@ public class Murderer extends Suspect implements Lie  {
 
     
     @Override
-    public void all_Lie() {
+    public void contradiction() { //Se contredire
         //Afficher le suspect a dit des choses contradictoires => c'est étrange...
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void all_Lie
@@ -164,6 +167,7 @@ public class Murderer extends Suspect implements Lie  {
     
     
     public void confess(){
+        //tout avouer + dit ce qui s'est passé
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void confess
 }
