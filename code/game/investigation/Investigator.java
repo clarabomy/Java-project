@@ -86,7 +86,7 @@ public class Investigator extends LiveCharacter {
         //affiche les indices ayant été trouvés 
     }//end void lookForClues
     
-    //public String crossClue(){
+    public void crossClue(){
         /*
         joueur voit tous les indices et témoignages //consultClues()
         joueur voit phrase de display progress //displayProgress()
@@ -94,7 +94,7 @@ public class Investigator extends LiveCharacter {
             joueur choisit trou à remplir
             joueur choisit une des possibilités
         */
-    //}
+    }
     
     public void displayProgress(){
         //<tueur> a tué <victime> avec <arme> pour <mobile> raison.

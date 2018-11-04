@@ -9,64 +9,69 @@ package project.game;
  *
  * @author ISEN
  */
-public class UserInterface {
+public class UserInterface {//majoritairement codé - en cours de débuggage
     protected int m_nbChoices;
     protected static final int M_CONSOLE_SIZE = 20;
     
     
     /*$$ METHODS $$*/
-    private String constructPerso(String perso) {
-        return new StringBuilder("(").append(perso).append(") ").toString();
+    private String constructList(String[] choicesList) {
+        String list = "";
+        for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
+        
+        return list;
     }
+    
     
     public UserInterface clean() {
         String swipe = "";
-        for (int i = 0; i < M_CONSOLE_SIZE; i++) swipe = new StringBuilder("\n").append("\n").toString();//concatène tous les retours à la ligne
+        for (int i = 0; i < M_CONSOLE_SIZE; i++) swipe = new StringBuilder(swipe).append("\n").toString();//concatène tous les retours à la ligne
         System.out.println(swipe);//affiche tout d'un coup
+        
+        m_nbChoices = 0;
         return this;
     }//end UserInterface clean
     
     
     public UserInterface display(String text){
-        System.out.println(text);
+        System.out.printf("%s\n\n", text);
 
+        m_nbChoices = 0;
         return this;
     }//end UserInterface display
     
     
     public UserInterface display(String text, String choice){
-        System.out.println(new StringBuilder(text).append('\n').append(choice).toString());
+        System.out.printf("%s\n\t%s\n\n", text, choice);
 
-        return this;
-    }//end UserInterface display
-    
-    
-    public UserInterface display(String perso, String text, String choice){
-        System.out.println(new StringBuilder(constructPerso(perso)).append(text).append('\n').append(choice).toString());
-
+        m_nbChoices = 1;
         return this;
     }//end UserInterface display
     
     public UserInterface display(String text, String[] choices){
-        System.out.println(new StringBuilder(text).append('\n').toString());
+        this.display(text, constructList(choices));
         
         m_nbChoices = choices.length;
-        for (int index = 0; index < m_nbChoices; index++) System.out.println(new StringBuilder("Choix ").append(index + 1).append(" : ").append(choices[index]).toString());
-        
         return this;
     }//end UserInterface display
     
     
-    public UserInterface display(String perso, String text, String[] choices){
-        System.out.println(new StringBuilder(constructPerso(perso)).append(text).append('\n').toString());
-        
-        m_nbChoices = choices.length;
-        for (int index = 0; index < m_nbChoices; index++) System.out.println(new StringBuilder("Choix ").append(index + 1).append(" : ").append(choices[index]).toString());
-        
+    public UserInterface display(String speaker, String text, String choice){
+        System.out.printf("(%s) %s\n\t%s\n\n", speaker, text, choice);
+
+        m_nbChoices = 1;
         return this;
     }//end UserInterface display
     
     
+    public UserInterface display(String speaker, String text, String[] choices){
+        this.display(speaker, text, constructList(choices));
+        
+        m_nbChoices = choices.length;
+        return this;
+    }//end UserInterface display
+    
+    /*$ avancement modifs $*/
     public UserInterface displayThrow(String[] category, int[] value, int result) {
         for (int i = 0; i < category.length; i++) this.display(new StringBuilder("Lancer de dés pour ").append(category[i]).append("... ").append(String.valueOf(value[i])).toString(), "Continuer");
         System.out.println();

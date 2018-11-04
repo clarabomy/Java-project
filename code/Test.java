@@ -10,6 +10,7 @@ import project.game.investigation.Investigator;
 import project.game.investigation.clue.Clue;
 import project.game.investigation.clue.Proof;
 import project.game.investigation.InvestElement;
+import project.game.investigation.Sex;
 
 
 /**
@@ -23,49 +24,39 @@ public class Test {
         Proof clue = new Proof(sang, "sang", false);
         Proof clue2 = new Proof(sang, "sang", false);
         Clue[] clue_tab = {clue,clue2};
-        Investigator player = new Investigator("Michel", false, 34, 60, 70, 32, clue_tab, "100");
-        player.rollDice();
+        Investigator player = new Investigator("Michel", Sex.MAN, 34, 60, 70, 32, clue_tab, "100");
+        Investigator.rollDice();
     }
     
     public void debug() {
         //débug du plus précis au plus général
-        Test debug = new Test();
-        debug.test1();//à répartir dans les catégories testées
+        //this.test1();//à répartir dans les catégories testées
         
         
-        //project.game.investigation.investElement
-        debug.testCrimeScene();
-        debug.testCrimeWeapon();
-        debug.testInvestElement();
         //project.game.investigation.clue
-        debug.testProof();
-        debug.testTestimony();
-        
-        
-        //project.game.investigation.investElement
-        debug.testCrimeScene();
-        debug.testCrimeWeapon();
-        debug.testInvestElement();
+        //this.testProof();
+        //this.testTestimony();
         
         
         //project.game.investigation.suspect
-        debug.testCrimePartner();
-        debug.testInnocent();
-        debug.testMurderer();
+        //this.testCrimePartner();
+        //this.testInnocent();
+        //this.testMurderer();
         
         
         //project.game.investigation
-        debug.testInvestigator();
-        debug.testVictim();
+        //this.testInvestElement();
+        //this.testInvestigator();
+        //this.testVictim();
         
         
         //project.game
-        debug.testInvestigation();
-        debug.testUserInterface();
+        //this.testInvestigation();
+        this.testUserInterface();
         
         
         //project
-        debug.testGame();
+        //this.testGame();
     }
     
     
@@ -75,20 +66,6 @@ public class Test {
     }
     
     public void testTestimony() {
-        
-    }
-    
-    
-    //project.game.investigation.investElement
-    public void testCrimeScene() {
-        
-    }
-    
-    public void testCrimeWeapon() {
-        
-    }
-    
-    public void testInvestElement() {
         
     }
     
@@ -108,6 +85,11 @@ public class Test {
     
     
     //project.game.investigation
+    public void testInvestElement() {
+        
+    }
+    
+    
     public void testInvestigator() {
         
     }
@@ -124,14 +106,21 @@ public class Test {
     
     public void testUserInterface() {
         UserInterface console = new UserInterface();
-        
-        console.display("Test 1", "Continuer").execContinue();
-        
         String choices[] = {"option 1", "option 2", "option 3"};
-        int value = console.clean().display("Test 2", choices).execSingleChoice("option");
-        System.out.println("Vous avez choisi l'option " + value);
         
-        int values[] = console.clean().display("Test 3 (implémenter?)", choices).execMultiChoice();
+        console.display("test 1");
+        
+        console.display("Test 2", "Continuer");
+        
+        console.display("Test 3", choices);
+        
+        console.display("debugger", "Test 4", "Continuer");
+        
+        console.display("debugger", "Test 5", choices);
+        
+        console.clean();
+        
+        console.display("un peu de texte", "appuyez sur une touche pour continuer").execContinue();
     }
     
     
