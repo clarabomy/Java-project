@@ -5,21 +5,23 @@
  */
 package project.game;
 
+import java.io.IOException;
+
 /**
  *
  * @author ISEN
  */
-public class UserInterface {//majoritairement codé - en cours de débuggage
-    protected int m_nbChoices;
+public class UserInterface {//majoritairement codé - en cours de débug => dernières fonctions
+    protected static int m_nbChoices;
     protected static final int M_CONSOLE_SIZE = 20;
     
     
     /*$$ METHODS $$*/
     private String constructList(String[] choicesList) {
-        String list = "";
+        String list = "\t";
         for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
         
-        return list;
+        return list.substring(0, list.length() - 2);//retire dernier \n\t
     }
     
     
@@ -33,71 +35,77 @@ public class UserInterface {//majoritairement codé - en cours de débuggage
     }//end UserInterface clean
     
     
-    public UserInterface display(String text){
-        System.out.printf("%s\n\n", text);
+    public UserInterface display(String text, boolean lineBreak){//version 1
+        System.out.printf("%s\n%s", text, (lineBreak? "\n" : ""));
 
         m_nbChoices = 0;
         return this;
     }//end UserInterface display
     
     
-    public UserInterface display(String text, String choice){
-        System.out.printf("%s\n\t%s\n\n", text, choice);
-
-        m_nbChoices = 1;
-        return this;
-    }//end UserInterface display
-    
-    public UserInterface display(String text, String[] choices){
-        this.display(text, constructList(choices));
+    public UserInterface display(String text, String[] choices, boolean lineBreak){//version 2
+        System.out.printf("%s\n%s\n%s", text, constructList(choices), (lineBreak? "\n" : ""));
         
         m_nbChoices = choices.length;
         return this;
     }//end UserInterface display
     
     
-    public UserInterface display(String speaker, String text, String choice){
-        System.out.printf("(%s) %s\n\t%s\n\n", speaker, text, choice);
-
-        m_nbChoices = 1;
+    public UserInterface display(String speaker, String text, boolean lineBreak){//version 3
+        System.out.printf("(%s) %s\n%s", speaker, text, (lineBreak? "\n" : ""));
+        
+        m_nbChoices = 0;
         return this;
     }//end UserInterface display
     
     
-    public UserInterface display(String speaker, String text, String[] choices){
-        this.display(speaker, text, constructList(choices));
+    public UserInterface display(String speaker, String text, String[] choices, boolean lineBreak){//version 4
+        System.out.printf("(%s) %s\n %s\n%s", speaker, text, constructList(choices), (lineBreak? "\n" : ""));
         
         m_nbChoices = choices.length;
         return this;
     }//end UserInterface display
     
-    /*$ avancement modifs $*/
-    public UserInterface displayThrow(String[] category, int[] value, int result) {
-        for (int i = 0; i < category.length; i++) this.display(new StringBuilder("Lancer de dés pour ").append(category[i]).append("... ").append(String.valueOf(value[i])).toString(), "Continuer");
-        System.out.println();
-        this.display(((result <= 2)? "Réussite": "Echec") + ((result == 1 || result == 4)? " critique" : ""), "continuer");
+    
+    public UserInterface displayThrow(String[] category, int[] value, int result, boolean lineBreak) {
+        for (int i = 0; i < category.length; i++) System.out.printf("Lancer de dés pour %s... %d\n", category[i], value[i]);
+        System.out.printf("%s%s\n%s", ((result <= 2)? "Réussite": "Echec"), ((result == 1 || result == 4)? " critique" : ""), (lineBreak? "\n" : "") );
         
+        m_nbChoices = 0;
         return this;
     }//end UserInterface displayThrow
     
     
-    public void execContinue() {
-        System.out.println("\t Passer à la suite...");
-        //saisie bloquante d'un caractère au pif
+    public UserInterface execContinue() {
+        //saisie bloquante d'un caractère (au pif?) entrée
+        System.out.println("\tContinuer...");
+        try {
+            System.in.read();
+        } 
+        catch(IOException e){
+        }
+        
+        return this;
     }//end void execContinue
     
-            
-    public int execSingleChoice(String categorie) {
-        System.out.println(new StringBuilder("\t Choisissez votre ").append(categorie).append(" : ").toString());
+    
+    public int execSingleChoice() {//refaire bien
+        System.out.printf("\t\tFaites votre choix : ");
 
         int choice = 0;
-        do choice = /*something*/1; while (1 < choice && choice < m_nbChoices);
+        try {
+            do choice = System.in.read(); while (1 < choice && choice < m_nbChoices);
+        } 
+        catch(IOException e){
+        }
         
         return choice;
     }//end int playerSingleChoice
     
     
-    public int[] execMultiChoice(){//nécéssaire? peut réutiliser single choices
+    public int[] execMultiChoice(){//nécéssaire?
+        System.out.printf("\t\tFaites vos choix (saisie vide pour continuer) : ");
+        
         int[] tmp = { 0 };
         return tmp;
     }//end int[] playerMultiChoices

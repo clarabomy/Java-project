@@ -43,7 +43,7 @@ public class Investigation {
                                     "M'occuper des suspects.", 
                                     "Lister les indices.\n",
                                     "Voir mon supérieur."}; //menu du jeu
-            switch (m_console.display("Aujourd'hui, je vais...", choicesList).execSingleChoice("action")) {//choix unique
+            switch (m_console.display("Aujourd'hui, je vais...", choicesList, false).execSingleChoice()) {//choix unique
                 case 0:
                     elementsMenu();
                     break;
@@ -68,7 +68,7 @@ public class Investigation {
                                 "Autopsier la victime.", 
                                 "Chercher des indices dans la scène de crime.\n",
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList).execSingleChoice("action");
+        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
         if (action < choicesList.length) m_elements[action].analyse(m_player);
     }//end elementsMenu
     
@@ -81,11 +81,11 @@ public class Investigation {
                                 "Innocenter un suspect.", 
                                 "Arrêter un suspect.\n",
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList).execSingleChoice("action");
+        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
         
         if (action < choicesList.length) {
             System.out.print("Et l'heureux élu est ");
-            int choicePlayer = m_console.execSingleChoice("suspect");
+            int choicePlayer = m_console.execSingleChoice();
 
             switch(action) {
                 case 0:
@@ -117,11 +117,11 @@ public class Investigation {
                                 "Relier les indices.", 
                                 "Chercher des incohérences.\n", 
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList).execSingleChoice("action");
+        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
         
         if (action < choicesList.length) {
             System.out.print("Allez, indice ");
-            int choicePlayer = m_console.execSingleChoice("indice");
+            int choicePlayer = m_console.execSingleChoice();
 
             switch(action) {
                 case 0:

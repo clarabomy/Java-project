@@ -77,7 +77,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     @Override
     public void contradiction() { //Se contredire
         //Afficher le suspect a dit des choses contradictoires => c'est étrange...
-        m_console.display("Enquêteur", "Le suspect semble mal à l'aise. Ses propos sont contradictoires. Il cache quelque chose...",  "continuer").execContinue();
+        m_console.display("Enquêteur", "Le suspect semble mal à l'aise. Ses propos sont contradictoires. Il cache quelque chose...", false).execContinue();
     }//end void contradiction()
 
     
@@ -97,7 +97,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     
     public void confess(){
         //tout avouer + dit ce qui s'est passé
-        m_console.display(this.m_name, "Je n'y arrive plus, je vais tout vous avouer...",  "continuer").execContinue();
+        m_console.display(this.m_name, "Je n'y arrive plus, je vais tout vous avouer...", false).execContinue();
         throw new UnsupportedOperationException("Not fully supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void confess
 }

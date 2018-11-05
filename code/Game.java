@@ -41,7 +41,7 @@ public class Game {
                                     "Déposer un rapport d'enquête",     //sauvegarder partie
                                     "Abandonner une enquête\n",         //abandonner partie
                                     "Quitter le bureau d'enquête"};     //quitter jeu
-            switch (m_console.display("Menu principal", choicesList).execSingleChoice("action")) {
+            switch (m_console.display("Menu principal", choicesList, false).execSingleChoice()) {
                 case 0:
                     gameRules();
                     break;
@@ -78,7 +78,7 @@ public class Game {
                                     {"Ouvrir le dossier"}};
         
         //intro
-        switch (m_console.display(intro[0], choices[0]).execSingleChoice("enquête")) {
+        switch (m_console.display("Votre supérieur", intro[0], choices[0], false).execSingleChoice()) {
             case 0:
                 m_levelChoice = Difficulties.SIMPLE;
                 break;
@@ -90,7 +90,7 @@ public class Game {
                 break;
         }
         
-        m_console.display(intro[1], choices[1]).execContinue();//appel chaîné : renvoie this en fin de fonction
+        m_console.display("Votre supérieur", intro[1], choices[1], false).execContinue();//appel chaîné : renvoie this en fin de fonction
         
         //initialise classes avec aléatoire
         

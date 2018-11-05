@@ -104,23 +104,23 @@ public class Test {
         
     }
     
-    public void testUserInterface() {
+    public void testUserInterface() {//1 pb left
         UserInterface console = new UserInterface();
         String choices[] = {"option 1", "option 2", "option 3"};
+        int result = 0;
         
-        console.display("test 1");
+        console.display("test 1", true);
         
-        console.display("Test 2", "Continuer");
+        console.display("Test 2", choices, true);
         
-        console.display("Test 3", choices);
+        console.display("debuggeur", "Test 3", true);
         
-        console.display("debugger", "Test 4", "Continuer");
+        console.display("debuggeur", "Test 4", choices, true);
         
-        console.display("debugger", "Test 5", choices);
+        console.display("test 5", false).execContinue().clean();
         
-        console.clean();
-        
-        console.display("un peu de texte", "appuyez sur une touche pour continuer").execContinue();
+        result = console.display("test 6", choices, false).execSingleChoice();//pb
+        System.out.println(result);
     }
     
     
