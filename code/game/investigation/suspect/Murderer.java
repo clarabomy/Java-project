@@ -1,25 +1,26 @@
 
 package project.game.investigation.suspect;
 
+import project.game.Investigation;
+import project.game.investigation.Investigator;
 import project.game.investigation.Sex;
 
 /**
  *
  * @author ISEN
  */
-public class Murderer extends Suspect implements Lie  {//majoritairement codé - pas testé
+public class Murderer extends Suspect implements Lie  {//majoritairement codé - en cours de débugage
     protected String m_motive;
-
     
     /*$$ CONSTRUCTOR $$*/
-    public Murderer(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
+    public Murderer(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_motive = motive;
     }
 
     
     /*$$ GETTERS & SETTERS $$*/
-    public String getMotive() {
+    public String getMotive() {//utile?
         return m_motive;
     }
     
@@ -64,36 +65,74 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
                 this.contradiction();
                 break;
             case 4:
-                //dit de la merde
+                m_console.display("Enquêteur", "Le suspect refuse de parler. Bon, tant pis...", false).execContinue();
                 break;
         }
     }//end void giveTestimony
 
     
     @Override
-    public void contradiction() { //Se contredire
-        //Afficher le suspect a dit des choses contradictoires => c'est étrange...
+    public void contradiction() {
         m_console.display("Enquêteur", "Le suspect semble mal à l'aise. Ses propos sont contradictoires. Il cache quelque chose...", false).execContinue();
     }//end void contradiction()
 
     
     @Override
     public void createFalseLead() {
-        //donne un alibi bidon au hasard
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //crée alibi bidon avec aléatoire
+        String[] activity   = {"J'ai travaillé", "Je me suis reposé", "J'ai mangé", "Je suis sorti", "J'étais"},
+                    place   = {"au restaurant", "à l'hotel", "chez moi", "chez un ami", "dans un parc", },
+                    witness = {"seul", "avec un ami", "avec ma femme", "avec mon équipe", "avec mon chien"};
+        
+        String alibi = new StringBuilder(activity[(int) (Math.random() * activity.length)]).append(" ")
+                                .append(witness[(int) (Math.random() * witness.length)]).append(" ")
+                                .append(place[(int) (Math.random() * place.length)]).append(".").toString();
+        
+        //l'affiche
+        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
+        m_console.display(nom, alibi, false).execContinue();
     }//end void alibi_FalseLead
 
     
     @Override
     public void addTestimony() {
-        //Dans le tableau d'indice, ajoute un témoignage avec islie = true
+        //crée témoigage bidon avec aléatoire
+        String[] suspect    = {},//la liste des suspects
+                    object  = {"une pipe", "un homme avec une forte carrure", "un homme avec une canne", "un homme décrépit", "une femme classe"},
+                    sound   = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
+        
+        
+        String testimony = "";
+        switch ((int) (Math.random() * 2)) {//0, 1 ou 2
+            case 0 :
+                testimony = "Je n'ai rien vu ni entendu";
+                break;
+            case 1:
+                testimony = new StringBuilder("J'ai vu ").append(suspect[(int) (Math.random() * suspect.length)])
+                                        .append(" avec ").append(object[(int) (Math.random() * object.length)]).toString();
+                break;
+            case 2:
+                testimony = new StringBuilder("J'ai entendu ").append(sound[(int) (Math.random() * sound.length)]).toString();
+                break;
+        }
+        
+        testimony = new StringBuilder(testimony).append(" près du lieu du crime.").toString();
+        
+        //Dans le tableau d'indice, ajoute le témoignage avec islie = true
+        //l'affiche
+        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
+        m_console.display(nom, testimony, false).execContinue();
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void testimony_addTestimony
     
     
     public void confess(){
-        //tout avouer + dit ce qui s'est passé
-        m_console.display(this.m_name, "Je n'y arrive plus, je vais tout vous avouer...", false).execContinue();
-        throw new UnsupportedOperationException("Not fully supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
+        m_console.display(nom, "C'est bon, je vais tout vous avouer...", false).execContinue();
+        m_console.display(nom, "Raconte ce qui s'est passé (pourquoi, comment)", false).execContinue();
+        
+        String text = new StringBuilder("J'ai fais tout ca pour ").append(m_motive).append(". Et vous, qu'auriez vous fait à ma place??").toString();
+        m_console.display(nom, text, false).execContinue();
     }//end void confess
 }

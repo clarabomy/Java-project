@@ -8,12 +8,16 @@ import java.util.Scanner;
  *
  * @author ISEN
  */
-public class UserInterface {//majoritairement codé - en cours de débug => dernières fonctions
+public class UserInterface {//codé - débugé
     protected static int m_nbChoices;
     protected static final int M_CONSOLE_SIZE = 20;
     
     
     /*$$ METHODS $$*/
+    public UserInterface() {
+        m_nbChoices = 0;
+    }
+    
     private String constructList(String[] choicesList) {
         String list = "\t";
         for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
@@ -75,7 +79,7 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
     
     public UserInterface execContinue() {
         //saisie bloquante d'un caractère (au pif?) entrée
-        System.out.println("\tEntrer pour continuer...");
+        System.out.println("\t\tAppuyez sur entrer pour continuer...");
         try {
             System.in.read();
         } 
@@ -90,24 +94,19 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
         Scanner keyboard = new Scanner(System.in);
         int choice = 0;
         boolean correctChoice = false;
-        System.out.printf("\t\tFaites votre choix : ");
 
-        /*int choice = 0;
-        try {
-            do choice = System.in.read(); while (1 < choice && choice < m_nbChoices);
-        } 
-        catch(IOException e){
-        }*/
         do {
             try {
+                System.out.printf("\t\tFaites votre choix : ");
                 choice = keyboard.nextInt();
-                if (1 <= choice && choice <= m_nbChoices) correctChoice = true; 
+                if (1 <= choice && choice <= m_nbChoices) correctChoice = true;
             } 
             catch (Exception e) {
-                System.out.println("Please enter a correct choice...");
                 keyboard.next(); 
             }
         } while (correctChoice == false);
+        
+        
         return choice;
     }
     

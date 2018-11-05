@@ -8,7 +8,7 @@ package project.game.investigation;
 public abstract class LiveCharacter extends Character {
     protected static final int M_SIDES = 100;
     protected static final int M_CRITICAL_SUCCESS = 15;
-    protected static final int M_CRITICAL_FAILURE = 15;
+    protected static final int M_CRITICAL_FAILURE = 95;
     protected static int m_bonus; //{30, 20, 10};//simple, medium, difficult
     protected static int m_malus; //{10, 20, 30};//same
 
@@ -29,6 +29,7 @@ public abstract class LiveCharacter extends Character {
     
     public static int throwSimpleDice(int validThrow) {
         int throwResult = rollDice();
+        //System.out.printf("jet : %d\n", throwResult);
         
         if (throwResult <= validThrow && throwResult > M_CRITICAL_SUCCESS) return 2;//succes => plus courant
         else if (throwResult > validThrow && throwResult < M_CRITICAL_FAILURE) return 3;//echec => plus courant

@@ -13,7 +13,7 @@ public abstract class Character {
     protected Sex m_sex;
     protected int m_age;
     protected int m_diffGame;
-    protected UserInterface m_console;
+    protected UserInterface m_console = new UserInterface();
 
     
     /*$$ CONSTRUCTOR $$*/

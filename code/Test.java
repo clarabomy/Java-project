@@ -6,7 +6,11 @@ import project.game.investigation.Investigator;
 import project.game.investigation.clue.Clue;
 import project.game.investigation.clue.Proof;
 import project.game.investigation.InvestElement;
+import static project.game.investigation.LiveCharacter.throwDoubleDices;
 import project.game.investigation.Sex;
+import static project.game.investigation.suspect.Lie.M_COHERENCE_VALID;
+import static project.game.investigation.suspect.Lie.M_CREDIBILITY_VALID;
+import project.game.investigation.suspect.Murderer;
 
 
 /**
@@ -14,6 +18,8 @@ import project.game.investigation.Sex;
  * @author ISEN
  */
 public class Test {
+    private UserInterface console = new UserInterface();
+        
     public void test1() {//à répartir dans les catégories testées
         int[] tab = {1,2,3};
         InvestElement sang = new InvestElement(tab);
@@ -40,7 +46,7 @@ public class Test {
         //project.game.investigation.suspect
         //this.testCrimePartner();
         //this.testInnocent();
-        //this.testMurderer();
+        this.testMurderer();//débug en cours
         
         
         //project.game.investigation
@@ -51,7 +57,7 @@ public class Test {
         
         //project.game
         //this.testInvestigation();
-        this.testUserInterface();
+        //this.testUserInterface();//débug ok
         
         
         //project
@@ -78,8 +84,23 @@ public class Test {
         
     }
     
-    public void testMurderer() {
+    public void testMurderer() {//debug en cours
+        int[] testimonyRef = {};
+        Murderer criminel = new Murderer("name", "surname", Sex.MAN, 30, 70, "look", "physicalAspect", false, testimonyRef, "motive");
         
+        criminel.addTestimony();//coder
+        
+        //criminel.confess();//débug ok
+        
+        //criminel.contradiction();//débug ok
+        
+        //criminel.createFalseLead();//débug ok
+        
+        //console.display(criminel.getMotive(), false).execContinue();//débug ok
+        
+        //criminel.giveAlibi();//débug ok
+        
+        //criminel.giveTestimony();//débug ok
     }
     
     
@@ -103,23 +124,22 @@ public class Test {
         
     }
     
-    public void testUserInterface() {//1 pb left
-        UserInterface console = new UserInterface();
+    public void testUserInterface() {//débug ok
         String choices[] = {"option 1", "option 2", "option 3"};
-        int result = 0;
+        int result;
         
-        //console.display("test 1", true);
+        console.display("test 1", true);
         
-        //console.display("Test 2", choices, true);
+        console.display("Test 2", choices, true);
         
-        //console.display("debuggeur", "Test 3", true);
+        console.display("debuggeur", "Test 3", true);
         
-        //console.display("debuggeur", "Test 4", choices, true);
+        console.display("debuggeur", "Test 4", choices, true);
         
-        //console.display("test 5", false).execContinue().clean();
+        console.display("test 5", false).execContinue().clean();
         
-        console.display("test 6", choices, false).execSingleChoice();
-        //console.display("test 5", false).execContinue().clean();
+        result = console.display("test 6", choices, false).execSingleChoice();
+        System.out.printf("Choix enregistré : %d\n", result);
     }
     
     

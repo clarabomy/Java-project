@@ -14,7 +14,7 @@ import project.game.investigation.suspect.Suspect;
  */
 public class Investigation {
     protected Investigator m_player;
-    protected Suspect[] m_suspectsList;
+    protected static Suspect[] m_suspectsList;//persos peuvent récupérer liste des suspects
     protected Victim m_corpse;
     protected InvestElement[] m_elements;
     protected UserInterface m_console;//provisoire => pas hérité de Game?
