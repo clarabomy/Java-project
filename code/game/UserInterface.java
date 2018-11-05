@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
@@ -20,7 +17,7 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
     private String constructList(String[] choicesList) {
         String list = "\t";
         for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
-        
+    
         return list.substring(0, list.length() - 2);//retire dernier \n\t
     }
     
@@ -44,9 +41,9 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
     
     
     public UserInterface display(String text, String[] choices, boolean lineBreak){//version 2
-        System.out.printf("%s\n%s\n%s", text, constructList(choices), (lineBreak? "\n" : ""));
-        
+        System.out.printf("%s\n%s\n%s", text, constructList(choices), (lineBreak? "\n" : "")); 
         m_nbChoices = choices.length;
+        
         return this;
     }//end UserInterface display
     
@@ -78,7 +75,7 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
     
     public UserInterface execContinue() {
         //saisie bloquante d'un caractère (au pif?) entrée
-        System.out.println("\tContinuer...");
+        System.out.println("\tEntrer pour continuer...");
         try {
             System.in.read();
         } 
@@ -90,17 +87,29 @@ public class UserInterface {//majoritairement codé - en cours de débug => dern
     
     
     public int execSingleChoice() {//refaire bien
+        Scanner keyboard = new Scanner(System.in);
+        int choice = 0;
+        boolean correctChoice = false;
         System.out.printf("\t\tFaites votre choix : ");
 
-        int choice = 0;
+        /*int choice = 0;
         try {
             do choice = System.in.read(); while (1 < choice && choice < m_nbChoices);
         } 
         catch(IOException e){
-        }
-        
+        }*/
+        do {
+            try {
+                choice = keyboard.nextInt();
+                if (1 <= choice && choice <= m_nbChoices) correctChoice = true; 
+            } 
+            catch (Exception e) {
+                System.out.println("Please enter a correct choice...");
+                keyboard.next(); 
+            }
+        } while (correctChoice == false);
         return choice;
-    }//end int playerSingleChoice
+    }
     
     
     public int[] execMultiChoice(){//nécéssaire?

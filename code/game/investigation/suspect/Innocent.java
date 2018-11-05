@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation.suspect;
 
 import project.game.investigation.Sex;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 
 public class Innocent extends Suspect {
@@ -18,8 +14,8 @@ public class Innocent extends Suspect {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
-        super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
+    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_alibi = alibi;
         this.m_cooperation = cooperationLevel;
     }
@@ -47,14 +43,33 @@ public class Innocent extends Suspect {
     
     
     @Override
-    public void giveAlibi() {
+    public void giveAlibi() { //options à déterminer 
         //Connaître alibi -> suspect lance le dé pour niveau de coopération => donne son alibi ou non    
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch(throwDoubleDices(m_stress, m_cooperation)) {
+            case 1: //succès critique
+            case 2:
+                System.out.printf("%s", this.getAlibi()); //trouver meilleure phrase
+                break;
+            case 3:
+            case 4:
+                System.out.println("Euh... je ne m'en souviens pas...");
+                break;
+        }
     }//end void giveAlibi
 
     
     @Override
     public void giveTestimony() {
+        switch(throwDoubleDices(m_stress, m_cooperation)) {
+            case 1: //succès critique
+            case 2:
+                //Donner un témoignage
+                break;
+            case 3:
+            case 4:
+                System.out.println("Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !");
+                break;
+        }
         //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
                 //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
                 //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)

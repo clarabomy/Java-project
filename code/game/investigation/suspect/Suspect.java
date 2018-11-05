@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation.suspect;
 
 import project.game.investigation.LiveCharacter;
@@ -11,7 +7,7 @@ import project.game.investigation.Sex;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public abstract class Suspect extends LiveCharacter {
     protected int m_stress;
@@ -22,8 +18,8 @@ public abstract class Suspect extends LiveCharacter {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Suspect(String name, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
-        super(name, sex, age);
+    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
+        super(name, surname, sex, age);
         this.m_stress = stressLevel;
         this.m_look = look;
         this.m_physicalAspect = physicalAspect;
@@ -34,26 +30,39 @@ public abstract class Suspect extends LiveCharacter {
 
     
     /*$$ GETTERS & SETTERS $$*/
-    public int getStress() {
+    public int getStressLevel() {
         return m_stress;
     }
+
+    public String getLook() {
+        return m_look;
+    }
+
+    public String getPhysicalAspect() {
+        return m_physicalAspect;
+    }
+
+    public void setFindedInnocent(boolean findedInnocent) {
+        this.m_findedInnocent = findedInnocent;
+    }
     
-    
+   
     /*$$ METHODS $$*/
     abstract void giveAlibi();
     abstract void giveTestimony();
     
-    
     @Override
     public void displayStats() {
         //Affiche les niveaux de stress du suspect
+        System.out.printf("Niveau de stress de %s %s : %d\n", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getStressLevel());
     }//end void displayInfos
     
     
     @Override
     public void presentCharacter(){
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.printf("Voici %s %s (%s, %d ans)...\n", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getSex().toString(), this.getAge());
+        System.out.printf("Aspect physique :%s\nLook : %s\n", this.getPhysicalAspect(), this.getLook());
     }//end void presentCharacter
     
     
@@ -72,12 +81,16 @@ public abstract class Suspect extends LiveCharacter {
     
     
     public void BeDisculpated(){
-        //on modifie findedInnocent + vous avez décidé de disculpté ... 
+        this.setFindedInnocent(true);
+        System.out.printf("Vous avez choisi de disculpté %s %s...", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase());
+    //on modifie findedInnocent + vous avez décidé de disculpté ... 
     }//end void BeDisculpated
     
     
     public void BeArrested(){
-        //si c'est coupable = bonne fin => enquête réussi
-        //sinon => il y a eu de nouveaux meurtres => vous êtes virés !
+        //Si c'est coupable = bonne fin => enquête réussi
+        //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
+        if (this instanceof Murderer) System.out.println("Bravo, vous avez réussi à trouver le coupable !");
+        else System.out.println("Il y a eu de nouveaux meurtres ! Vous êtes renvoyés !");    
     }//end void BeArrested
 }

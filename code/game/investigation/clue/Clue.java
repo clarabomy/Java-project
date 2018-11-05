@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation.clue;
 
 /**
@@ -11,7 +7,7 @@ package project.game.investigation.clue;
  */
 public abstract class Clue {
     protected String m_content;
-    protected boolean m_isFounded;//faire un getter et ou un setter
+    protected boolean m_isFounded;
     
     
     /*$$ CONSTRUCTOR $$*/

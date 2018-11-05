@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation;
 
 import project.game.investigation.clue.Clue;
@@ -15,13 +11,13 @@ public class Investigator extends LiveCharacter {
     protected int m_manipulation;
     protected int m_intelligence;
     protected int m_popularity;
-    protected Clue[] m_clueList;// faire un getter et ou un setter
+    protected Clue[] m_clueList;
     protected String m_progress;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigator(String name, Sex sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
-        super(name, sex, age);
+    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, int popularityLevel, Clue[] cluesList, String progress) {
+        super(name, surname, sex, age);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
         this.m_popularity = popularityLevel;
@@ -71,20 +67,22 @@ public class Investigator extends LiveCharacter {
     @Override
     public void displayStats() {
         //afficher niveau manipulation, intelligence et popularité;
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.printf("Votre niveau d'intelligence : %d\nVotre niveau de manipulation : %d\nVotre niveau de popularité : %d\n", this.getIntelligence(), this.getManipulation(), this.getPopularity());
     }//end void displayInfos
     
     
     @Override
     public void presentCharacter() {
         //Description de l'enqueteur : nom, age, sexe
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (this.getSex().toString().equals("woman")) System.out.printf("Vous êtes %s %s, une enquêtrice de talent !\n", this.getName().toUpperCase(), this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase());
+        else System.out.printf("Vous êtes %s %s, un enquêteur de talent !\n",  this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase());  
     }//end void presentCharacter
     
     
     public void consultClues(){ //consulter indices
         //affiche les indices ayant été trouvés 
     }//end void lookForClues
+    
     
     public void crossClue(){
         /*
@@ -97,17 +95,20 @@ public class Investigator extends LiveCharacter {
     }
     
     public void displayProgress(){
-        //<tueur> a tué <victime> avec <arme> pour <mobile> raison.
+        System.out.println("<tueur> a tué <victime> avec <arme> pour cause de <mobile>");
         //Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
     }//end void displayProgress
     
     public void checkContradiction(){
-        //lance le dé d'intelligence 
-        /*
-        réussite critique : intique combien d'erreurs dans progress
-        réussite : indique si erreur
-        echec : ne sait pas
-        echec critique : indique un nombre d erreurs au hasard
-        */
+        switch(throwSimpleDice(this.getIntelligence())) {
+            case 1://succes critique
+                //indique combien d'erreurs dans progrès
+            case 2://succes
+                //indique si erreur
+            case 3://echec
+                //ne sait pas
+            case 4://echec critique
+                //indique un nombre d'erreurs au hasard
+        }
     }
 }

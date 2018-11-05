@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation.clue;
 
 import project.game.investigation.InvestElement;
@@ -35,6 +31,7 @@ public class Proof extends Clue {
         //assigne la preuve à l'élément d'enquête (arme du crime, scène de crime)
     }
 
+    
     @Override
     public String display() {
         //affiche ce que contient la preuve et d'où elle vient (sang trouvé sur arme, cheveux trouvés sur scène de crime, etc.)

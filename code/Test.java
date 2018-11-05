@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project;
 
 import project.game.UserInterface;
@@ -24,8 +20,11 @@ public class Test {
         Proof clue = new Proof(sang, "sang", false);
         Proof clue2 = new Proof(sang, "sang", false);
         Clue[] clue_tab = {clue,clue2};
-        Investigator player = new Investigator("Michel", Sex.MAN, 34, 60, 70, 32, clue_tab, "100");
+        Investigator player = new Investigator("Bourgain", "Manon", Sex.WOMAN, 34, 60, 70, 32, clue_tab, "100");
         Investigator.rollDice();
+        player.presentCharacter();
+        player.displayStats();
+        System.out.println(Sex.WOMAN.toString());
     }
     
     public void debug() {
@@ -109,18 +108,18 @@ public class Test {
         String choices[] = {"option 1", "option 2", "option 3"};
         int result = 0;
         
-        console.display("test 1", true);
+        //console.display("test 1", true);
         
-        console.display("Test 2", choices, true);
+        //console.display("Test 2", choices, true);
         
-        console.display("debuggeur", "Test 3", true);
+        //console.display("debuggeur", "Test 3", true);
         
-        console.display("debuggeur", "Test 4", choices, true);
+        //console.display("debuggeur", "Test 4", choices, true);
         
-        console.display("test 5", false).execContinue().clean();
+        //console.display("test 5", false).execContinue().clean();
         
-        result = console.display("test 6", choices, false).execSingleChoice();//pb
-        System.out.println(result);
+        console.display("test 6", choices, false).execSingleChoice();
+        //console.display("test 5", false).execContinue().clean();
     }
     
     

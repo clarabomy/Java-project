@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation;
 
 /**
@@ -18,8 +14,8 @@ public abstract class LiveCharacter extends Character {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public LiveCharacter(String name, Sex sex, int age) {
-        super(name, sex, age);
+    public LiveCharacter(String name, String surname, Sex sex, int age) {
+        super(name, surname, sex, age);
     }
     
     
@@ -31,7 +27,7 @@ public abstract class LiveCharacter extends Character {
     }//end int rollDice
     
     
-    public int throwSimpleDice(int validThrow) {
+    public static int throwSimpleDice(int validThrow) {
         int throwResult = rollDice();
         
         if (throwResult <= validThrow && throwResult > M_CRITICAL_SUCCESS) return 2;//succes => plus courant
@@ -41,7 +37,7 @@ public abstract class LiveCharacter extends Character {
     }
     
     
-    public int throwDoubleDices(int validFirstThrow, int validSecondThrow) {
+    public static int throwDoubleDices(int validFirstThrow, int validSecondThrow) {
         switch(throwSimpleDice(validFirstThrow)) {
             case 1://succes critique
                 return throwSimpleDice(validSecondThrow + m_bonus);
@@ -118,7 +114,7 @@ public abstract class LiveCharacter extends Character {
         */
     }
     
-    public int throwTripleDices(int validFirstThrow, int validSecondThrow, int validThirdThrow) {//utile?
+    public static int throwTripleDices(int validFirstThrow, int validSecondThrow, int validThirdThrow) {//utile?
         switch(throwDoubleDices(validFirstThrow, validSecondThrow)) {
             case 1://succes critique
                 return throwSimpleDice(validThirdThrow + m_bonus);

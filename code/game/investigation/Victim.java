@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation;
 
 /**
@@ -16,8 +12,8 @@ public class Victim extends Character implements NoticeClues {
 
 
     /*$$ CONSTRUCTOR $$*/
-    public Victim(String name, Sex sex, int age, String deathDate, String deathCause, int[] refProof) {
-        super(name, sex, age);
+    public Victim(String name, String surname, Sex sex, int age, String deathDate, String deathCause, int[] refProof) {
+        super(name, surname, sex, age);
         this.m_deathDate = deathDate;
         this.m_deathCause = deathCause;
         this.m_refProof = new int[refProof.length];
@@ -40,8 +36,8 @@ public class Victim extends Character implements NoticeClues {
     
     @Override
     public void presentCharacter() {
-        //Victime : nom, sexe, age (phrase différente) 
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Victime : nom, sexe, age (phrase différente)
+        System.out.printf("Victime : %s %s (%s, %d ans\n)", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getSex().toString(), this.getAge());
     }//end void presentCharacter
 
     

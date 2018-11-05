@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project;
 
+import java.io.File;
 import project.game.Difficulties;
 import project.game.Investigation;
 import project.game.UserInterface;
@@ -111,6 +108,10 @@ public class Game {
     
     
     public void dropInvestigation(){
-        //supprime le fichier ou vide son contenu
+        //supprime le fichier 
+        File file = new File("invest.txt");
+        if(file.delete()) System.out.printf("%s is deleted. Vous pouvez commencer une nouvelle enquête\n", file.getName());
+        else System.out.println("Delete operation is failed.");   
+
     }//end void dropInvestigation
 }

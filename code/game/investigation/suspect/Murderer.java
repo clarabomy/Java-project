@@ -1,23 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation.suspect;
 
 import project.game.investigation.Sex;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public class Murderer extends Suspect implements Lie  {//majoritairement codé - pas testé
     protected String m_motive;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Murderer(String name, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
-        super(name, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
+    public Murderer(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String motive) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_motive = motive;
     }
 
@@ -36,10 +32,10 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
             case 1: //réussite critique
                 //affiche comme pour innocent
-                this.alibi_FalseLead();
+                this.createFalseLead();
                 break;
             case 2: //réussite
-                this.alibi_FalseLead();
+                this.createFalseLead();
                 break;
             case 3: //échec
                 this.contradiction();
@@ -59,10 +55,10 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
             case 1:
                 //affiche comme pour innocent
-                this.testimony_addTestimony();
+                this.addTestimony();
                 break;
             case 2:
-                this.testimony_addTestimony();
+                this.addTestimony();
                 break;
             case 3:
                 this.contradiction();
@@ -82,14 +78,14 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
 
     
     @Override
-    public void alibi_FalseLead() {
+    public void createFalseLead() {
         //donne un alibi bidon au hasard
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void alibi_FalseLead
 
     
     @Override
-    public void testimony_addTestimony() {
+    public void addTestimony() {
         //Dans le tableau d'indice, ajoute un témoignage avec islie = true
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void testimony_addTestimony

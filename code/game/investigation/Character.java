@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package project.game.investigation;
 
 import project.game.UserInterface;
@@ -13,6 +9,7 @@ import project.game.UserInterface;
  */
 public abstract class Character {
     protected String m_name;
+    protected String m_surname;
     protected Sex m_sex;
     protected int m_age;
     protected int m_diffGame;
@@ -20,8 +17,9 @@ public abstract class Character {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Character(String name, Sex sex, int age) {
+    public Character(String name, String surname, Sex sex, int age) {
         this.m_name = name;
+        this.m_surname = surname;
         this.m_sex = sex;
         this.m_age = age;
     }
@@ -30,6 +28,11 @@ public abstract class Character {
     /*$$ GETTERS & SETTERS $$*/
     public String getName() {
         return m_name;
+    }
+
+    
+    public String getSurname() {
+        return m_surname;
     }
 
     
