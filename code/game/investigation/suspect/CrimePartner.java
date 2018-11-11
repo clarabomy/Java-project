@@ -55,11 +55,20 @@ public class CrimePartner extends Suspect implements Lie {
 
     
     @Override
-    public void giveAlibi() { //trouver les options
+    public void giveAlibi(int actionInvestigator) { //trouver les options
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + complice utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
+        //si inspecteur réussit bien : 
+            //si complice stresse pas trop : va avoir plus de mal à faire passer un mensonge
+            //sinon : ne va pas réussit à mentir
+        //s'il réussit mal : 
+            //si complice stresse pas trop : va réussir plus facilement
+            //sinon : va avoir plus de mal à faire passer un mensonge
+        
+            
         //Lance dé pour stress, cohérence 
             //Si ok, créer fausse piste (donner faux alibi)
             //sinon, seContredit() + donne son vrai alibi
-        switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
+        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
             case 1: //réussite critique
                 //affiche comme pour innocent
                 this.createFalseLead();
@@ -77,11 +86,20 @@ public class CrimePartner extends Suspect implements Lie {
     
     
     @Override
-    public void giveTestimony() {
-         //Lance dé pour stress, crédibilité et cohérence
+    public void giveTestimony(int actionInvestigator) {
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + complice utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
+        //si inspecteur réussit bien : 
+            //si complice stresse pas trop : va avoir plus de mal à faire passer un mensonge
+            //sinon : ne va pas réussit à mentir
+        //s'il réussit mal : 
+            //si complice stresse pas trop : va réussir plus facilement
+            //sinon : va avoir plus de mal à faire passer un mensonge
+        
+        
+        //Lance dé pour stress, crédibilité et cohérence
            //Si ok, inventeTémoignage() en n'ayant pas l'air inquiet
            //sinon, seContredit() et finit par donner son vrai témoignage
-        switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
+        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
             case 1:
                 //affiche comme pour innocent
                 this.addTestimony();

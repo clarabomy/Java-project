@@ -99,16 +99,25 @@ public class Investigator extends LiveCharacter {
         //Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
     }//end void displayProgress
     
+    
     public void checkContradiction(){
-        switch(throwSimpleDice(this.getIntelligence())) {
-            case 1://succes critique
+        switch(rollDice(this.m_intelligence, "intelligence", true)) {
+            case CRITIC_SUCCESS:
                 //indique combien d'erreurs dans progrès
-            case 2://succes
+            case SUCCESS:
                 //indique si erreur
-            case 3://echec
+            case FAILURE:
                 //ne sait pas
-            case 4://echec critique
+            case CRITIC_FAILURE:
                 //indique un nombre d'erreurs au hasard
         }
+    }
+    
+    
+    public DiceResult InvestigatorDices() {
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
+        int[] stats = {this.m_intelligence, this.m_manipulation};
+        String[] category = {"intelligence", "manipulation"};
+        return rollMultiDice(stats , category, true);
     }
 }

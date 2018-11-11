@@ -28,6 +28,7 @@ public class Innocent extends Suspect {
     
     
     /*$$ METHODS $$*/
+    /*
     @Override
     public void BeInterrogated() {
         //Présentation du personnage presenterPerso() = description littéraire de qui il est + description physique 
@@ -40,12 +41,22 @@ public class Innocent extends Suspect {
 
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//end void BeInterrogated
+*/
     
     
     @Override
-    public void giveAlibi() { //options à déterminer 
+    public void giveAlibi(int actionInvestigator) { //options à déterminer 
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
+        //si inspecteur réussit bien : 
+            //si stresse pas trop : innocent dit ce qu'il sait
+            //sinon : a du mal a parler
+        //s'il réussit mal : 
+            //si stresse pas trop : peut dire une partie de ce qu'il sait
+            //sinon : ne dit rien
+        
+            
         //Connaître alibi -> suspect lance le dé pour niveau de coopération => donne son alibi ou non    
-        switch(throwDoubleDices(m_stress, m_cooperation)) {
+        switch(rollDoubleDices(m_stress, m_cooperation, false)) {
             case 1: //succès critique
             case 2:
                 System.out.printf("%s", this.getAlibi()); //trouver meilleure phrase
@@ -59,13 +70,22 @@ public class Innocent extends Suspect {
 
     
     @Override
-    public void giveTestimony() {
-        switch(throwDoubleDices(m_stress, m_cooperation)) {
-            case 1: //succès critique
+    public void giveTestimony(int actionInvestigator) {
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
+        //si inspecteur réussit bien : 
+            //si stresse pas trop : innocent dit ce qu'il sait
+            //sinon : a du mal a parler
+        //s'il réussit mal : 
+            //si stresse pas trop : peut dire une partie de ce qu'il sait
+            //sinon : ne dit rien
+            
+            
+        switch(rollDoubleDices(m_stress, m_cooperation, false)) {
+            case 1: //succès critique : ce qu'il a vu et ce qu'il a entendu
             case 2:
-                //Donner un témoignage
+                //Donner un témoignage : soit ce qu'il a vu, soit ce qu'il a entendu
                 break;
-            case 3:
+            case 3://trop confus pour se souvenir
             case 4:
                 System.out.println("Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !");
                 break;

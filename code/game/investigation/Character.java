@@ -36,6 +36,11 @@ public abstract class Character {
     }
 
     
+    public String getFullName() {
+        return new StringBuilder(m_surname).append(" ").append(m_name).toString();
+    }
+
+    
     public Sex getSex() {
         return m_sex;
     }

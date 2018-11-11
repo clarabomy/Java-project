@@ -1,7 +1,7 @@
 
 package project.game.investigation.suspect;
 
-import project.game.Investigation;
+import static project.game.Investigation.suspectsNameList;
 import project.game.investigation.Investigator;
 import project.game.investigation.Sex;
 
@@ -27,10 +27,18 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     
     /*$$ METHODS $$*/
     @Override
-    public void giveAlibi() {
+    public void giveAlibi(int actionInvestigator) {
+        //si inspecteur n a pas bien réussi : (pas du tout : bonus)
+            //si perso ne stresse pas trop :    réussit bien
+            //sinon :                           plus de mal à faire passer un mensonge
+        //sinon : (completement : malus)
+            //si perso ne stresse pas trop :    plus de mal à faire passer un mensonge
+            //sinon :                           ne réussit pas à mentir
+            
+            
         //Lance dé pour crédibilité et cohérence
         //Si ok : créer fausse piste (donner faux alibi) | sinon : seContredit()
-        switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
+        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
             case 1: //réussite critique
                 //affiche comme pour innocent
                 this.createFalseLead();
@@ -49,11 +57,24 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
 
     
     @Override
-    public void giveTestimony() {
+    public void giveTestimony(int actionInvestigator) {
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + meurtricer utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
+        //si inspecteur réussit bien : 
+            //si stresse pas trop : meurtrier va avoir plus de mal à faire passer un mensonge
+            //sinon : ne va pas réussit à mentir
+        //s'il réussit mal : 
+            //si stresse pas trop : meurtrier va réussir plus facilement
+            //sinon : meurtrier va avoir plus de mal à faire passer un mensonge
+        //int retours1 = Investigator.interrogateSuspect();
+        //int retours2 = throwSimpleDice(m_stress, false);
+        //int retours3 = throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false);
+        
+        
+            
         //Lance dé pour crédibilité et cohérence
            //Si ok, inventeTémoignage()
            //sinon, seContredit()
-        switch (throwDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame])) {
+        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
             case 1:
                 //affiche comme pour innocent
                 this.addTestimony();
@@ -89,16 +110,15 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
                                 .append(place[(int) (Math.random() * place.length)]).append(".").toString();
         
         //l'affiche
-        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
-        m_console.display(nom, alibi, false).execContinue();
+        m_console.display(this.getFullName(), alibi, false).execContinue();
     }//end void alibi_FalseLead
 
     
     @Override
     public void addTestimony() {
         //crée témoigage bidon avec aléatoire
-        String[] suspect    = {},//la liste des suspects
-                    object  = {"une pipe", "un homme avec une forte carrure", "un homme avec une canne", "un homme décrépit", "une femme classe"},
+        String[] suspect    = suspectsNameList(),
+                    object  = {"une pipe", "un homme qui avait forte carrure", "un homme qui avait une canne", "un homme décrépit", "une femme classe"},
                     sound   = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
         
         
@@ -119,16 +139,15 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         testimony = new StringBuilder(testimony).append(" près du lieu du crime.").toString();
         
         //Dans le tableau d'indice, ajoute le témoignage avec islie = true
-        //l'affiche
-        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
-        m_console.display(nom, testimony, false).execContinue();
+        //...
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //l'affiche
+        m_console.display(this.getFullName(), testimony, false).execContinue();
     }//end void testimony_addTestimony
     
     
     public void confess(){
-        String nom = new StringBuilder(this.m_surname).append(" ").append(this.m_name).toString();
+        String nom = this.getFullName();
         m_console.display(nom, "C'est bon, je vais tout vous avouer...", false).execContinue();
         m_console.display(nom, "Raconte ce qui s'est passé (pourquoi, comment)", false).execContinue();
         

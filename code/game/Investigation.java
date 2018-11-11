@@ -14,7 +14,7 @@ import project.game.investigation.suspect.Suspect;
  */
 public class Investigation {
     protected Investigator m_player;
-    protected static Suspect[] m_suspectsList;//persos peuvent récupérer liste des suspects
+    protected static Suspect[] m_suspectsList;
     protected Victim m_corpse;
     protected InvestElement[] m_elements;
     protected UserInterface m_console;//provisoire => pas hérité de Game?
@@ -23,11 +23,20 @@ public class Investigation {
     /*$$ CONSTRUCTOR $$*/
     public Investigation(Investigator player, Suspect[] suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
-        this.m_suspectsList = new Suspect[suspectsList.length];
-        System.arraycopy(suspectsList, 0, this.m_suspectsList, 0, suspectsList.length);
+        Investigation.m_suspectsList = new Suspect[suspectsList.length];
+        System.arraycopy(suspectsList, 0, Investigation.m_suspectsList, 0, suspectsList.length);
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);
+    }
+    
+    
+    /*$ GETTERS & SETTERS $*/
+    public static String[] suspectsNameList() {
+        String[] listName = new String[m_suspectsList.length];
+        for (int i = 0; i < m_suspectsList.length; i++) listName[i] = m_suspectsList[i].getFullName();
+        
+        return listName;
     }
     
     
@@ -85,7 +94,7 @@ public class Investigation {
 
             switch(action) {
                 case 0:
-                    m_suspectsList[choicePlayer].BeInterrogated();
+                    m_suspectsList[choicePlayer].BeInterrogated(m_player);
                     break;
                 case 1:
                     m_suspectsList[choicePlayer].BeDisculpated();
@@ -132,4 +141,5 @@ public class Investigation {
             }
         }
     }//end void cluesMenu
+    
 }

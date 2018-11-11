@@ -1,6 +1,8 @@
 
 package project.game.investigation.suspect;
 
+import project.game.investigation.DiceResult;
+import project.game.investigation.Investigator;
 import project.game.investigation.LiveCharacter;
 import project.game.investigation.Sex;
 
@@ -48,8 +50,8 @@ public abstract class Suspect extends LiveCharacter {
     
    
     /*$$ METHODS $$*/
-    abstract void giveAlibi();
-    abstract void giveTestimony();
+    abstract void giveAlibi(DiceResult throwPlayer);
+    abstract void giveTestimony(DiceResult throwPlayer);
     
     @Override
     public void displayStats() {
@@ -66,7 +68,7 @@ public abstract class Suspect extends LiveCharacter {
     }//end void presentCharacter
     
     
-    public void BeInterrogated() {
+    public void BeInterrogated(Investigator player) {
         //Présentation du personnage presenterPerso() = description littéraire de qui il est
         //AfficherInfos() = stats du perso + description physique
         
@@ -75,8 +77,19 @@ public abstract class Suspect extends LiveCharacter {
             //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
                 //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
                 //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
-
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        String[] choices = {"que faisiez vous pendant le crime?", "avez vous vu ou entendu quelque chose?"};
+        int choix = m_console.display("Inspecteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
+        
+        DiceResult throwPlayer = player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)
+        switch (choix) {
+            case 0:
+                this.giveAlibi(throwPlayer);
+                break;
+            case 1:
+                this.giveTestimony(throwPlayer);
+                break;
+        }
     }//end void BeInterrogated
     
     
