@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author ISEN
  */
-public class UserInterface {//codé - débugé
+public class UserInterface {//codé - débuggé
     protected static int m_nbChoices;
     protected static final int M_CONSOLE_SIZE = 20;
     
@@ -19,6 +19,7 @@ public class UserInterface {//codé - débugé
     }
     
     private String constructList(String[] choicesList) {
+        //afficher choix => crée le string d'affichage
         String list = "\t";
         for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
     
@@ -90,7 +91,7 @@ public class UserInterface {//codé - débugé
     }//end void execContinue
     
     
-    public int execSingleChoice() {//refaire bien
+    public int execSingleChoice() {
         Scanner keyboard = new Scanner(System.in);
         int choice = 0;
         boolean correctChoice = false;

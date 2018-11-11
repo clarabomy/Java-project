@@ -61,9 +61,9 @@ public class Test {
         Clue[] clue_tab = {clue,clue2};
         Investigator player = new Investigator("Bourgain", "Manon", Sex.WOMAN, 34, 60, 70, 32, clue_tab, "100");
         //Investigator.dice();
-        player.presentCharacter();
+        //player.presentCharacter();
         player.displayStats();
-        System.out.println(Sex.WOMAN.toString());
+        //System.out.println(Sex.WOMAN.toString());
     }
     
     public void debug() {

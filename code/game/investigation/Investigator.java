@@ -67,15 +67,22 @@ public class Investigator extends LiveCharacter {
     @Override
     public void displayStats() {
         //afficher niveau manipulation, intelligence et popularité;
-        System.out.printf("Votre niveau d'intelligence : %d\nVotre niveau de manipulation : %d\nVotre niveau de popularité : %d\n", this.getIntelligence(), this.getManipulation(), this.getPopularity());
+        String intelligence = new StringBuilder("Votre niveau d'intelligence : ").append(this.getIntelligence()).toString();
+        String manipulation = new StringBuilder("Votre niveau de manipulation : ") .append(this.getManipulation()).toString();
+        String popularity = new StringBuilder("Votre niveau de popularité : ").append(this.getPopularity()).toString();
+        m_console.display(intelligence, true);
+        m_console.display(manipulation, true);
+        m_console.display(popularity, false).execContinue();
     }//end void displayInfos
     
     
     @Override
     public void presentCharacter() {
-        //Description de l'enqueteur : nom, age, sexe
-        if (this.getSex().toString().equals("woman")) System.out.printf("Vous êtes %s %s, une enquêtrice de talent !\n", this.getName().toUpperCase(), this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase());
-        else System.out.printf("Vous êtes %s %s, un enquêteur de talent !\n",  this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase());  
+        //Description de l'enqueteur : nom, prenom
+        String text;
+        if (this.getSex().toString().equals("woman")) text = new StringBuilder("").append(this.getFullName()).append(", une enquêtrice de talent !").toString();
+        else text = new StringBuilder("").append(this.getFullName()).append(", un enquêteur de talent !").toString();
+        m_console.display(text, false).execContinue();    
     }//end void presentCharacter
     
     
@@ -95,8 +102,9 @@ public class Investigator extends LiveCharacter {
     }
     
     public void displayProgress(){
-        System.out.println("<tueur> a tué <victime> avec <arme> pour cause de <mobile>");
         //Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
+        //"<tueur> a tué <victime> avec <arme> pour cause de <mobile>"
+        m_console.display(m_progress, false).execContinue();
     }//end void displayProgress
     
     

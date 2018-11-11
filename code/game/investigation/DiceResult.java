@@ -7,6 +7,6 @@ package project.game.investigation;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public enum DiceResult {CRITIC_SUCCESS, SUCCESS, FAILURE, CRITIC_FAILURE, ERROR};

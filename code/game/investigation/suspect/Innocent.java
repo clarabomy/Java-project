@@ -1,6 +1,7 @@
 
 package project.game.investigation.suspect;
 
+import project.game.investigation.DiceResult;
 import project.game.investigation.Sex;
 
 /**
@@ -45,7 +46,7 @@ public class Innocent extends Suspect {
     
     
     @Override
-    public void giveAlibi(int actionInvestigator) { //options à déterminer 
+    public void giveAlibi(DiceResult actionInvestigator) { //options à déterminer 
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
         //si inspecteur réussit bien : 
             //si stresse pas trop : innocent dit ce qu'il sait
@@ -53,24 +54,24 @@ public class Innocent extends Suspect {
         //s'il réussit mal : 
             //si stresse pas trop : peut dire une partie de ce qu'il sait
             //sinon : ne dit rien
-        
+        int[] validStage = {m_stress, m_cooperation};
             
         //Connaître alibi -> suspect lance le dé pour niveau de coopération => donne son alibi ou non    
-        switch(rollDoubleDices(m_stress, m_cooperation, false)) {
-            case 1: //succès critique
-            case 2:
-                System.out.printf("%s", this.getAlibi()); //trouver meilleure phrase
+        switch (rollMultiDice(validStage, null, false)) {
+            case CRITIC_SUCCESS: 
+            case SUCCESS:
+                //System.out.printf("%s", this.getAlibi()); //trouver meilleure phrase
                 break;
-            case 3:
-            case 4:
-                System.out.println("Euh... je ne m'en souviens pas...");
+            case FAILURE:
+            case CRITIC_FAILURE:
+                m_console.display("Suspect", "Euh... je ne m'en souviens pas...", false).execContinue();
                 break;
         }
     }//end void giveAlibi
 
     
     @Override
-    public void giveTestimony(int actionInvestigator) {
+    public void giveTestimony(DiceResult actionInvestigator) {
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
         //si inspecteur réussit bien : 
             //si stresse pas trop : innocent dit ce qu'il sait
@@ -79,15 +80,15 @@ public class Innocent extends Suspect {
             //si stresse pas trop : peut dire une partie de ce qu'il sait
             //sinon : ne dit rien
             
-            
-        switch(rollDoubleDices(m_stress, m_cooperation, false)) {
-            case 1: //succès critique : ce qu'il a vu et ce qu'il a entendu
-            case 2:
+        int[] validStage = {m_stress, m_cooperation};
+        switch (rollMultiDice(validStage, null, false)) {
+            case CRITIC_SUCCESS: //succès critique : ce qu'il a vu et ce qu'il a entendu
+            case SUCCESS:
                 //Donner un témoignage : soit ce qu'il a vu, soit ce qu'il a entendu
                 break;
-            case 3://trop confus pour se souvenir
-            case 4:
-                System.out.println("Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !");
+            case FAILURE://trop confus pour se souvenir
+            case CRITIC_FAILURE:
+                m_console.display("Suspect","Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false).execContinue();
                 break;
         }
         //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 

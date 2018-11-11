@@ -37,7 +37,10 @@ public class Victim extends Character implements NoticeClues {
     @Override
     public void presentCharacter() {
         //Victime : nom, sexe, age (phrase différente)
-        System.out.printf("Victime : %s %s (%s, %d ans\n)", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getSex().toString(), this.getAge());
+        String victimPresentation;
+        if (this.getSex().toString().equals("woman")) victimPresentation = new StringBuilder("La victime est une femme de ").append(this.getAge()).append(" ans. Sa carte d'indentité indique qu'elle s'appelait ").append(this.getFullName()).append(".").toString();
+        else victimPresentation = new StringBuilder("La victime est un homme de ").append(this.getAge()).append(" ans. Sa carte d'indentité indique qu'il s'appelait ").append(this.getFullName()).append(".").toString();
+        m_console.display(victimPresentation, false).execContinue();
     }//end void presentCharacter
 
     

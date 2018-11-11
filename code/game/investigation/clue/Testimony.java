@@ -28,7 +28,7 @@ public class Testimony extends Clue {
     }//end void assign
 
     @Override
-    public String display() {
+    public void display() {
         //Témoignage de nom_personnage : ce qu'il a dit
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

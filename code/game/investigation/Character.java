@@ -26,15 +26,15 @@ public abstract class Character {
 
     
     /*$$ GETTERS & SETTERS $$*/
-    public String getName() {
-        return m_name;
+    /*public String getName() {
+        return (m_name.substring(0,1).toUpperCase() + m_name.substring(1).toLowerCase());
     }
 
     
     public String getSurname() {
-        return m_surname;
+        return (m_surname.substring(0,1).toUpperCase() + m_surname.substring(1).toLowerCase());
     }
-
+    */
     
     public String getFullName() {
         return new StringBuilder(m_surname).append(" ").append(m_name).toString();

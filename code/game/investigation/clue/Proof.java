@@ -33,9 +33,10 @@ public class Proof extends Clue {
 
     
     @Override
-    public String display() {
+    public void display() {
         //affiche ce que contient la preuve et d'où elle vient (sang trouvé sur arme, cheveux trouvés sur scène de crime, etc.)
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String proofDisplay = new StringBuilder("Ohh, je viens de trouver une preuve (").append(this.getContent()).append(").").toString();
+        m_console.display("Enquêteur", proofDisplay, false).execContinue();
     }
 
 }

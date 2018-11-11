@@ -5,6 +5,7 @@
  */
 package project.game.investigation.suspect;
 
+import project.game.investigation.DiceResult;
 import project.game.investigation.Sex;
 
 /**
@@ -55,7 +56,7 @@ public class CrimePartner extends Suspect implements Lie {
 
     
     @Override
-    public void giveAlibi(int actionInvestigator) { //trouver les options
+    public void giveAlibi(DiceResult actionInvestigator) { //trouver les options
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + complice utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
         //si inspecteur réussit bien : 
             //si complice stresse pas trop : va avoir plus de mal à faire passer un mensonge
@@ -68,25 +69,27 @@ public class CrimePartner extends Suspect implements Lie {
         //Lance dé pour stress, cohérence 
             //Si ok, créer fausse piste (donner faux alibi)
             //sinon, seContredit() + donne son vrai alibi
-        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
-            case 1: //réussite critique
+        int[] validStage = {m_stress, M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        
+        switch (rollMultiDice(validStage, null, false)) {
+            case CRITIC_SUCCESS: 
                 //affiche comme pour innocent
                 this.createFalseLead();
                 break;
-            case 2: //réussite
+            case SUCCESS: 
                 this.createFalseLead();
                 break;
-            case 3: //échec
+            case FAILURE:
                 this.contradiction();
                 break;
-            case 4: //échec critique
+            case CRITIC_FAILURE: 
                 break;
         }
     }//end void giveAlibi
     
     
     @Override
-    public void giveTestimony(int actionInvestigator) {
+    public void giveTestimony(DiceResult actionInvestigator) {
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + complice utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
         //si inspecteur réussit bien : 
             //si complice stresse pas trop : va avoir plus de mal à faire passer un mensonge
@@ -99,18 +102,20 @@ public class CrimePartner extends Suspect implements Lie {
         //Lance dé pour stress, crédibilité et cohérence
            //Si ok, inventeTémoignage() en n'ayant pas l'air inquiet
            //sinon, seContredit() et finit par donner son vrai témoignage
-        switch (rollDoubleDices(M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame], false)) {
-            case 1:
+        
+        int[] validStage = {m_stress, M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        switch (rollMultiDice(validStage, null, false)) {
+            case CRITIC_SUCCESS:
                 //affiche comme pour innocent
                 this.addTestimony();
                 break;
-            case 2:
+            case SUCCESS:
                 this.addTestimony();
                 break;
-            case 3:
+            case FAILURE:
                 this.contradiction();
                 break;
-            case 4:
+            case CRITIC_FAILURE:
                 //dit de la merde
                 break;
         }

@@ -56,15 +56,27 @@ public abstract class Suspect extends LiveCharacter {
     @Override
     public void displayStats() {
         //Affiche les niveaux de stress du suspect
-        System.out.printf("Niveau de stress de %s %s : %d\n", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getStressLevel());
+        String name = new StringBuilder("Nom, prénom : ").append(this.getFullName()).toString();
+        String sex = new StringBuilder("Sexe : ").append(this.getSex().toString()).toString();
+        String age = new StringBuilder("Age : ").append(this.getAge()).append(" ans").toString();
+        String condition;
+        if (this.getStressLevel() > 50) condition = new StringBuilder("Etat : stressé").toString();
+        else condition = new StringBuilder("Etat : détendu").toString();
+        String physicalDescript = new StringBuilder("Description physique : ").append(this.getPhysicalAspect()).append(", ").append(this.getLook()).toString();
+        
+        m_console.display(name, true);
+        m_console.display(sex, true);
+        m_console.display(age, true);
+        m_console.display(condition, true);
+        m_console.display(physicalDescript, false).execContinue();
+        
     }//end void displayInfos
-    
     
     @Override
     public void presentCharacter(){
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        System.out.printf("Voici %s %s (%s, %d ans)...\n", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase(), this.getSex().toString(), this.getAge());
-        System.out.printf("Aspect physique :%s\nLook : %s\n", this.getPhysicalAspect(), this.getLook());
+        String text = new StringBuilder("Bonjour, je m'appelle ").append(this.getFullName()).append(". J'ai ").append(this.getAge()).append(" ans.Vous vouliez me voir ?").toString();
+        m_console.display(text, false).execContinue();
     }//end void presentCharacter
     
     
@@ -78,8 +90,8 @@ public abstract class Suspect extends LiveCharacter {
                 //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
                 //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
         
-        String[] choices = {"que faisiez vous pendant le crime?", "avez vous vu ou entendu quelque chose?"};
-        int choix = m_console.display("Inspecteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
+        String[] choices = {"Que faisiez vous pendant le crime?", "Avez vous vu ou entendu quelque chose?"};
+        int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
         
         DiceResult throwPlayer = player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)
         switch (choix) {
@@ -94,16 +106,17 @@ public abstract class Suspect extends LiveCharacter {
     
     
     public void BeDisculpated(){
+        //on modifie findedInnocent + vous avez décidé de disculpté ... 
         this.setFindedInnocent(true);
-        System.out.printf("Vous avez choisi de disculpté %s %s...", this.getSurname().substring(0,1).toUpperCase() + this.getSurname().substring(1).toLowerCase(), this.getName().substring(0,1).toUpperCase() + this.getName().substring(1).toLowerCase());
-    //on modifie findedInnocent + vous avez décidé de disculpté ... 
+        String text = new StringBuilder("Vous avez choisi de disculpté").append(this.getFullName()).toString();
+        m_console.display(text, false).execContinue();
     }//end void BeDisculpated
     
     
     public void BeArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
-        if (this instanceof Murderer) System.out.println("Bravo, vous avez réussi à trouver le coupable !");
-        else System.out.println("Il y a eu de nouveaux meurtres ! Vous êtes renvoyés !");    
+        if (this instanceof Murderer) m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
+        else m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyés !", false).execContinue();    
     }//end void BeArrested
 }

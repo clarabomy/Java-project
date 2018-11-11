@@ -4,7 +4,7 @@ package project.game.investigation;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public interface NoticeClues {
     /*$$ METHODS $$*/

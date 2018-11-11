@@ -5,6 +5,7 @@ import project.game.investigation.Investigator;
 import project.game.investigation.Victim;
 import project.game.investigation.InvestElement;
 import project.game.investigation.suspect.Suspect;
+import project.game.investigation.clue.Clue;
 
 
 

@@ -1,6 +1,7 @@
 
 package project.game.investigation.clue;
 
+
 /**
  *
  * @author ISEN
@@ -18,10 +19,14 @@ public abstract class Clue {
 
     
     /*$$ GETTERS & SETTERS $$*/
+    public String getContent() {
+        return m_content;
+    }
+
     public boolean isFounded() {
         return m_isFounded;
     }
-
+    
     
     public void setFounded(boolean isFounded) {
         this.m_isFounded = isFounded;
@@ -29,5 +34,5 @@ public abstract class Clue {
     
     
     /*$$ METHODS $$*/
-    public abstract String display();
+    public abstract void display();
 }
