@@ -1,5 +1,5 @@
 
-package project.game.investigation;
+package project.game.character;
 
 /**
  *

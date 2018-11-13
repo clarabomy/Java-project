@@ -1,8 +1,8 @@
 
-package project.game.investigation.clue;
+package project.game.investigation;
 
-import project.game.investigation.InvestElement;
-import project.game.investigation.Victim;
+import project.game.UserInterface;
+import project.game.character.Victim;
 
 
 /**
@@ -11,6 +11,7 @@ import project.game.investigation.Victim;
  */
 public class Proof extends Clue {
     protected InvestElement m_element;
+    protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -38,5 +39,4 @@ public class Proof extends Clue {
         String proofDisplay = new StringBuilder("Ohh, je viens de trouver une preuve (").append(this.getContent()).append(").").toString();
         m_console.display("Enquêteur", proofDisplay, false).execContinue();
     }
-
 }

@@ -1,10 +1,9 @@
 
-package project.game.investigation.suspect;
+package project.game.character.suspect;
 
-import static project.game.Investigation.suspectsNameList;
-import project.game.investigation.DiceResult;
-import project.game.investigation.Investigator;
-import project.game.investigation.Sex;
+import project.game.character.DiceResult;
+import project.game.character.Sex;
+import static project.game.investigation.Investigation.suspectsNameList;
 
 /**
  *
@@ -28,8 +27,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     
     /*$$ METHODS $$*/
     @Override
-    public void giveAlibi(DiceResult actionInvestigator) {
-        
+    public void giveAlibi() {
         //si inspecteur n a pas bien réussi : (pas du tout : bonus)
             //si perso ne stresse pas trop :    réussit bien
             //sinon :                           plus de mal à faire passer un mensonge
@@ -42,17 +40,17 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         //Si ok : créer fausse piste (donner faux alibi) | sinon : seContredit()
         int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
         switch (rollMultiDice(validStage, null, false)) {
-            case CRITIC_SUCCESS: 
+            case CRITIC_SUCCESS:
                 //affiche comme pour innocent
                 this.createFalseLead();
                 break;
-            case SUCCESS: 
+            case SUCCESS:
                 this.createFalseLead();
                 break;
-            case FAILURE: 
+            case FAILURE:
                 this.contradiction();
                 break;
-            case CRITIC_FAILURE: 
+            case CRITIC_FAILURE:
                 this.confess();
                 break;
         }
@@ -60,7 +58,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
 
     
     @Override
-    public void giveTestimony(DiceResult actionInvestigator) {
+    public void giveTestimony() {
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + meurtricer utilise cohérence et crédibilité pour mentir et lutte contre stress (jet caché)
         //si inspecteur réussit bien : 
             //si stresse pas trop : meurtrier va avoir plus de mal à faire passer un mensonge
@@ -78,10 +76,8 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
            //Si ok, inventeTémoignage()
            //sinon, seContredit()
         int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
-
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                //affiche comme pour innocent
                 this.addTestimony();
                 break;
             case SUCCESS:
@@ -109,7 +105,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         String[] activity   = {"J'ai travaillé", "Je me suis reposé(e)", "J'ai mangé", "Je suis sorti(e)", "J'étais"},
                     place   = {"au restaurant", "à l'hotel", "chez moi", "chez un ami", "dans un parc", },
                     witness = {"seul", "avec un ami", "avec ma femme", "avec mon équipe", "avec mon chien"};
-        
+
         String alibi = new StringBuilder(activity[(int) (Math.random() * activity.length)]).append(" ")
                                 .append(witness[(int) (Math.random() * witness.length)]).append(" ")
                                 .append(place[(int) (Math.random() * place.length)]).append(".").toString();
@@ -125,7 +121,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         String[] suspect    = suspectsNameList(),
                     object  = {"une pipe", "un homme qui avait forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"},
                     sound   = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
-        
+
         
         String testimony = "";
         switch ((int) (Math.random() * 2)) {//0, 1 ou 2

@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author ISEN
  */
-public class UserInterface {//codé - débuggé
+public class UserInterface {//codé - débugé
     protected static int m_nbChoices;
     protected static final int M_CONSOLE_SIZE = 20;
     

@@ -1,7 +1,8 @@
 
-package project.game.investigation.clue;
+package project.game.investigation;
 
-import project.game.investigation.suspect.Suspect;
+import project.game.character.suspect.Suspect;
+
 
 
 /**

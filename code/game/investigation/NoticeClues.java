@@ -1,10 +1,12 @@
 
 package project.game.investigation;
 
+import project.game.character.Investigator;
+
 
 /**
  *
- * @author ISEN
+ * @author Thibaut
  */
 public interface NoticeClues {
     /*$$ METHODS $$*/

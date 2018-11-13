@@ -1,18 +1,18 @@
 
 package project;
 
-import project.game.Investigation;
 import project.game.UserInterface;
-import project.game.investigation.Investigator;
-import project.game.investigation.clue.Clue;
-import project.game.investigation.clue.Proof;
+import project.game.character.Investigator;
+import project.game.character.Sex;
+import project.game.character.Victim;
+import project.game.character.suspect.CrimePartner;
+import project.game.character.suspect.Innocent;
+import project.game.character.suspect.Murderer;
+import project.game.character.suspect.Suspect;
 import project.game.investigation.InvestElement;
-import project.game.investigation.Sex;
-import project.game.investigation.Victim;
-import project.game.investigation.suspect.CrimePartner;
-import project.game.investigation.suspect.Innocent;
-import project.game.investigation.suspect.Murderer;
-import project.game.investigation.suspect.Suspect;
+import project.game.investigation.Investigation;
+import project.game.investigation.Proof;
+import project.investigation.InvestElement.Clue;
 
 
 /**
@@ -40,7 +40,7 @@ public class Test {
         m_refProof = new int[2];
         m_elements = new InvestElement[2];
 
-        m_player = new Investigator("joueur", "prénom", Sex.MAN, 30, 60, 75, 40, m_cluesList, "progress");        
+        m_player = new Investigator("Joueur", "Prénom", Sex.MAN, 30, 60, 75, m_cluesList, "progress");        
         m_corpse = new Victim("name", "surname", Sex.WOMAN, 25, "deathDate", "deathCause", m_refProof);
         
         m_suspectsList = new Suspect[5];
@@ -58,8 +58,8 @@ public class Test {
         InvestElement sang = new InvestElement(tab);
         Proof clue = new Proof(sang, "sang", false);
         Proof clue2 = new Proof(sang, "sang", false);
-        Clue[] clue_tab = {clue,clue2};
-        Investigator player = new Investigator("Bourgain", "Manon", Sex.WOMAN, 34, 60, 70, 32, clue_tab, "100");
+        Clue[] clue_tab = {};// = {clue,clue2};
+        Investigator player = new Investigator("Bourgain", "Manon", Sex.WOMAN, 34, 60, 32, clue_tab, "100");
         //Investigator.dice();
         //player.presentCharacter();
         player.displayStats();

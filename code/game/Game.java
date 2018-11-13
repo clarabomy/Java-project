@@ -1,10 +1,8 @@
 
-package project;
+package project.game;
 
 import java.io.File;
-import project.game.Difficulties;
-import project.game.Investigation;
-import project.game.UserInterface;
+import project.game.investigation.Investigation;
 
 /**
  *

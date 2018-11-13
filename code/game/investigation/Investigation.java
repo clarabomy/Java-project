@@ -1,11 +1,11 @@
 
-package project.game;
+package project.game.investigation;
 
-import project.game.investigation.Investigator;
-import project.game.investigation.Victim;
-import project.game.investigation.InvestElement;
-import project.game.investigation.suspect.Suspect;
-import project.game.investigation.clue.Clue;
+import project.game.UserInterface;
+import project.game.character.Investigator;
+import project.game.character.Victim;
+import project.game.character.suspect.Suspect;
+
 
 
 
@@ -18,7 +18,7 @@ public class Investigation {
     protected static Suspect[] m_suspectsList;
     protected Victim m_corpse;
     protected InvestElement[] m_elements;
-    protected UserInterface m_console;//provisoire => pas hérité de Game?
+    protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -112,9 +112,9 @@ public class Investigation {
         int nbClues = m_player.getClueList().length;
         int indexClues = 0;
         for (int index = 0; index < nbClues; index++) {
-            do indexClues++; while (indexClues < nbClues && m_player.getClue(indexClues).isFounded() == false);
+            //do indexClues++; while (indexClues < nbClues && m_player.getClue(indexClues).isFounded() == false);
             if (indexClues < nbClues) {
-                System.out.print(new StringBuilder("Indice ").append(index + 1).append(" : ").append(m_player.getClue(indexClues).display()).toString());
+                System.out.print(new StringBuilder("Indice ").append(index + 1).append(" : ").append(m_player.getClue(indexClues)/*.display()*/).toString());
                 indexClues++;
             }
         }

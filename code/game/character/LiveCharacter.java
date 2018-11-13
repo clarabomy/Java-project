@@ -1,18 +1,18 @@
 
-package project.game.investigation;
+package project.game.character;
 
 /**
  *
  * @author ISEN
  */
 public abstract class LiveCharacter extends Character {
-    protected static final int M_SIDES = 100;
-    protected static final int M_CRITICAL_SUCCESS = 15;
-    protected static final int M_CRITICAL_FAILURE = 95;
-    protected static final int M_COEFF = 5;
-    protected static int m_coeffDiff; //pour 50 : 1.25 = {44, 38, 32, 25} / 1 = {45, 40, 35, 30} / 0.75 = {47, 43, 39, 35}
-    protected static int m_lastDiceValue;
-    protected static int m_lastDiceValidStage;
+    private static final int M_SIDES = 100;
+    private static final int M_CRITICAL_SUCCESS = 15;
+    private static final int M_CRITICAL_FAILURE = 95;
+    private static final int M_COEFF = 5;
+    private static int m_coeffDiff; //pour 50 : 1.25 = {44, 38, 32, 25} / 1 = {45, 40, 35, 30} / 0.75 = {47, 43, 39, 35}
+    private static int m_lastDiceValue;
+    private static int m_lastDiceValidStage;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -57,7 +57,7 @@ public abstract class LiveCharacter extends Character {
     
     public static DiceResult rollMultiDice(int[] validStage, String[] display, boolean newThrow) {
         DiceResult action = DiceResult.ERROR;
-        for (int i = 0; i < validStage.length; i++) action = rollDice(validStage[i], i < display.length? display[i] : null, newThrow);
+        for (int i = 0; i < validStage.length; i++) action = rollDice(validStage[i], i < display.length? display[i] : null, i == 0? newThrow : false);
         return action;
     }
 }

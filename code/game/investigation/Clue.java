@@ -1,6 +1,5 @@
 
-package project.game.investigation.clue;
-
+package project.game.investigation;
 
 /**
  *
@@ -26,7 +25,7 @@ public abstract class Clue {
     public boolean isFounded() {
         return m_isFounded;
     }
-    
+
     
     public void setFounded(boolean isFounded) {
         this.m_isFounded = isFounded;

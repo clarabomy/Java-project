@@ -1,5 +1,7 @@
 
-package project.game.investigation;
+package project.game.character;
+
+import project.game.investigation.NoticeClues;
 
 /**
  *
@@ -37,6 +39,9 @@ public class Victim extends Character implements NoticeClues {
     @Override
     public void presentCharacter() {
         //Victime : nom, sexe, age (phrase différente)
+        m_console.display(new StringBuilder("La victime est ").append(m_sex == Sex.WOMAN? "une femme de " : "un homme de ").append(m_age).append(" ans. Sa carte d'indentité indique qu'").append(m_sex == Sex.WOMAN? "elle s'appelait" : "il s'appelait").append(this.getFullName()).append(".").toString(), false).execContinue();
+
+
         String victimPresentation;
         if (this.getSex().toString().equals("woman")) victimPresentation = new StringBuilder("La victime est une femme de ").append(this.getAge()).append(" ans. Sa carte d'indentité indique qu'elle s'appelait ").append(this.getFullName()).append(".").toString();
         else victimPresentation = new StringBuilder("La victime est un homme de ").append(this.getAge()).append(" ans. Sa carte d'indentité indique qu'il s'appelait ").append(this.getFullName()).append(".").toString();

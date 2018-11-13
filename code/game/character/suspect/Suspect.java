@@ -1,10 +1,10 @@
 
-package project.game.investigation.suspect;
+package project.game.character.suspect;
 
-import project.game.investigation.DiceResult;
-import project.game.investigation.Investigator;
-import project.game.investigation.LiveCharacter;
-import project.game.investigation.Sex;
+import project.game.character.DiceResult;
+import project.game.character.Investigator;
+import project.game.character.LiveCharacter;
+import project.game.character.Sex;
 
 
 /**
@@ -50,18 +50,16 @@ public abstract class Suspect extends LiveCharacter {
     
    
     /*$$ METHODS $$*/
-    abstract void giveAlibi(DiceResult throwPlayer);
-    abstract void giveTestimony(DiceResult throwPlayer);
+    abstract void giveAlibi();
+    abstract void giveTestimony();
     
     @Override
     public void displayStats() {
         //Affiche les niveaux de stress du suspect
         String name = new StringBuilder("Nom, prénom : ").append(this.getFullName()).toString();
-        String sex = new StringBuilder("Sexe : ").append(this.getSex().toString()).toString();
-        String age = new StringBuilder("Age : ").append(this.getAge()).append(" ans").toString();
-        String condition;
-        if (this.getStressLevel() > 50) condition = new StringBuilder("Etat : stressé").toString();
-        else condition = new StringBuilder("Etat : détendu").toString();
+        String sex = new StringBuilder("Sexe : ").append(this.m_sex.toString()).toString();
+        String age = new StringBuilder("Age : ").append(this.m_age).append(" ans").toString();
+        String condition = new StringBuilder("Etat : ").append(this.m_stress > 50? "stressé" : "détendu").toString();
         String physicalDescript = new StringBuilder("Description physique : ").append(this.getPhysicalAspect()).append(", ").append(this.getLook()).toString();
         
         m_console.display(name, true);
@@ -72,10 +70,11 @@ public abstract class Suspect extends LiveCharacter {
         
     }//end void displayInfos
     
+    
     @Override
-    public void presentCharacter(){
+    public void presentCharacter() {
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        String text = new StringBuilder("Bonjour, je m'appelle ").append(this.getFullName()).append(". J'ai ").append(this.getAge()).append(" ans.Vous vouliez me voir ?").toString();
+        String text = new StringBuilder("Bonjour, je m'appelle ").append(this.getFullName()).append(". J'ai ").append(this.m_age).append(" ans. Vous vouliez me voir ?").toString();
         m_console.display(text, false).execContinue();
     }//end void presentCharacter
     
@@ -93,13 +92,13 @@ public abstract class Suspect extends LiveCharacter {
         String[] choices = {"Que faisiez vous pendant le crime?", "Avez vous vu ou entendu quelque chose?"};
         int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
         
-        DiceResult throwPlayer = player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)
+        player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)
         switch (choix) {
             case 0:
-                this.giveAlibi(throwPlayer);
+                this.giveAlibi();
                 break;
             case 1:
-                this.giveTestimony(throwPlayer);
+                this.giveTestimony();
                 break;
         }
     }//end void BeInterrogated
@@ -108,7 +107,7 @@ public abstract class Suspect extends LiveCharacter {
     public void BeDisculpated(){
         //on modifie findedInnocent + vous avez décidé de disculpté ... 
         this.setFindedInnocent(true);
-        String text = new StringBuilder("Vous avez choisi de disculpté").append(this.getFullName()).toString();
+        String text = new StringBuilder("Vous avez choisi de disculper ").append(this.getFullName()).toString();
         m_console.display(text, false).execContinue();
     }//end void BeDisculpated
     
@@ -116,7 +115,8 @@ public abstract class Suspect extends LiveCharacter {
     public void BeArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
-        if (this instanceof Murderer) m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
-        else m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyés !", false).execContinue();    
+        if (this instanceof Murderer) m_console.display("Bravo, vous avez réussi à trouver le coupable",false);
+        else m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);    
+        m_console.execContinue();
     }//end void BeArrested
 }
