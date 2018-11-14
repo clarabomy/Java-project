@@ -1,7 +1,6 @@
 
 package project.game.character.suspect;
 
-import project.game.character.DiceResult;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
@@ -89,7 +88,7 @@ public abstract class Suspect extends LiveCharacter {
                 //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
                 //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
         
-        String[] choices = {"Que faisiez vous pendant le crime?", "Avez vous vu ou entendu quelque chose?"};
+        String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
         int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
         
         player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)

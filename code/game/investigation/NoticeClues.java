@@ -6,7 +6,7 @@ import project.game.character.Investigator;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public interface NoticeClues {
     /*$$ METHODS $$*/

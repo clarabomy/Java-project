@@ -9,10 +9,10 @@ import project.game.character.suspect.CrimePartner;
 import project.game.character.suspect.Innocent;
 import project.game.character.suspect.Murderer;
 import project.game.character.suspect.Suspect;
+import project.game.investigation.Clue;
 import project.game.investigation.InvestElement;
 import project.game.investigation.Investigation;
 import project.game.investigation.Proof;
-import project.investigation.InvestElement.Clue;
 
 
 /**
@@ -45,10 +45,10 @@ public class Test {
         
         m_suspectsList = new Suspect[5];
         m_suspectsList[0] = new Murderer("Criminel", "Jean Michel", Sex.MAN, 30, 70, "look", "physicalAspect", false, m_testimonyRef, "motive");
-        m_suspectsList[1] = new CrimePartner("Complice", "Jean Luc", Sex.WOMAN, 32, 70, 30, "look", "physicalAspect", false, m_testimonyRef, "alibi");
-        m_suspectsList[2] = new Innocent("Innocent", "Jean François", Sex.MAN, 70, 80, 80, "personality", "look", "physicalAspect", false, m_testimonyRef, "alibi");
-        m_suspectsList[3] = new Innocent("Innocent", "Jean Jacques", Sex.MAN, 70, 80, 80, "personality", "look", "physicalAspect", false, m_testimonyRef, "alibi");
-        m_suspectsList[4] = new Innocent("Innocent", "Jean Philippe", Sex.MAN, 70, 80, 80, "personality", "look", "physicalAspect", false, m_testimonyRef, "alibi");
+        m_suspectsList[1] = new CrimePartner("Complice", "Jean Lucette", Sex.WOMAN, 32, 70, 30, "look", "physicalAspect", false, m_testimonyRef, "alibi");
+        m_suspectsList[2] = new Innocent("Innocent", "Jean François", Sex.MAN, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi");
+        m_suspectsList[3] = new Innocent("Innocent", "Jean Jacques", Sex.MAN, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi");
+        m_suspectsList[4] = new Innocent("Innocent", "Jean Philippe", Sex.MAN, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi");
         
         m_enquete = new Investigation(m_player, m_suspectsList, m_corpse, m_elements);
     }
@@ -58,7 +58,7 @@ public class Test {
         InvestElement sang = new InvestElement(tab);
         Proof clue = new Proof(sang, "sang", false);
         Proof clue2 = new Proof(sang, "sang", false);
-        Clue[] clue_tab = {};// = {clue,clue2};
+        Clue[] clue_tab = {clue,clue2};
         Investigator player = new Investigator("Bourgain", "Manon", Sex.WOMAN, 34, 60, 32, clue_tab, "100");
         //Investigator.dice();
         //player.presentCharacter();

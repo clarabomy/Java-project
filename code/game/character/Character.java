@@ -12,7 +12,6 @@ public abstract class Character {
     protected String m_surname;
     protected Sex m_sex;
     protected int m_age;
-    protected int m_diffGame;
     protected UserInterface m_console = new UserInterface();
 
     

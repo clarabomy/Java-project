@@ -1,7 +1,6 @@
 
 package project.game.character.suspect;
 
-import project.game.character.DiceResult;
 import project.game.character.Sex;
 
 /**
@@ -15,7 +14,7 @@ public class Innocent extends Suspect {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String personality, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
+    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
         this.m_alibi = alibi;
         this.m_cooperation = cooperationLevel;
@@ -66,11 +65,11 @@ public class Innocent extends Suspect {
                 m_console.display(this.getAlibi(), false); //trouver meilleure phrase
                 break;
             case FAILURE:
-                m_console.display("Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+                m_console.display(this.getFullName(), "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
                 break;
             case CRITIC_FAILURE:
                 //effacer alibi
-                m_console.display("Euh... je ne m'en souviens pas...", false);
+                m_console.display(this.getFullName(),"Euh... je ne m'en souviens pas...", false);
                 break;
         }
         m_console.execContinue();

@@ -1,6 +1,8 @@
 
 package project.game.investigation;
 
+import project.game.UserInterface;
+
 /**
  *
  * @author ISEN
@@ -8,6 +10,8 @@ package project.game.investigation;
 public abstract class Clue {
     protected String m_content;
     protected boolean m_isFounded;
+    protected UserInterface m_console;
+
     
     
     /*$$ CONSTRUCTOR $$*/

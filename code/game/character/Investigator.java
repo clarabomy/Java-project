@@ -1,8 +1,8 @@
 
 package project.game.character;
 
+import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
-import project.investigation.InvestElement.Clue;
 
 /**
  *
@@ -60,19 +60,25 @@ public class Investigator extends LiveCharacter {
     
     @Override
     public void presentCharacter() {
-        //m_console.display(new StringBuilder("Vous êtes").append(m_name).append(" ").append(m_surname).append(m_sex.equals(Sex.WOMAN)? ", une enquêtrice" : ", un enquêteur").append("de talent!").toString(), false).execContinue();
+        String text = new StringBuilder("Vous êtes ").append(this.getFullName()).append(m_sex.equals(Sex.WOMAN)? ", une enquêtrice" : ", un enquêteur").append("de talent!").toString();
         
         //Description de l'enqueteur : nom, prenom
-        String text;
-        if (this.getSex().toString().equals("woman")) text = new StringBuilder("").append(this.getFullName()).append(", une enquêtrice de talent !").toString();
-        else text = new StringBuilder("").append(this.getFullName()).append(", un enquêteur de talent !").toString();
+        //if (this.getSex().toString().equals("woman")) text = new StringBuilder("").append(this.getFullName()).append(", une enquêtrice de talent !").toString();
+        //else text = new StringBuilder("").append(this.getFullName()).append(", un enquêteur de talent !").toString();
         m_console.display(text, false).execContinue();    
     }//end void presentCharacter
     
     
     public Investigator consultClues(){
         //affiche les indices ayant été trouvés
-        //for (int i = 0; i < m_clueList.length; i++) if (m_clueList[i].isFounded()) m_console.display(new StringBuilder("Indice ").append(i+1).append(" : ").append(m_clueList[i].getContent()).toString(), true);
+        boolean none = true;
+        for (int i = 0; i < m_clueList.length; i++) {
+            if (m_clueList[i].isFounded()) {
+                m_console.display(new StringBuilder("Indice ").append(i+1).append(" : ").append(m_clueList[i].getContent()).toString(), true);
+                none = false;
+            }
+        }
+        if (none) m_console.display("Vous n'avez pas encore trouvé d'indices...", false);
         m_console.execContinue();
         return this;
     }//end void lookForClues
@@ -88,10 +94,10 @@ public class Investigator extends LiveCharacter {
         */
         this.consultClues().displayProgress();
         String choices[] = {"<meurtrier>", /*"<victime>", */"<arme>", "<mobile>"};
-        switch (m_console.display("Quel champ voulez vous remplir?", choices, false).execSingleChoice()) {
+        switch (m_console.display("Quel champ voulez-vous remplir ?", choices, false).execSingleChoice()) {
             case 1:
                 String[] listSuspects = suspectsNameList();
-                int designed = m_console.display("Le coupable est le suspect...", listSuspects, false).execSingleChoice();
+                int designed = m_console.display("Le coupable serait le suspect...", listSuspects, false).execSingleChoice();
                 m_progress.replace("<meurtrier>", listSuspects[designed]);//pour premier coup mais en cas d'erreur...?
                 break;
             case 2:

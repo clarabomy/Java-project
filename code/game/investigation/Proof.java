@@ -1,7 +1,6 @@
 
 package project.game.investigation;
 
-import project.game.UserInterface;
 import project.game.character.Victim;
 
 
@@ -11,7 +10,6 @@ import project.game.character.Victim;
  */
 public class Proof extends Clue {
     protected InvestElement m_element;
-    protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/

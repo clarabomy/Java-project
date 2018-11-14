@@ -1,7 +1,6 @@
 
 package project.game.character.suspect;
 
-import project.game.character.DiceResult;
 import project.game.character.Sex;
 import static project.game.investigation.Investigation.suspectsNameList;
 
@@ -38,7 +37,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
             
         //Lance dé pour crédibilité et cohérence
         //Si ok : créer fausse piste (donner faux alibi) | sinon : seContredit()
-        int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        int[] validStage = {M_COHERENCE_VALID, M_CREDIBILITY_VALID};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 //affiche comme pour innocent
@@ -75,7 +74,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         //Lance dé pour crédibilité et cohérence
            //Si ok, inventeTémoignage()
            //sinon, seContredit()
-        int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        int[] validStage = {M_COHERENCE_VALID, M_CREDIBILITY_VALID};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 this.addTestimony();
@@ -119,7 +118,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     public void addTestimony() {
         //crée témoigage bidon avec aléatoire
         String[] suspect    = suspectsNameList(),
-                    object  = {"une pipe", "un homme qui avait forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"},
+                    object  = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"},
                     sound   = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
 
         

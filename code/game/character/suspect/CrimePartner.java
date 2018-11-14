@@ -5,7 +5,6 @@
  */
 package project.game.character.suspect;
 
-import project.game.character.DiceResult;
 import project.game.character.Sex;
 
 /**
@@ -69,7 +68,7 @@ public class CrimePartner extends Suspect implements Lie {
         //Lance dé pour stress, cohérence 
             //Si ok, créer fausse piste (donner faux alibi)
             //sinon, seContredit() + donne son vrai alibi
-        int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        int[] validStage = {M_COHERENCE_VALID, M_CREDIBILITY_VALID};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 this.createFalseLead();
@@ -101,7 +100,7 @@ public class CrimePartner extends Suspect implements Lie {
         //Lance dé pour stress, crédibilité et cohérence
            //Si ok, inventeTémoignage() en n'ayant pas l'air inquiet
            //sinon, seContredit() et finit par donner son vrai témoignage
-        int[] validStage = {M_COHERENCE_VALID[m_diffGame], M_CREDIBILITY_VALID[m_diffGame]};
+        int[] validStage = {M_COHERENCE_VALID, M_CREDIBILITY_VALID};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 //vu et entendu
