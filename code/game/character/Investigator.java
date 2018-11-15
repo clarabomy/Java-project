@@ -51,8 +51,8 @@ public class Investigator extends LiveCharacter {
     @Override
     public void displayStats() {
         //afficher niveau manipulation, intelligence et popularité;
-        String intelligence = new StringBuilder("Votre niveau d'intelligence : ").append(this.m_intelligence).toString();
-        String manipulation = new StringBuilder("Votre niveau de manipulation : ").append(this.m_manipulation).toString();
+        String intelligence = "Votre niveau d'intelligence : " + this.m_intelligence;
+        String manipulation = "Votre niveau de manipulation : " + this.m_manipulation;
         m_console.display(intelligence, true);
         m_console.display(manipulation, false).execContinue();
     }//end void displayInfos
@@ -60,11 +60,7 @@ public class Investigator extends LiveCharacter {
     
     @Override
     public void presentCharacter() {
-        String text = new StringBuilder("Vous êtes ").append(this.getFullName()).append(m_sex.equals(Sex.WOMAN)? ", une enquêtrice" : ", un enquêteur").append("de talent!").toString();
-        
-        //Description de l'enqueteur : nom, prenom
-        //if (this.getSex().toString().equals("woman")) text = new StringBuilder("").append(this.getFullName()).append(", une enquêtrice de talent !").toString();
-        //else text = new StringBuilder("").append(this.getFullName()).append(", un enquêteur de talent !").toString();
+        String text = "Vous êtes " + this.getFullName() + (m_sex.equals(Sex.WOMAN)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
         m_console.display(text, false).execContinue();    
     }//end void presentCharacter
     
@@ -74,11 +70,13 @@ public class Investigator extends LiveCharacter {
         boolean none = true;
         for (int i = 0; i < m_clueList.length; i++) {
             if (m_clueList[i].isFounded()) {
-                m_console.display(new StringBuilder("Indice ").append(i+1).append(" : ").append(m_clueList[i].getContent()).toString(), true);
+                m_console.display("Indice " + (i+1) + " : " + m_clueList[i].getContent(), true);
                 none = false;
             }
         }
-        if (none) m_console.display("Vous n'avez pas encore trouvé d'indices...", false);
+        if (none) {
+            m_console.display("Vous n'avez pas encore trouvé d'indices...", false);
+        }
         m_console.execContinue();
         return this;
     }//end void lookForClues

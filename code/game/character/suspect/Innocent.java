@@ -65,11 +65,11 @@ public class Innocent extends Suspect {
                 m_console.display(this.getAlibi(), false); //trouver meilleure phrase
                 break;
             case FAILURE:
-                m_console.display(this.getFullName(), "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+                this.textAvocat();
                 break;
             case CRITIC_FAILURE:
                 //effacer alibi
-                m_console.display(this.getFullName(),"Euh... je ne m'en souviens pas...", false);
+                this.textForget();
                 break;
         }
         m_console.execContinue();
@@ -93,18 +93,18 @@ public class Innocent extends Suspect {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS: //ce qu'il a vu et ce qu'il a entendu
-                m_console.display(new StringBuilder("ce que j'ai vu").append("ce que j'ai entendu").toString(), false); //trouver meilleure phrase
+                m_console.display("ce que j'ai vu" + "\n" + "ce que j'ai entendu", false); //trouver meilleure phrase
                 break;
             case SUCCESS:
                 //Donner un témoignage : soit ce qu'il a vu, soit ce qu'il a entendu
                 m_console.display((Math.random() < 0.5)? "ce que j'ai vu" : "ce que j'ai entendu", false); //trouver meilleure phrase
                 break;
             case FAILURE:
-                m_console.display("Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+                this.textAvocat();
                 break;
             case CRITIC_FAILURE:
                 //effacer temoignage
-                m_console.display("Euh... je ne m'en souviens pas...", false);
+                this.textForget();
                 break;
         }
         m_console.execContinue();

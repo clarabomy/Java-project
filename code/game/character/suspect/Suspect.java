@@ -55,11 +55,11 @@ public abstract class Suspect extends LiveCharacter {
     @Override
     public void displayStats() {
         //Affiche les niveaux de stress du suspect
-        String name = new StringBuilder("Nom, prénom : ").append(this.getFullName()).toString();
-        String sex = new StringBuilder("Sexe : ").append(this.m_sex.toString()).toString();
-        String age = new StringBuilder("Age : ").append(this.m_age).append(" ans").toString();
-        String condition = new StringBuilder("Etat : ").append(this.m_stress > 50? "stressé" : "détendu").toString();
-        String physicalDescript = new StringBuilder("Description physique : ").append(this.getPhysicalAspect()).append(", ").append(this.getLook()).toString();
+        String name = "Nom, prénom : " + this.getFullName();
+        String sex = "Sexe : " + this.m_sex.toString();
+        String age = "Age : " + this.m_age + " ans";
+        String condition = "Etat : " + (this.m_stress > 50? "stressé" : "détendu");
+        String physicalDescript = "Description physique : " + this.getPhysicalAspect() + ", " + this.getLook();
         
         m_console.display(name, true);
         m_console.display(sex, true);
@@ -73,7 +73,7 @@ public abstract class Suspect extends LiveCharacter {
     @Override
     public void presentCharacter() {
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        String text = new StringBuilder("Bonjour, je m'appelle ").append(this.getFullName()).append(". J'ai ").append(this.m_age).append(" ans. Vous vouliez me voir ?").toString();
+        String text = "Bonjour, je m'appelle " + this.getFullName() + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
         m_console.display(text, false).execContinue();
     }//end void presentCharacter
     
@@ -106,7 +106,7 @@ public abstract class Suspect extends LiveCharacter {
     public void BeDisculpated(){
         //on modifie findedInnocent + vous avez décidé de disculpté ... 
         this.setFindedInnocent(true);
-        String text = new StringBuilder("Vous avez choisi de disculper ").append(this.getFullName()).toString();
+        String text = "Vous avez choisi de disculper " + this.getFullName();
         m_console.display(text, false).execContinue();
     }//end void BeDisculpated
     
@@ -114,8 +114,21 @@ public abstract class Suspect extends LiveCharacter {
     public void BeArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
-        if (this instanceof Murderer) m_console.display("Bravo, vous avez réussi à trouver le coupable",false);
-        else m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);    
+        if (this instanceof Murderer) {
+            m_console.display("Bravo, vous avez réussi à trouver le coupable",false);
+        }
+        else {
+            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);
+        }    
         m_console.execContinue();
     }//end void BeArrested
+    
+    
+    protected void textAvocat() {
+        m_console.display(this.getFullName(), "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+    }
+    
+    protected void textForget() {
+        m_console.display(this.getFullName(),"Euh... je ne m'en souviens pas...", false);
+    }
 }

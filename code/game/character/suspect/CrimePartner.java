@@ -77,7 +77,7 @@ public class CrimePartner extends Suspect implements Lie {
                 //donne son alibi
                 break;
             case FAILURE:
-                //parlerai en présence d'un avocat
+                this.textAvocat();
                 break;
             case CRITIC_FAILURE:
                 this.contradiction();
@@ -111,7 +111,7 @@ public class CrimePartner extends Suspect implements Lie {
                 this.addTestimony();
                 break;
             case FAILURE:
-                //parlerai en présence d'un avocat
+                this.textAvocat();
                 break;
             case CRITIC_FAILURE:
                 //dit de la merde

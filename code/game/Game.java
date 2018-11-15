@@ -108,8 +108,12 @@ public class Game {
     public void dropInvestigation(){
         //supprime le fichier 
         File file = new File("invest.txt");
-        if(file.delete()) System.out.printf("%s is deleted. Vous pouvez commencer une nouvelle enquête\n", file.getName());
-        else System.out.println("Delete operation is failed.");   
+        if(file.delete()) {
+            System.out.printf("%s is deleted. Vous pouvez commencer une nouvelle enquête\n", file.getName());
+        }
+        else {
+            System.out.println("Delete operation is failed.");
+        }   
 
     }//end void dropInvestigation
 }

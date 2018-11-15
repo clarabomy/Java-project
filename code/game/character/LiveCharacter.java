@@ -28,8 +28,7 @@ public abstract class LiveCharacter extends Character {
     public static DiceResult rollDice(int validStage, String display, boolean newThrow) {
         //lance un dé
         int diceValue = (int) (Math.random() * M_SIDES) + 1;//donne valeur entre 1 et 100
-        if (display != null) System.out.printf("Jet de %s : %d\n", display, diceValue);
-        
+
         
         //si ce lancé est dépendant du précédent, ajuste l'intervalle de validité
         //si échec simple au précédent lancer et qu'on prend en compte l'ancien lancer
@@ -47,13 +46,23 @@ public abstract class LiveCharacter extends Character {
     
         
         //détermine le résultat
+        DiceResult result;
         //plus fréquent
-        if (diceValue <= validStage && diceValue > M_CRITICAL_SUCCESS) return DiceResult.SUCCESS;
-        else if (diceValue > validStage && diceValue < M_CRITICAL_FAILURE) return DiceResult.FAILURE;
+        if (diceValue <= validStage && diceValue > M_CRITICAL_SUCCESS) result = DiceResult.SUCCESS;
+        else if (diceValue > validStage && diceValue < M_CRITICAL_FAILURE) result = DiceResult.FAILURE;
         
         //moins fréquent
-        else if (diceValue <= M_CRITICAL_SUCCESS) return DiceResult.CRITIC_SUCCESS;
-        else return DiceResult.CRITIC_FAILURE;//if (throwResult >= M_CRITICAL_FAILURE)
+        else if (diceValue <= M_CRITICAL_SUCCESS) result = DiceResult.CRITIC_SUCCESS;
+        else result = DiceResult.CRITIC_FAILURE;//if (throwResult >= M_CRITICAL_FAILURE)
+        
+        
+        //affiche infos si souhaité
+        if (display != null) {
+            System.out.printf("Jet de %s : %d / %d\t%s\n", display, diceValue, validStage, result.toString());
+        }
+        
+        
+        return result;
     }
    
     

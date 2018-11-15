@@ -21,7 +21,9 @@ public class UserInterface {//codé - débugé
     private String constructList(String[] choicesList) {
         //afficher choix => crée le string d'affichage
         String list = "\t";
-        for (int index = 0; index < choicesList.length; index++) list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
+        for (int index = 0; index < choicesList.length; index++) {
+            list = new StringBuilder(list).append("Choix ").append(index + 1).append(" : ").append(choicesList[index]).append("\n\t").toString();
+        }
     
         return list.substring(0, list.length() - 2);//retire dernier \n\t
     }
@@ -29,7 +31,9 @@ public class UserInterface {//codé - débugé
     
     public UserInterface clean() {
         String swipe = "";
-        for (int i = 0; i < M_CONSOLE_SIZE; i++) swipe = new StringBuilder(swipe).append("\n").toString();//concatène tous les retours à la ligne
+        for (int i = 0; i < M_CONSOLE_SIZE; i++) {//concatène tous les retours à la ligne
+            swipe = new StringBuilder(swipe).append("\n").toString();
+        }
         System.out.println(swipe);//affiche tout d'un coup
         
         m_nbChoices = 0;
@@ -69,18 +73,9 @@ public class UserInterface {//codé - débugé
     }//end UserInterface display
     
     
-    public UserInterface displayThrow(String[] category, int[] value, int result, boolean lineBreak) {
-        for (int i = 0; i < category.length; i++) System.out.printf("Lancer de dés pour %s... %d\n", category[i], value[i]);
-        System.out.printf("%s%s\n%s", ((result <= 2)? "Réussite": "Echec"), ((result == 1 || result == 4)? " critique" : ""), (lineBreak? "\n" : "") );
-        
-        m_nbChoices = 0;
-        return this;
-    }//end UserInterface displayThrow
-    
-    
     public UserInterface execContinue() {
-        //saisie bloquante d'un caractère (au pif?) entrée
-        System.out.println("\t\tAppuyez sur entrer pour continuer...");
+        //saisie bloquante d'un caractère entrée
+        System.out.println("\t\tAppuyez sur entrée pour continuer...");
         try {
             System.in.read();
         } 
@@ -100,7 +95,9 @@ public class UserInterface {//codé - débugé
             try {
                 System.out.printf("\t\tFaites votre choix : ");
                 choice = keyboard.nextInt();
-                if (1 <= choice && choice <= m_nbChoices) correctChoice = true;
+                if (1 <= choice && choice <= m_nbChoices) {
+                    correctChoice = true;
+                }
             } 
             catch (Exception e) {
                 keyboard.next(); 

@@ -105,9 +105,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
                     place   = {"au restaurant", "à l'hotel", "chez moi", "chez un ami", "dans un parc", },
                     witness = {"seul", "avec un ami", "avec ma femme", "avec mon équipe", "avec mon chien"};
 
-        String alibi = new StringBuilder(activity[(int) (Math.random() * activity.length)]).append(" ")
-                                .append(witness[(int) (Math.random() * witness.length)]).append(" ")
-                                .append(place[(int) (Math.random() * place.length)]).append(".").toString();
+        String alibi = activity[(int) (Math.random() * activity.length)] + " " + witness[(int) (Math.random() * witness.length)] + " " + place[(int) (Math.random() * place.length)] + ".";
         
         //l'affiche
         m_console.display(this.getFullName(), alibi, false).execContinue();
@@ -128,15 +126,14 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
                 testimony = "Je n'ai rien vu ni entendu";
                 break;
             case 1:
-                testimony = new StringBuilder("J'ai vu ").append(suspect[(int) (Math.random() * suspect.length)])
-                                        .append(" avec ").append(object[(int) (Math.random() * object.length)]).toString();
+                testimony = "J'ai vu " + suspect[(int) (Math.random() * suspect.length)] + " avec " + object[(int) (Math.random() * object.length)];
                 break;
             case 2:
-                testimony = new StringBuilder("J'ai entendu ").append(sound[(int) (Math.random() * sound.length)]).toString();
+                testimony = "J'ai entendu " + sound[(int) (Math.random() * sound.length)];
                 break;
         }
         
-        testimony = new StringBuilder(testimony).append(" près du lieu du crime.").toString();
+        testimony += " près du lieu du crime.";
         
         //Dans le tableau d'indice, ajoute le témoignage avec islie = true
         //...
@@ -151,7 +148,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         m_console.display(nom, "C'est bon, je vais tout vous avouer...", false).execContinue();
         m_console.display(nom, "Raconte ce qui s'est passé (pourquoi, comment)", false).execContinue();
         
-        String text = new StringBuilder("J'ai fait tout ça pour ").append(m_motive).append(". Et vous, qu'auriez-vous fait à ma place?").toString();
+        String text = "J'ai fait tout ça pour " + m_motive + ". Et vous, qu'auriez-vous fait à ma place?";
         m_console.display(nom, text, false).execContinue();
     }//end void confess
 }

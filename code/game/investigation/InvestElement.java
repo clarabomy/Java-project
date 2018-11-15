@@ -21,7 +21,9 @@ public class InvestElement implements NoticeClues {
     /*$$ METHODS $$*/
     @Override
     public void analyse(Investigator player) {
-        for (int i = 0; i < this.m_refProof.length; i++) player.getClue(this.m_refProof[i]);//.setFounded(true);
+        for (int i = 0; i < this.m_refProof.length; i++) {
+            player.getClue(this.m_refProof[i]).setFounded(true);
+        }
     }//end void analyse
 
     

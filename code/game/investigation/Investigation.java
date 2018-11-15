@@ -35,7 +35,9 @@ public class Investigation {
     /*$ GETTERS & SETTERS $*/
     public static String[] suspectsNameList() {
         String[] listName = new String[m_suspectsList.length];
-        for (int i = 0; i < m_suspectsList.length; i++) listName[i] = m_suspectsList[i].getFullName();
+        for (int i = 0; i < m_suspectsList.length; i++) {
+            listName[i] = m_suspectsList[i].getFullName();
+        }
         
         return listName;
     }
@@ -68,20 +70,26 @@ public class Investigation {
     
     
     public void elementsMenu() {
-        for (int index = 0; index < m_elements.length; index++) System.out.print(new StringBuilder("Element ").append(index + 1).append(" : ").append(m_elements[index].display()).toString());
+        for (int index = 0; index < m_elements.length; index++) {
+            System.out.print("Element " + (index + 1) + " : " + m_elements[index].display());
+        }
         
         String[] choicesList = {"Analyser l'arme du crime.", 
                                 "Autopsier la victime.", 
                                 "Chercher des indices dans la scène de crime.\n",
                                 "Faire autre chose."};  //menu principal
         int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
-        if (action < choicesList.length) m_elements[action].analyse(m_player);
+        if (action < choicesList.length) {
+            m_elements[action].analyse(m_player);
+        }
     }//end elementsMenu
     
     
     public void suspectsMenu() {
         int nbSuspects = m_suspectsList.length;
-        for (int index = 0; index < nbSuspects; index++) System.out.print(new StringBuilder("Suspect ").append(index + 1).append(" : ").append(m_elements[index].display()).toString());
+        for (int index = 0; index < nbSuspects; index++) {
+            System.out.print("Suspect " + (index + 1) + " : " + m_elements[index].display());
+        }
         
         String[] choicesList = {"Interroger un suspect.", 
                                 "Innocenter un suspect.", 
@@ -114,7 +122,7 @@ public class Investigation {
         for (int index = 0; index < nbClues; index++) {
             //do indexClues++; while (indexClues < nbClues && m_player.getClue(indexClues).isFounded() == false);
             if (indexClues < nbClues) {
-                System.out.print(new StringBuilder("Indice ").append(index + 1).append(" : ").append(m_player.getClue(indexClues)/*.display()*/).toString());
+                System.out.print("Indice " + (index + 1) + " : " + m_player.getClue(indexClues)/*.display()*/);
                 indexClues++;
             }
         }
