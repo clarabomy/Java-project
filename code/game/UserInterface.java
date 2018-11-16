@@ -18,7 +18,7 @@ public class UserInterface {//codé - débugé
         m_nbChoices = 0;
     }
     
-    private String constructList(String[] choicesList) {
+    private String concatList(String[] choicesList) {
         //afficher choix => crée le string d'affichage
         String list = "\t";
         for (int index = 0; index < choicesList.length; index++) {
@@ -50,7 +50,7 @@ public class UserInterface {//codé - débugé
     
     
     public UserInterface display(String text, String[] choices, boolean lineBreak){//version 2
-        System.out.printf("%s\n%s\n%s", text, constructList(choices), (lineBreak? "\n" : "")); 
+        System.out.printf("%s\n%s\n%s", text, concatList(choices), (lineBreak? "\n" : "")); 
         m_nbChoices = choices.length;
         
         return this;
@@ -66,7 +66,7 @@ public class UserInterface {//codé - débugé
     
     
     public UserInterface display(String speaker, String text, String[] choices, boolean lineBreak){//version 4
-        System.out.printf("(%s) %s\n %s\n%s", speaker, text, constructList(choices), (lineBreak? "\n" : ""));
+        System.out.printf("(%s) %s\n %s\n%s", speaker, text, concatList(choices), (lineBreak? "\n" : ""));
         
         m_nbChoices = choices.length;
         return this;

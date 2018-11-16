@@ -22,15 +22,22 @@ public class Testimony extends Clue {
     }
 
     
-    /*$$ METHODS $$*/
-    public void assignTestimony(Suspect suspect) {    
-    //assigne le témoignage à un suspect
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }//end void assign
+    /*$ GETTERS & SETTERS $*/
+    public Suspect getSuspect() {    
+        return m_suspect;
+    }
 
+    
+    /*$$ METHODS $$*/
+    public void assignTestimony(Suspect suspect, TestimonyType type) {
+       //assigne le témoignage à un suspect
+        suspect.setTestimonyRef(this.m_indexInClues,type);
+    } //end void assign
+
+    
     @Override
     public void display() {
         //Témoignage de nom_personnage : ce qu'il a dit
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        m_console.display(this.getSuspect().getFullName(), this.getContent(), false).execContinue();
     }
 }

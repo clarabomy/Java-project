@@ -77,10 +77,10 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         int[] validStage = {M_COHERENCE_VALID, M_CREDIBILITY_VALID};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                this.addTestimony();
+                this.createTestimony();
                 break;
             case SUCCESS:
-                this.addTestimony();
+                this.createTestimony();
                 break;
             case FAILURE:
                 this.contradiction();
@@ -113,7 +113,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
 
     
     @Override
-    public void addTestimony() {
+    public void createTestimony() {
         //crée témoigage bidon avec aléatoire
         String[] suspect    = suspectsNameList(),
                     object  = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"},

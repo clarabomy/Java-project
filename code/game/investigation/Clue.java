@@ -11,7 +11,7 @@ public abstract class Clue {
     protected String m_content;
     protected boolean m_isFounded;
     protected UserInterface m_console;
-
+    protected int m_indexInClues;
     
     
     /*$$ CONSTRUCTOR $$*/

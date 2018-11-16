@@ -13,5 +13,5 @@ public interface Lie {
     /*$$ METHODS $$*/
     abstract void contradiction();
     abstract void createFalseLead();
-    abstract void addTestimony();
+    abstract void createTestimony();
 }

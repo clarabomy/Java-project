@@ -120,7 +120,7 @@ public class Test {
     public void testMurderer() {//debug en cours
         Murderer criminel = (Murderer) m_suspectsList[0];
         
-        criminel.addTestimony();//code en cours
+        criminel.createTestimony();//code en cours
         
         //criminel.confess();//débug ok
         

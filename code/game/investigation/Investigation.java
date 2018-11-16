@@ -71,7 +71,7 @@ public class Investigation {
     
     public void elementsMenu() {
         for (int index = 0; index < m_elements.length; index++) {
-            System.out.print("Element " + (index + 1) + " : " + m_elements[index].display());
+            //System.out.print("Element " + (index + 1) + " : " + m_elements[index].display());
         }
         
         String[] choicesList = {"Analyser l'arme du crime.", 
@@ -88,7 +88,7 @@ public class Investigation {
     public void suspectsMenu() {
         int nbSuspects = m_suspectsList.length;
         for (int index = 0; index < nbSuspects; index++) {
-            System.out.print("Suspect " + (index + 1) + " : " + m_elements[index].display());
+            //System.out.print("Suspect " + (index + 1) + " : " + m_elements[index].display());
         }
         
         String[] choicesList = {"Interroger un suspect.", 
@@ -117,7 +117,7 @@ public class Investigation {
     
     
     public void cluesMenu() {
-        int nbClues = m_player.getClueList().length;
+        int nbClues = m_player.getClueList().size();
         int indexClues = 0;
         for (int index = 0; index < nbClues; index++) {
             //do indexClues++; while (indexClues < nbClues && m_player.getClue(indexClues).isFounded() == false);

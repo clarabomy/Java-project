@@ -20,14 +20,15 @@ public class Proof extends Clue {
     
     
     /*$$ METHODS $$*/
-    
-    public void assignVictim(Victim corpse) {
+    public void assignVictim(Victim corpse, int ref) {
         //assigne la preuve à la victime
+        corpse.setRefProof(ref);
     }
     
     
-    public void assignElement(InvestElement elt){
+    public void assignElement(InvestElement elt, int ref){
         //assigne la preuve à l'élément d'enquête (arme du crime, scène de crime)
+        elt.setRefProof(ref);
     }
 
     

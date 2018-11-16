@@ -47,7 +47,7 @@ public class CrimePartner extends Suspect implements Lie {
 
     
     @Override
-    public void addTestimony() {
+    public void createTestimony() {
         //Ajouter un témoignage
         //Phrase : le suspect n'avait pas l'air très inquiet
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -104,11 +104,11 @@ public class CrimePartner extends Suspect implements Lie {
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 //vu et entendu
-                this.addTestimony();
+                this.createTestimony();
                 break;
             case SUCCESS:
                 //vu ou entendu
-                this.addTestimony();
+                this.createTestimony();
                 break;
             case FAILURE:
                 this.textAvocat();

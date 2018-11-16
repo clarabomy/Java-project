@@ -1,6 +1,7 @@
 
 package project.game.character;
 
+import java.util.ArrayList;
 import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
 
@@ -11,39 +12,33 @@ import static project.game.investigation.Investigation.suspectsNameList;
 public class Investigator extends LiveCharacter {
     protected int m_manipulation;
     protected int m_intelligence;
-    protected Clue[] m_clueList;
+    protected ArrayList <Clue> m_clueList;
     protected String m_progress;//"<meurtrier> a tué <victime> avec <arme> pour cause de <mobile>"//Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, Clue[] cluesList, String progress) {
+    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, ArrayList <Clue> clueList, String progress) {
         super(name, surname, sex, age);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
-        this.m_clueList = new Clue[cluesList.length];
-        System.arraycopy(cluesList, 0, this.m_clueList, 0, cluesList.length);
+        this.m_clueList = new ArrayList(clueList);
         this.m_progress = progress;
     }
 
     
     /*$$ GETTERS & SETTERS $$*/
     public Clue getClue(int index) {
-        return m_clueList[index];
+        return m_clueList.get(index);
     }
     
     
-    public Clue[] getClueList() {
+    public ArrayList <Clue> getClueList() {
         return m_clueList;
     }
     
     
     public String getProgress() {
         return m_progress;
-    }
-    
-    
-    public void setClueList(Clue[] m_clueList) {
-        this.m_clueList = m_clueList;
     }
 
     
@@ -68,9 +63,9 @@ public class Investigator extends LiveCharacter {
     public Investigator consultClues(){
         //affiche les indices ayant été trouvés
         boolean none = true;
-        for (int i = 0; i < m_clueList.length; i++) {
-            if (m_clueList[i].isFounded()) {
-                m_console.display("Indice " + (i+1) + " : " + m_clueList[i].getContent(), true);
+        for (int i = 0; i < m_clueList.size(); i++) {
+            if (m_clueList.get(i).isFounded()) {
+                m_console.display("Indice " + (i+1) + " : " + m_clueList.get(i).getContent(), true);
                 none = false;
             }
         }

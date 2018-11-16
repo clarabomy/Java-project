@@ -4,6 +4,7 @@ package project.game.character.suspect;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
+import project.game.investigation.TestimonyType;
 
 
 /**
@@ -45,6 +46,11 @@ public abstract class Suspect extends LiveCharacter {
 
     public void setFindedInnocent(boolean findedInnocent) {
         this.m_findedInnocent = findedInnocent;
+    }
+
+    public void setTestimonyRef(int ref, TestimonyType index) { //index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
+        int key = index == TestimonyType.SEEN ? 0 : 1;
+        this.m_testimonyRef[key] = ref;
     }
     
    
