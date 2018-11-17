@@ -2,6 +2,7 @@
 package project.game.character.suspect;
 
 import java.util.ArrayList;
+import project.game.Game;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
@@ -19,6 +20,7 @@ public abstract class Suspect extends LiveCharacter {
     protected String m_physicalAspect;
     protected boolean m_findedInnocent;
     protected int[] m_testimonyRef;
+    protected int m_difficulty;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -30,22 +32,11 @@ public abstract class Suspect extends LiveCharacter {
         this.m_findedInnocent = findedInnocent;
         this.m_testimonyRef = new int[testimonyRef.length];
         System.arraycopy(testimonyRef, 0, this.m_testimonyRef, 0, testimonyRef.length);
+        this.m_difficulty = Game.getDifficulty();
     }
 
     
     /*$$ GETTERS & SETTERS $$*/
-    public int getStressLevel() {
-        return m_stress;
-    }
-
-    public String getLook() {
-        return m_look;
-    }
-
-    public String getPhysicalAspect() {
-        return m_physicalAspect;
-    }
-
     public void setFindedInnocent(boolean findedInnocent) {
         this.m_findedInnocent = findedInnocent;
     }
@@ -67,7 +58,7 @@ public abstract class Suspect extends LiveCharacter {
         String sex = "Sexe : " + this.m_sex.toString();
         String age = "Age : " + this.m_age + " ans";
         String condition = "Etat : " + (this.m_stress > 50? "stressé" : "détendu");
-        String physicalDescript = "Description physique : " + this.getPhysicalAspect() + ", " + this.getLook();
+        String physicalDescript = "Description physique : " + this.m_physicalAspect + ", " + this.m_look;
         
         m_console.display(name, true);
         m_console.display(sex, true);
@@ -87,15 +78,6 @@ public abstract class Suspect extends LiveCharacter {
     
     
     public void BeInterrogated(Investigator player) {
-        //Présentation du personnage presenterPerso() = description littéraire de qui il est
-        //AfficherInfos() = stats du perso + description physique
-        
-        //Menu => 2 fonctions
-            //Connaître alibi -> suspect lance le dé pour niveau de coopération => donne son alibi ou non    
-            //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
-                //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
-                //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
-        
         String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
         int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
        
@@ -113,31 +95,35 @@ public abstract class Suspect extends LiveCharacter {
                 this.giveTestimony();
                 break;
         }
-    }//end void BeInterrogated
+    }
     
     
     public void BeDisculpated(){
-        //on modifie findedInnocent + vous avez décidé de disculpté ... 
         this.setFindedInnocent(true);
         String text = "Vous avez choisi de disculper " + this.getFullName();
         m_console.display(text, false).execContinue();
-    }//end void BeDisculpated
+    }
     
     
     public void BeArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
         if (this instanceof Murderer) {
-            m_console.display("Bravo, vous avez réussi à trouver le coupable",false);
+            m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
+            //this.confess();
         }
         else {
-            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);
-        }    
-        m_console.execContinue();
-    }//end void BeArrested
+            //perso clame son innocence lors de son proces...
+            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
+        }
+    }
     
     
-    protected void textAvocat() {
+    protected void textNoSpeak() {
+        m_console.display("Enquêteur", "Le suspect refuse de parler.", false);
+    }
+    
+    protected void textLawyer() {
         m_console.display(this.getFullName(), "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
     }
     

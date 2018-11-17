@@ -1,6 +1,7 @@
 
 package project.game.investigation;
 
+import java.util.ArrayList;
 import project.game.UserInterface;
 import project.game.character.Investigator;
 import project.game.character.Victim;
@@ -15,17 +16,16 @@ import project.game.character.suspect.Suspect;
  */
 public class Investigation {
     protected Investigator m_player;
-    protected static Suspect[] m_suspectsList;
+    protected static ArrayList <Suspect> m_suspectsList;
     protected Victim m_corpse;
     protected InvestElement[] m_elements;
     protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigation(Investigator player, Suspect[] suspectsList, Victim corpse, InvestElement[] elements) {
+    public Investigation(Investigator player, ArrayList <Suspect> suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
-        Investigation.m_suspectsList = new Suspect[suspectsList.length];
-        System.arraycopy(suspectsList, 0, Investigation.m_suspectsList, 0, suspectsList.length);
+        Investigation.m_suspectsList = new ArrayList(suspectsList);
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);
@@ -33,12 +33,11 @@ public class Investigation {
     
     
     /*$ GETTERS & SETTERS $*/
-    public static String[] suspectsNameList() {
-        String[] listName = new String[m_suspectsList.length];
-        for (int i = 0; i < m_suspectsList.length; i++) {
-            listName[i] = m_suspectsList[i].getFullName();
+    public static ArrayList <String> suspectsNameList() {
+        ArrayList <String> listName = new ArrayList();
+        for (int i = 0; i < m_suspectsList.size(); i++) {
+            listName.add(m_suspectsList.get(i).getFullName());
         }
-        
         return listName;
     }
     
@@ -86,7 +85,7 @@ public class Investigation {
     
     
     public void suspectsMenu() {
-        int nbSuspects = m_suspectsList.length;
+        int nbSuspects = m_suspectsList.size();
         for (int index = 0; index < nbSuspects; index++) {
             //System.out.print("Suspect " + (index + 1) + " : " + m_elements[index].display());
         }
@@ -103,13 +102,13 @@ public class Investigation {
 
             switch(action) {
                 case 0:
-                    m_suspectsList[choicePlayer].BeInterrogated(m_player);
+                    m_suspectsList.get(choicePlayer).BeInterrogated(m_player);
                     break;
                 case 1:
-                    m_suspectsList[choicePlayer].BeDisculpated();
+                    m_suspectsList.get(choicePlayer).BeDisculpated();
                     break;
                 case 2:
-                    m_suspectsList[choicePlayer].BeArrested();
+                    m_suspectsList.get(choicePlayer).BeArrested();
                     break;
             }
         }

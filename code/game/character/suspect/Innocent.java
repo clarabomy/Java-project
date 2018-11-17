@@ -21,92 +21,48 @@ public class Innocent extends Suspect {
         this.m_alibi = alibi;
         this.m_cooperation = cooperationLevel;
     }
-
-    
-    /*$$ GETTERS & SETTERS $$*/
-    public String getAlibi() {
-        return m_alibi;
-    }
     
     
     /*$$ METHODS $$*/
-    /*
     @Override
-    public void BeInterrogated() {
-        //Présentation du personnage presenterPerso() = description littéraire de qui il est + description physique 
-        //AfficherInfos() = stats du perso 
-        
-        //Menu => 2 fonctions
-            //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
-                //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
-                //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
-
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }//end void BeInterrogated
-*/
-    
-    
-    @Override
-    public void giveAlibi() { //options à déterminer 
-        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
-        //si inspecteur réussit bien : 
-            //si stresse pas trop : innocent dit ce qu'il sait
-            //sinon : a du mal a parler
-        //s'il réussit mal : 
-            //si stresse pas trop : peut dire une partie de ce qu'il sait
-            //sinon : ne dit rien
-        
-            
-        //Connaître alibi -> suspect lance le dé pour niveau de coopération => donne son alibi ou non    
+    public void giveAlibi() {   
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.getAlibi(), false); //trouver meilleure phrase
+                m_console.display(this.getFullName(), "Je suis innocent. Concentrez vous sur les autres suspects, plutôt que de perdre votre temps.", false);
                 break;
             case SUCCESS:
-                m_console.display(this.getAlibi(), false); //trouver meilleure phrase
+                m_console.display(this.getFullName(), this.m_alibi, false);
                 break;
             case FAILURE:
-                this.textAvocat();
+                this.textNoSpeak();
                 break;
             case CRITIC_FAILURE:
-                //effacer alibi
-                this.textForget();
+                this.textLawyer();
                 break;
         }
         m_console.execContinue();
-    }//end void giveAlibi
+    }
 
     
     @Override
     public void giveTestimony() {
-        //inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché) + innocent utilise coopération pour l'aider et lutte contre stress (jet caché)
-        //si inspecteur réussit bien : 
-            //si innocent stresse pas trop : innocent dit ce qu'il sait
-            //sinon : a du mal a parler
-        //s'il réussit mal : 
-            //si innocent stresse pas trop : peut dire une partie de ce qu'il sait
-            //sinon : ne dit rien
-            
-            
-        //Obtenir témoignage -> avez-vous vu qqch ? Lancer le dé pour voir le niveau de stress 
-                //si lancer réussi : afficher ce qu'il sait, a vu (passer l'indice de non trouvé à trouvé) => témoignages
-                //si lancer échoué : afficher qu'il ne coopère pas (indice non trouvé)
+        String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
+        String heard = "J'ai entendu" + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
+        
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
-            case CRITIC_SUCCESS: //ce qu'il a vu et ce qu'il a entendu
-                m_console.display("ce que j'ai vu" + "\n" + "ce que j'ai entendu", false); //trouver meilleure phrase
+            case CRITIC_SUCCESS:
+                m_console.display(this.getFullName(), seen + heard, false);
                 break;
             case SUCCESS:
-                //Donner un témoignage : soit ce qu'il a vu, soit ce qu'il a entendu
-                m_console.display((Math.random() < 0.5)? "ce que j'ai vu" : "ce que j'ai entendu", false); //trouver meilleure phrase
+                m_console.display(this.getFullName(), (Math.random() < 0.5)? seen : heard, false);//soit ce qu'il a vu, soit ce qu'il a entendu
                 break;
             case FAILURE:
-                this.textAvocat();
+                this.textNoSpeak();
                 break;
             case CRITIC_FAILURE:
-                //effacer temoignage
-                this.textForget();
+                this.textForget();//mais garde temoignage en mémoire
                 break;
         }
         m_console.execContinue();

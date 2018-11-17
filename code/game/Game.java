@@ -10,7 +10,7 @@ import project.game.investigation.Investigation;
  */
 public class Game {
     protected Investigation m_currentGame;//memberOfClass_attributeName
-    protected Difficulties m_levelChoice;
+    protected static Difficulties m_levelChoice;
     protected UserInterface m_console;
 
     
@@ -21,12 +21,15 @@ public class Game {
     
     
     /*$$ GETTERS & SETTERS $$*/
-    public Difficulties getLevelChoice() {
+    public static Difficulties getLevelChoice() {
         return m_levelChoice;
     }
     
+    public static int getDifficulty() {
+        return m_levelChoice == Difficulties.SIMPLE? 0 : (m_levelChoice == Difficulties.MEDIUM? 1 : 2);
+    }
     
-    /*$$ METHODS $$*/
+    /*$$ METHODS $$*/   
     public void gameMenu() {//menu général du jeu
         boolean exitGame = false;
         do {
@@ -116,4 +119,5 @@ public class Game {
         }   
 
     }//end void dropInvestigation
+
 }
