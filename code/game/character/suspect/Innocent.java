@@ -1,7 +1,9 @@
 
 package project.game.character.suspect;
 
+import java.util.ArrayList;
 import project.game.character.Sex;
+import project.game.investigation.Clue;
 
 /**
  *
@@ -14,8 +16,8 @@ public class Innocent extends Suspect {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef);
+    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi, ArrayList <Clue> clueList) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef, clueList);
         this.m_alibi = alibi;
         this.m_cooperation = cooperationLevel;
     }

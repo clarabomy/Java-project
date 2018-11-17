@@ -1,6 +1,8 @@
 
 package project.game.character.suspect;
 
+import project.game.investigation.TestimonyType;
+
 /**
  *
  * @author ISEN
@@ -12,6 +14,6 @@ public interface Lie {
     
     /*$$ METHODS $$*/
     abstract void contradiction();
-    abstract void createFalseLead();
-    abstract void createTestimony();
+    abstract void createFalseAlibi();
+    abstract int createFalseTestimony(TestimonyType category);
 }

@@ -31,8 +31,8 @@ public class InvestElement implements NoticeClues {
     /*$$ METHODS $$*/
     @Override
     public void analyse(Investigator player) {
-        String analyseText = new String();
-        String proofText = new String();
+        String analyseText;
+        String proofText;
         
         if (InvestElementType.CRIME_SCENE == this.m_category) {
             analyseText = "L'équipe sur le terrain a fouillé la scène de crime.";

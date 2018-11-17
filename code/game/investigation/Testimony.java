@@ -15,8 +15,8 @@ public class Testimony extends Clue {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Testimony(Suspect suspect, boolean isLie, String content, boolean isFounded) {
-        super(content, isFounded);
+    public Testimony(Suspect suspect, boolean isLie, String content) {
+        super(content, false);
         this.m_suspect = suspect;
         this.m_isLie = isLie;
     }

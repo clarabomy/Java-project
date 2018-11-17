@@ -9,4 +9,4 @@ package project.game.investigation;
  *
  * @author ISEN
  */
-public enum TestimonyType {SEEN, HEARD};
+public enum TestimonyType {SEEN, HEARD};//index 0 : ce qu'il a vu, 1 : ce qu'il a entendu

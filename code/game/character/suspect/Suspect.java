@@ -1,9 +1,11 @@
 
 package project.game.character.suspect;
 
+import java.util.ArrayList;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
+import project.game.investigation.Clue;
 import project.game.investigation.TestimonyType;
 
 
@@ -20,8 +22,8 @@ public abstract class Suspect extends LiveCharacter {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef) {
-        super(name, surname, sex, age);
+    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, ArrayList <Clue> clueList) {
+        super(name, surname, sex, age, clueList);
         this.m_stress = stressLevel;
         this.m_look = look;
         this.m_physicalAspect = physicalAspect;
@@ -48,8 +50,8 @@ public abstract class Suspect extends LiveCharacter {
         this.m_findedInnocent = findedInnocent;
     }
 
-    public void setTestimonyRef(int ref, TestimonyType index) { //index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
-        int key = index == TestimonyType.SEEN ? 0 : 1;
+    public void setTestimonyRef(int ref, TestimonyType index) {
+        int key = index == TestimonyType.SEEN ? 0 : 1; //index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
         this.m_testimonyRef[key] = ref;
     }
     
@@ -96,13 +98,18 @@ public abstract class Suspect extends LiveCharacter {
         
         String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
         int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
+       
+        //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
+        int[] stats = {player.getIntelligence(), player.getManipulation()};
+        String[] category = {"intelligence", "manipulation"};
+        rollMultiDice(stats , category, true);
         
-        player.InvestigatorDices();//inspecteur utilise intelligence et manipulation pour essayer de récupérer les infos (jet affiché)
+        //applique le choix
         switch (choix) {
-            case 0:
+            case 1:
                 this.giveAlibi();
                 break;
-            case 1:
+            case 2:
                 this.giveTestimony();
                 break;
         }

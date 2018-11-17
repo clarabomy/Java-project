@@ -126,7 +126,7 @@ public class Test {
         
         //criminel.contradiction();//débug ok
         
-        //criminel.createFalseLead();//débug ok
+        //criminel.createFalseAlibi();//débug ok
         
         //m_console.display(criminel.getMotive(), false).execContinue();//débug ok
         

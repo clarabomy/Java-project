@@ -1,6 +1,9 @@
 
 package project.game.character;
 
+import java.util.ArrayList;
+import project.game.investigation.Clue;
+
 /**
  *
  * @author ISEN
@@ -13,12 +16,41 @@ public abstract class LiveCharacter extends Character {
     private static int m_coeffDiff; //pour 50 : 1.25 = {44, 38, 32, 25} / 1 = {45, 40, 35, 30} / 0.75 = {47, 43, 39, 35}
     private static int m_lastDiceValue; //valeur tirée du dé précédent
     private static int m_lastDiceValidStage; //palier de validation du lancer précédent
+    protected ArrayList <Clue> m_clueList = new ArrayList();;// tous les personnages vivants peuvent modifier le tableau d'indices (modifient témoignage)
 
     
     /*$$ CONSTRUCTOR $$*/
-    public LiveCharacter(String name, String surname, Sex sex, int age) {
+    public LiveCharacter(String name, String surname, Sex sex, int age, ArrayList <Clue> clueList) {
         super(name, surname, sex, age);
+        m_clueList.addAll(clueList);
     }
+    
+    
+    /*$$ GETTERS & SETTERS $$*/
+    public Clue getClue(int index) {
+        return m_clueList.get(index);
+    }
+    
+    
+    public ArrayList <Clue> getClueList() {
+        return m_clueList;
+    }
+    
+    
+    public void addClue(Clue newClue) {
+        m_clueList.add(newClue);
+    }
+    
+    
+    public void addClueList(ArrayList <Clue> newClueList) {
+        m_clueList.addAll(newClueList);
+    }
+    
+    
+    public void setClueList(ArrayList <Clue> newClueList) {
+        m_clueList = newClueList;
+    }
+    
     
     
     /*$$ METHODS $$*/

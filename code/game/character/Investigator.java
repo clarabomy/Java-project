@@ -12,35 +12,31 @@ import static project.game.investigation.Investigation.suspectsNameList;
 public class Investigator extends LiveCharacter {
     protected int m_manipulation;
     protected int m_intelligence;
-    protected ArrayList <Clue> m_clueList;
     protected String m_progress;//"<meurtrier> a tué <victime> avec <arme> pour cause de <mobile>"//Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
 
     
     /*$$ CONSTRUCTOR $$*/
     public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, ArrayList <Clue> clueList, String progress) {
-        super(name, surname, sex, age);
+        super(name, surname, sex, age, clueList);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
-        this.m_clueList = new ArrayList(clueList);
         this.m_progress = progress;
     }
 
     
     /*$$ GETTERS & SETTERS $$*/
-    public Clue getClue(int index) {
-        return m_clueList.get(index);
-    }
-    
-    
-    public ArrayList <Clue> getClueList() {
-        return m_clueList;
-    }
-    
-    
     public String getProgress() {
         return m_progress;
     }
-
+    
+    public int getIntelligence() {
+        return m_intelligence;
+    }
+    
+    public int getManipulation() {
+        return m_manipulation;
+    }
+    
     
     /*$$ METHODS $$*/    
     @Override
@@ -119,13 +115,4 @@ public class Investigator extends LiveCharacter {
                 //indique un nombre d'erreurs au hasard
         }
     }
-    
-    
-    public DiceResult InvestigatorDices() {
-        //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
-        int[] stats = {this.m_intelligence, this.m_manipulation};
-        String[] category = {"intelligence", "manipulation"};
-        return rollMultiDice(stats , category, true);
-    }
-
 }
