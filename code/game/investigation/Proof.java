@@ -1,37 +1,31 @@
 
 package project.game.investigation;
 
-import project.game.character.Victim;
-
 
 /**
  *
  * @author ISEN
  */
 public class Proof extends Clue {
-    protected InvestElement m_element;
+    //protected InvestElement m_element;
+    protected String m_origin;//garde une trace de là ou est trouvé l'indice
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Proof(InvestElement element, String content, boolean isFounded) {
-        super(content, isFounded);
-        this.m_element = element;
+    public Proof(String origin, String content) {
+        super(content);
+        m_origin = origin;
     }
     
     
-    /*$$ METHODS $$*/
-    public void assignVictim(Victim corpse, int ref) {
-        //assigne la preuve à la victime
-        corpse.setRefProof(ref);
-    }
-    
-    
-    public void assignElement(InvestElement elt, int ref){
-        //assigne la preuve à l'élément d'enquête (arme du crime, scène de crime)
-        elt.setRefProof(ref);
+    /*$$ GETTERS & SETTERS $$*/
+    public String getOrigin() {
+        return m_origin;
     }
 
     
+    
+    /*$$ METHODS $$*/
     @Override
     public void display() {
         //affiche ce que contient la preuve et d'où elle vient (sang trouvé sur arme, cheveux trouvés sur scène de crime, etc.)

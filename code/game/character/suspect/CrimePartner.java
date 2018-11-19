@@ -6,37 +6,39 @@
 package project.game.character.suspect;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import project.game.character.Sex;
-import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
-import project.game.investigation.Testimony;
-import project.game.investigation.TestimonyType;
+import project.game.investigation.Deposition;
+import project.game.investigation.DepositionType;
 
 /**
  *
  * @author ISEN
  */
 public class CrimePartner extends Suspect implements Lie {
-    protected String m_alibi;
     protected String m_falseAlibi;
     protected int m_cooperation;
     protected String m_murdererName;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi, ArrayList <Clue> clueList, String murdererName) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef, clueList);
-        this.m_alibi = alibi;
-        this.m_falseAlibi = null;
+    public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect);
         this.m_cooperation = cooperationLevel;
         this.m_murdererName = murdererName;
+        m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
+        
+        this.m_falseAlibi = null;
+        m_heardTestimony = null;
+        m_seenTestimony = null;
     }
 
     
     /*$$ METHODS $$*/
     @Override
     public void giveAlibi() {
+        Deposition declaration;
+        
         int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
@@ -44,57 +46,84 @@ public class CrimePartner extends Suspect implements Lie {
                 break;
             case SUCCESS:
                 if (this.m_falseAlibi == null) {
-                    this.createFalseAlibi();
+                    this.createFalse(DepositionType.ALIBI);
                 }
-                this.m_console.display(this.getFullName(), this.m_falseAlibi, false);
+                this.m_console.display(this.m_fullName, this.m_falseAlibi, false);
+                
+                declaration = new Deposition(this.m_fullName, m_falseAlibi, DepositionType.ALIBI, true);
+                if (!this.m_clueList.contains(declaration)) {
+                    this.m_clueList.add(declaration);
+                }
                 break;
             case FAILURE:
-                this.m_console.display(this.getFullName(), this.m_alibi, false);
+                this.m_console.display(this.m_fullName, this.m_alibi.getContent(), false);
+                
+                if (!this.m_clueList.contains(m_alibi)) {
+                    this.m_clueList.add(m_alibi);
+                }
                 break;
             case CRITIC_FAILURE:
                 String part1 = "Ce soir là, j'ai participé à ce meurtre. Voilà. Vous êtes content ? ",
                         part2 = "Maintenant, vous pouvez arrêter avec vos questions : je n'en dirai pas plus.";
+                this.m_console.display(this.m_fullName, part1 + part2, false);
                 
-                this.m_console.display(this.getFullName(), part1 + part2, false);
+                declaration = new Deposition(this.m_fullName, part1 + part2, DepositionType.ALIBI, false);
+                if (!this.m_clueList.contains(declaration)) {
+                    this.m_clueList.add(declaration);
+                }
                 break;
         }
         this.m_console.execContinue();
     }
     
     @Override
-    public void createFalseAlibi() {
-        this.m_falseAlibi = this.m_alibi + ". Il y avait aussi " + this.m_murdererName + " avec moi.";
-    }
-    
-    @Override
     public void giveTestimony() {
         //crée temoignage si n'en a pas
-        for (int i = 0; i < this.m_testimonyRef.length; i++) {
-            if (this.m_testimonyRef[i] == -1) {
-                this.createFalseTestimony(i == 0? TestimonyType.SEEN : TestimonyType.HEARD);//index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
-            }
+        if (this.m_heardTestimony == null) {
+            this.createFalse(DepositionType.HEARD);
+        }
+        if (this.m_seenTestimony == null) {
+            this.createFalse(DepositionType.SEEN);
         }
         
         //affiche ce qu'il reussit a faire
-        String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
-        String heard = "J'ai entendu " + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
+        String seen = "J'ai vu " + this.m_seenTestimony.getContent() + ".";
+        String heard = "J'ai entendu " + this.m_heardTestimony.getContent() + ".";
         
         int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.getFullName(), seen + heard, false);
+                m_console.display(this.m_fullName, seen + heard, false);
+                
+                //l'inspecteur enregistre ce qu'il entend de nouveau
+                if (!m_clueList.contains(m_heardTestimony)) {
+                    m_clueList.add(m_heardTestimony);
+                }
+                if (!m_clueList.contains(m_seenTestimony)) {
+                    m_clueList.add(m_seenTestimony);
+                }
                 break;
             case SUCCESS:
-                m_console.display(this.getFullName(), (Math.random() < 0.5)? seen : heard, false);//soit ce qu'il a vu, soit ce qu'il a entendu
+                if (Math.random() < 0.5) {//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
+                    m_console.display(this.m_fullName, heard, false);
+                    if (!m_clueList.contains(m_heardTestimony)) {
+                        m_clueList.add(m_heardTestimony);
+                    }
+                }
+                else {
+                    m_console.display(this.m_fullName, seen + heard, false);
+                    if (!m_clueList.contains(m_seenTestimony)) {
+                        m_clueList.add(m_seenTestimony);
+                    }
+                }
                 break;
             case FAILURE:
                 this.textNoSpeak();
                 break;
             case CRITIC_FAILURE:
-                for (int i = 0; i < this.m_testimonyRef.length; i++) {
-                    this.m_clueList.remove(this.m_testimonyRef[i]);
-                    this.m_testimonyRef[i] = -1;
-                }
+                m_heardTestimony = null;
+                m_seenTestimony = null;
+                
                 this.textForget();
                 break;
         }
@@ -102,41 +131,35 @@ public class CrimePartner extends Suspect implements Lie {
     }
     
     @Override
-    public void createFalseTestimony(TestimonyType category) {//crée témoigage bidon avec aléatoire
-        //initialise variables
-        String[] object  = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"},
-                    sound   = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
-    
-        
-        //cree temoignage
-        String testimony = "";
+    public void createFalse(DepositionType category) {//crée témoigage bidon avec aléatoire
+        String text;
         switch (category) {
             case SEEN:
-                ArrayList <String> suspect = suspectsNameList();
-                //System.out.println(suspect.size());
-                //for (int i = 0; i < suspect.size(); i++) {
-                  //  System.out.println(suspect.get(i));
-                //}
-                suspect.remove(this.getFullName());
-                suspect.remove(this.m_murdererName);
+                String[] object = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"};
                 
-                testimony = "J'ai vu " + suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)];
+                ArrayList <String> suspect = suspectsNameList();
+                suspect.remove(this.m_fullName);
+                suspect.remove(this.m_murdererName);
+                /*System.out.println(suspect.size());
+                for (int i = 0; i < suspect.size(); i++) {
+                    System.out.println(suspect.get(i));
+                }*/
+                
+                text = "J'ai vu " + suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)] + " près du lieu du crime.";
+                
+                m_seenTestimony = new Deposition(this.m_fullName, text, DepositionType.SEEN, true);
                 break;
             case HEARD:
-                testimony = "J'ai entendu " + sound[(int) (Math.random() * sound.length)];
+                String[] sound = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
+                
+                text = "J'ai entendu " + sound[(int) (Math.random() * sound.length)] + " près du lieu du crime.";
+                
+                m_heardTestimony = new Deposition(this.m_fullName, text, DepositionType.HEARD, true);
+                break;
+            case ALIBI:
+                this.m_falseAlibi = this.m_alibi + ". Il y avait aussi " + this.m_murdererName + " avec moi.";
                 break;
         }
-        testimony += " près du lieu du crime.";
-        
-        System.out.println(testimony);
-        for (int i = 0; i < m_clueList.size(); i++) System.out.println(m_clueList.get(i).getContent());
-
-        //Dans le tableau d'indice, ajoute le témoignage avec islie = true et enregistre position
-        this.m_testimonyRef[category == TestimonyType.SEEN? 0 : 1] = m_clueList.size();//index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
-        Testimony lie = new Testimony(this, true, testimony);
-        m_clueList.add(lie);
-        
-        //for (int i = 0; i < m_clueList.size(); i++) System.out.println(m_clueList.get(i).getContent());
     }
 }
 

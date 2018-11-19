@@ -9,15 +9,12 @@ import project.game.UserInterface;
  */
 public abstract class Clue {
     protected String m_content;
-    protected boolean m_isFounded;
     protected UserInterface m_console;
-    protected int m_indexInClues;
     
     
     /*$$ CONSTRUCTOR $$*/
-    public Clue(String content, boolean isFounded) {
+    public Clue(String content) {
         this.m_content = content;
-        this.m_isFounded = isFounded;
     }
 
     
@@ -26,16 +23,7 @@ public abstract class Clue {
         return m_content;
     }
 
-    public boolean isFounded() {
-        return m_isFounded;
-    }
-
-    
-    public void setFounded(boolean isFounded) {
-        this.m_isFounded = isFounded;
-    }
-    
     
     /*$$ METHODS $$*/
-    public abstract void display();
+    public abstract void display();//formatedText?
 }

@@ -25,7 +25,7 @@ public class Investigation {
     /*$$ CONSTRUCTOR $$*/
     public Investigation(Investigator player, ArrayList <Suspect> suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
-        this.m_suspectsList = new ArrayList(suspectsList);
+        Investigation.m_suspectsList = new ArrayList(suspectsList);
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);
@@ -50,7 +50,7 @@ public class Investigation {
                                     "M'occuper des suspects.", 
                                     "Lister les indices.\n",
                                     "Voir mon supérieur."}; //menu du jeu
-            switch (m_console.display("Aujourd'hui, je vais...", choicesList, false).execSingleChoice()) {//choix unique
+            switch (m_console.display("Aujourd'hui, je vais...", choicesList, false).execChoice()) {//choix unique
                 case 0:
                     elementsMenu();
                     break;
@@ -69,15 +69,17 @@ public class Investigation {
     
     
     public void elementsMenu() {
+        /*
         for (int index = 0; index < m_elements.length; index++) {
             //System.out.print("Element " + (index + 1) + " : " + m_elements[index].display());
         }
+        */
         
         String[] choicesList = {"Analyser l'arme du crime.", 
                                 "Autopsier la victime.", 
                                 "Chercher des indices dans la scène de crime.\n",
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
+        int action = m_console.display("C'est parti pour...", choicesList, false).execChoice();
         if (action < choicesList.length) {
             m_elements[action].analyse(m_player);
         }
@@ -94,11 +96,11 @@ public class Investigation {
                                 "Innocenter un suspect.", 
                                 "Arrêter un suspect.\n",
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
+        int action = m_console.display("C'est parti pour...", choicesList, false).execChoice();
         
         if (action < choicesList.length) {
             System.out.print("Et l'heureux élu est ");
-            int choicePlayer = m_console.execSingleChoice();
+            int choicePlayer = m_console.execChoice();
 
             switch(action) {
                 case 0:
@@ -130,11 +132,11 @@ public class Investigation {
                                 "Relier les indices.", 
                                 "Chercher des incohérences.\n", 
                                 "Faire autre chose."};  //menu principal
-        int action = m_console.display("C'est parti pour...", choicesList, false).execSingleChoice();
+        int action = m_console.display("C'est parti pour...", choicesList, false).execChoice();
         
         if (action < choicesList.length) {
             System.out.print("Allez, indice ");
-            int choicePlayer = m_console.execSingleChoice();
+            int choicePlayer = m_console.execChoice();
 
             switch(action) {
                 case 0:

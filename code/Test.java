@@ -14,11 +14,7 @@ import project.game.character.suspect.Murderer;
 import project.game.character.suspect.Suspect;
 import project.game.investigation.Clue;
 import project.game.investigation.InvestElement;
-import project.game.investigation.InvestElementType;
 import project.game.investigation.Investigation;
-import project.game.investigation.Proof;
-import project.game.investigation.Testimony;
-import project.game.investigation.TestimonyType;
 
 
 /**
@@ -74,8 +70,7 @@ public class Test {
         
         m_enquete = new Investigation(m_player, m_suspectsList, m_corpse, m_elements);
         
-        m_jeu = new Game();
-        m_jeu.setLevelChoice(Difficulties.DIFFICULT);
+        m_jeu = new Game(Difficulties.DIFFICULT, "Jean Coupable", "Jeanne Victime", "arme", "folie");
     }
         
     public void test1() {//à répartir dans les catégories testées
@@ -184,16 +179,41 @@ public class Test {
     }
     
     public void testVictim() {
-        m_corpse = new Victim("VictimName", "VictimSurname", Sex.FEMME, 25, "deathDate", "deathCause", m_refProof);
+    //public Victim(String name, String surname, Sex sex, int age, String deathDate, String deathCause, ArrayList <Integer> refProof)
+        
+    
+    
+    
+    
+        //doit créer preuves et donner à victim ses références
+        //Victim(String name, String surname, Sex sex, int age, String deathDate, String deathCause, ArrayList <Integer> refProof)
+    
+        /*
+        InvestElement element = new InvestElement(InvestElementType.CRIME_WEAPON, );
+        //InvestElementType category, ArrayList <Integer> refProof
+        Clue clue1 = new Proof(element, "des coups de couteau");
+        Clue clue2 = new Proof(element, "un cheveu blond");
+        
+        ArrayList <Clue> clueList = new ArrayList();
+        clueList.add(clue1);
+        clueList.add(clue2);
+        Investigator player = new Investigator("Bourgain", "Manon", Sex.FEMME, 34, 60, 32, clueList, "100");
+    
+        ArrayList <Integer> refProof = new ArrayList();
+        refProof.add(1);
+        refProof.add(2);
+    
+        m_corpse = new Victim("VictimName", "VictimSurname", Sex.FEMME, 25, "deathDate", "deathCause", refProof);
         //m_corpse.presentCharacter();
-        InvestElement elem = new InvestElement (InvestElementType.CRIME_SCENE, m_refProof);
+        InvestElement elem = new InvestElement (InvestElementType.CRIME_SCENE, refProof);
         Proof clue4 = new Proof (elem, "contentClue4", false);
         m_clueList.add(clue4);
         Proof clue3 = new Proof (elem, "contentClue3", false);
         
         m_clueList.add(clue3);
         clue4.assignVictim(m_corpse, 1);
-        //m_corpse.analyse(m_player); //bug indexOutOfBoundsException
+        m_corpse.analyse(player); //bug indexOutOfBoundsException
+        */
     }
     
     
@@ -216,7 +236,7 @@ public class Test {
         
         m_console.display("test 5", false).execContinue().clean();
         
-        result = m_console.display("test 6", choices, false).execSingleChoice();
+        result = m_console.display("test 6", choices, false).execChoice();
         System.out.printf("Choix enregistré : %d\n", result);
     }
     

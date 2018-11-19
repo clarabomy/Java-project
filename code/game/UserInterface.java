@@ -86,7 +86,7 @@ public class UserInterface {//codé - débugé
     }//end void execContinue
     
     
-    public int execSingleChoice() {
+    public int execChoice() {
         Scanner keyboard = new Scanner(System.in);
         int choice = 0;
         boolean correctChoice = false;
@@ -107,12 +107,4 @@ public class UserInterface {//codé - débugé
         
         return choice;
     }
-    
-    
-    public int[] execMultiChoice(){//nécéssaire?
-        System.out.printf("\t\tFaites vos choix (saisie vide pour continuer) : ");
-        
-        int[] tmp = { 0 };
-        return tmp;
-    }//end int[] playerMultiChoices
 }

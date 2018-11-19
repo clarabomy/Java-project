@@ -18,13 +18,14 @@ public abstract class LiveCharacter extends Character {
     private static float m_coeffDiff;
     private static int m_lastDiceValue; //valeur tirée du dé précédent
     private static int m_lastDiceValidStage; //palier de validation du lancer précédent
-    protected ArrayList <Clue> m_clueList = new ArrayList();// tous les personnages vivants peuvent accéder au tableau d'indices (modifient témoignages ou les regardent)
+    //ajoute à clueList les preuves des éléments d'enquête quand les trouve + ajoute les dépositions quand les écoute
+    protected ArrayList <Clue> m_clueList = new ArrayList();
 
     
     /*$$ CONSTRUCTOR $$*/
-    public LiveCharacter(String name, String surname, Sex sex, int age, ArrayList <Clue> clueList) {
+    public LiveCharacter(String name, String surname, Sex sex, int age) {
         super(name, surname, sex, age);
-        m_clueList.addAll(clueList);
+        //m_clueList.addAll(clueList);
         
         //facile : 0.75 | moyen : 1 | difficile : 1.25
         m_coeffDiff = (float) (getLevelChoice() == Difficulties.SIMPLE? 0.75 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 1.25));
@@ -39,6 +40,10 @@ public abstract class LiveCharacter extends Character {
     
     public ArrayList <Clue> getClueList() {
         return m_clueList;
+    }
+    
+    public void setClue(Clue newClue) {
+        this.m_clueList.add(newClue);
     }
     
     
@@ -58,11 +63,11 @@ public abstract class LiveCharacter extends Character {
                 diceValue = 100;//loupe autres lancers
             }
             //si réussite critique au précédent lancer
-            if (m_lastDiceValue <= M_CRITICAL_SUCCESS) {
+            else if (m_lastDiceValue <= M_CRITICAL_SUCCESS) {
                 validStage += 10; //application du bonus dû au succès précédent
             }
             //si échec simple au précédent lancer
-            if (m_lastDiceValue > m_lastDiceValidStage && m_lastDiceValue < M_CRITICAL_FAILURE) {
+            else if (m_lastDiceValue > m_lastDiceValidStage && m_lastDiceValue < M_CRITICAL_FAILURE) {
                 int zone = 0;
                 do zone++; while (m_lastDiceValue > m_lastDiceValidStage + zone * ((M_SIDES - m_lastDiceValidStage) / 4));
                 validStage -= (int)(M_ZONE_VALUE * zone * m_coeffDiff); //application du malus dû à l'échec précédent

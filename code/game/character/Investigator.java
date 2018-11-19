@@ -1,7 +1,6 @@
 
 package project.game.character;
 
-import java.util.ArrayList;
 import static project.game.Game.getMobile;
 import static project.game.Game.getMobileList;
 import static project.game.Game.getMurderer;
@@ -9,7 +8,6 @@ import static project.game.Game.getVictim;
 import static project.game.Game.getVictimList;
 import static project.game.Game.getWeapon;
 import static project.game.Game.getWeaponList;
-import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
 
 /**
@@ -26,8 +24,8 @@ public class Investigator extends LiveCharacter {
     protected String m_progressMobile;
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, ArrayList <Clue> clueList, String progress) {
-        super(name, surname, sex, age, clueList);
+    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, String progress) {
+        super(name, surname, sex, age);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
         this.m_progress = progress;
@@ -56,7 +54,7 @@ public class Investigator extends LiveCharacter {
     /*$$ METHODS $$*/    
     @Override
     public void presentCharacter() {
-        String text = "Vous êtes " + this.getFullName() + (m_sex.equals(Sex.FEMME)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
+        String text = "Vous êtes " + (m_sex.equals(Sex.FEMME)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
         m_console.display(text, false).execContinue();    
     }//end void presentCharacter
     
@@ -80,28 +78,28 @@ public class Investigator extends LiveCharacter {
         this.consultClues().displayProgress();//affiche indices puis progression
         int designed = 0;
         String choices[] = {m_progressMurderer, m_progressVictim, m_progressWeapon, m_progressMobile};
-        switch (m_console.display("Quel champ voulez-vous changer ?", choices, false).execSingleChoice()) {
+        switch (m_console.display("Quel champ voulez-vous changer ?", choices, false).execChoice()) {
             case 1:
                 String[] listSuspects = (String[]) suspectsNameList().toArray();
-                designed = m_console.display("Le coupable serait le suspect...", listSuspects, false).execSingleChoice();
+                designed = m_console.display("Le coupable serait le suspect...", listSuspects, false).execChoice();
                 m_progressMurderer = listSuspects[designed];//met à jour le suspect
                 break;
             case 2:
                 //liste des victimes à l'initialisation
                 String[] morgue = (String[]) getVictimList().toArray();
-                designed = m_console.display("La victime est...", morgue, false).execSingleChoice();
+                designed = m_console.display("La victime est...", morgue, false).execChoice();
                 m_progressWeapon = morgue[designed];
                 break;
             case 3:
                 //liste des armes à l'initialisation
                 String[] arsenal = (String[]) getWeaponList().toArray();
-                designed = m_console.display("L'arme du crime est...", arsenal, false).execSingleChoice();
+                designed = m_console.display("L'arme du crime est...", arsenal, false).execChoice();
                 m_progressWeapon = arsenal[designed];
                 break;
             case 4:
                 //liste des mobiles à l'initialisation
                 String[] possibility = (String[]) getMobileList().toArray();
-                designed = m_console.display("Le mobile est...", possibility, false).execSingleChoice();
+                designed = m_console.display("Le mobile est...", possibility, false).execChoice();
                 m_progressWeapon = possibility[designed];
                 break;
         }
@@ -109,19 +107,17 @@ public class Investigator extends LiveCharacter {
     
     public Investigator consultClues(){
         //affiche les indices ayant été trouvés
-        boolean none = true;
-        for (int i = 0; i < m_clueList.size(); i++) {
-            if (m_clueList.get(i).isFounded()) {
-                m_console.display("Indice " + (i+1) + " : " + m_clueList.get(i).getContent(), true);
-                none = false;
-            }
-        }
-        if (none) {
+        if (m_clueList.isEmpty()) {
             m_console.display("Vous n'avez pas encore trouvé d'indices...", false);
+        }
+        else {
+            for (int i = 0; i < m_clueList.size(); i++) {
+                m_console.display("Indice " + (i+1) + " : " + m_clueList.get(i).getContent(), true);
+            }
         }
         m_console.execContinue();
         return this;
-    }//end void lookForClues
+    }
     
     public void displayProgress(){
         String progress = m_progress.replace("<Murderer>", m_progressMurderer)
@@ -131,7 +127,7 @@ public class Investigator extends LiveCharacter {
         m_console.display(progress, true);
     }
     
-    public void checkContradiction(){
+    public void checkContradiction(){//sur progression ou sur listClues?
         int nbErrors = 0;
         if (this.m_progressMurderer.equals(getMurderer())) {
             nbErrors++;

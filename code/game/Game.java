@@ -13,14 +13,13 @@ public class Game {
     protected Investigation m_currentGame;//memberOfClass_attributeName
     protected static Difficulties m_levelChoice;
     protected UserInterface m_console = new UserInterface();
-    protected static ArrayList<String> m_weaponList;//armes à l'initialisation
-    protected static ArrayList<String> m_mobileList;//mobiles à l'initialisation
-    protected static ArrayList<String> m_victimList;//victimes à l'initialisation
-    
+    protected static ArrayList<String> m_victimList = new ArrayList();//victimes à l'initialisation
+    protected static ArrayList<String> m_weaponList = new ArrayList();//armes à l'initialisation
+    protected static ArrayList<String> m_mobileList = new ArrayList();//mobiles à l'initialisation
     protected static String m_murderer;//à l'initialisation
+    protected static String m_victim;//à l'initialisation
     protected static String m_weapon;//à l'initialisation
     protected static String m_mobile;//à l'initialisation
-    protected static String m_victim;//à l'initialisation
     
 
     
@@ -28,12 +27,17 @@ public class Game {
     public Game() {
     }
     
-    
-    /*$$ GETTERS & SETTERS $$*/
-    public void setLevelChoice(Difficulties diff) {
-        m_levelChoice = diff;
+    //pour Test
+    public Game(Difficulties levelchoice, String murderer, String victim, String weapon, String mobile) {
+        m_levelChoice = levelchoice;
+        m_murderer = murderer;
+        m_victim = victim;
+        m_weapon = weapon;
+        m_mobile = mobile;
     }
     
+    
+    /*$$ GETTERS & SETTERS $$*/
     public static Difficulties getLevelChoice() {
         return m_levelChoice;
     }
@@ -80,7 +84,7 @@ public class Game {
                                     "Déposer un rapport d'enquête",     //sauvegarder partie
                                     "Abandonner une enquête\n",         //abandonner partie
                                     "Quitter le bureau d'enquête"};     //quitter jeu
-            switch (m_console.display("Menu principal", choicesList, false).execSingleChoice()) {
+            switch (m_console.display("Menu principal", choicesList, false).execChoice()) {
                 case 0:
                     gameRules();
                     break;
@@ -117,7 +121,7 @@ public class Game {
                                     {"Ouvrir le dossier"}};
         
         //intro
-        switch (m_console.display("Votre supérieur", intro[0], choices[0], false).execSingleChoice()) {
+        switch (m_console.display("Votre supérieur", intro[0], choices[0], false).execChoice()) {
             case 0:
                 m_levelChoice = Difficulties.SIMPLE;
                 break;

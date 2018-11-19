@@ -1,9 +1,9 @@
 
 package project.game.character.suspect;
 
-import java.util.ArrayList;
 import project.game.character.Sex;
-import project.game.investigation.Clue;
+import project.game.investigation.Deposition;
+import project.game.investigation.DepositionType;
 
 /**
  *
@@ -11,28 +11,41 @@ import project.game.investigation.Clue;
  */
 
 public class Innocent extends Suspect {
-    protected String m_alibi;
     protected int m_cooperation;
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi, ArrayList <Clue> clueList) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef, clueList);
-        this.m_alibi = alibi;
+    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String heard, String seen, String alibi) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect);
         this.m_cooperation = cooperationLevel;
+        
+        //String depositor, String content, DepositionType category, boolean isLie
+        m_heardTestimony = new Deposition(this.m_fullName, heard, DepositionType.HEARD, false);
+        m_seenTestimony = new Deposition(this.m_fullName, seen, DepositionType.SEEN, false);
+        m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
     }
     
     
     /*$$ METHODS $$*/
     @Override
-    public void giveAlibi() {   
+    public void giveAlibi() {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.getFullName(), "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps.", false);
+                String text = "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps.";
+                m_console.display(this.m_fullName, text, false);
+                
+                Deposition declaration = new Deposition(this.m_fullName, text, DepositionType.ALIBI, false);
+                if (!this.m_clueList.contains(declaration)) {
+                    this.m_clueList.add(declaration);
+                }
                 break;
             case SUCCESS:
-                m_console.display(this.getFullName(), this.m_alibi, false);
+                m_console.display(this.m_fullName, this.m_alibi.getContent(), false);
+                
+                if (!this.m_clueList.contains(m_alibi)) {
+                    this.m_clueList.add(m_alibi);
+                }
                 break;
             case FAILURE:
                 this.textNoSpeak();
@@ -46,16 +59,35 @@ public class Innocent extends Suspect {
 
     @Override
     public void giveTestimony() {
-        String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
-        String heard = "J'ai entendu " + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
+        String seen = "J'ai vu " + this.m_seenTestimony.getContent() + ".";
+        String heard = "J'ai entendu " + this.m_heardTestimony.getContent() + ".";
         
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.getFullName(), seen + heard, false);
+                m_console.display(this.m_fullName, seen + heard, false);
+                
+                //l'inspecteur enregistre ce qu'il entend de nouveau
+                if (!m_clueList.contains(m_heardTestimony)) {
+                    m_clueList.add(m_heardTestimony);
+                }
+                if (!m_clueList.contains(m_seenTestimony)) {
+                    m_clueList.add(m_seenTestimony);
+                }
                 break;
             case SUCCESS:
-                m_console.display(this.getFullName(), (Math.random() < 0.5)? seen : heard, false);//soit ce qu'il a vu, soit ce qu'il a entendu
+                if (Math.random() < 0.5) {//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
+                    m_console.display(this.m_fullName, heard, false);
+                    if (!m_clueList.contains(m_heardTestimony)) {
+                        m_clueList.add(m_heardTestimony);
+                    }
+                }
+                else {
+                    m_console.display(this.m_fullName, seen + heard, false);
+                    if (!m_clueList.contains(m_seenTestimony)) {
+                        m_clueList.add(m_seenTestimony);
+                    }
+                }
                 break;
             case FAILURE:
                 this.textNoSpeak();
