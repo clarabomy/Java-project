@@ -2,6 +2,8 @@
 package project;
 
 import java.util.ArrayList;
+import project.game.Difficulties;
+import project.game.Game;
 import project.game.UserInterface;
 import project.game.character.Investigator;
 import project.game.character.Sex;
@@ -33,6 +35,7 @@ public class Test {
     int[] m_testimonyRef;
     ArrayList <Integer> m_refProof = new ArrayList();
     InvestElement[] m_elements;
+    Game m_jeu;
     
     
     public Test() {
@@ -70,6 +73,9 @@ public class Test {
         //m_suspectsList[4] = new Innocent("Innocent", "Jean Philippe", Sex.HOMME, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi");
         
         m_enquete = new Investigation(m_player, m_suspectsList, m_corpse, m_elements);
+        
+        m_jeu = new Game();
+        m_jeu.setLevelChoice(Difficulties.DIFFICULT);
     }
         
     public void test1() {//à répartir dans les catégories testées
@@ -92,8 +98,8 @@ public class Test {
         
         
         //project.game.investigation.suspect
+        //this.testInnocent();//débug ok
        //this.testCrimePartner(); //débug en cours
-        //this.testInnocent(); //débug en cours
         //this.testMurderer();//débug en cours
           this.testVictim(); //débug en cours
 
@@ -141,7 +147,7 @@ public class Test {
         Innocent m_innocent = new Innocent("Innocent1", "Jean François", Sex.HOMME, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi", m_clueList);
         //m_innocent.displayStats(); //débug ok
         
-        //m_innocent.beInterrogated(player); //erreur fonctions dés
+        //m_innocent.beInterrogated(m_player); //débug ok
         
         //m_innocent.beArrested(); //débug ok
         

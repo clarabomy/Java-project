@@ -12,7 +12,7 @@ import project.game.investigation.Investigation;
 public class Game {
     protected Investigation m_currentGame;//memberOfClass_attributeName
     protected static Difficulties m_levelChoice;
-    protected UserInterface m_console;
+    protected UserInterface m_console = new UserInterface();
     protected static ArrayList<String> m_weaponList;//armes à l'initialisation
     protected static ArrayList<String> m_mobileList;//mobiles à l'initialisation
     protected static ArrayList<String> m_victimList;//victimes à l'initialisation
@@ -26,11 +26,14 @@ public class Game {
     
     /*$$ CONSTRUCTOR $$*/
     public Game() {
-        this.m_console = new UserInterface();
     }
     
     
     /*$$ GETTERS & SETTERS $$*/
+    public void setLevelChoice(Difficulties diff) {
+        m_levelChoice = diff;
+    }
+    
     public static Difficulties getLevelChoice() {
         return m_levelChoice;
     }

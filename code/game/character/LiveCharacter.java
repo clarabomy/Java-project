@@ -2,6 +2,8 @@
 package project.game.character;
 
 import java.util.ArrayList;
+import project.game.Difficulties;
+import static project.game.Game.getLevelChoice;
 import project.game.investigation.Clue;
 
 /**
@@ -13,7 +15,7 @@ public abstract class LiveCharacter extends Character {
     private static final int M_CRITICAL_SUCCESS = 15;
     private static final int M_CRITICAL_FAILURE = 95;
     private static final int M_ZONE_VALUE = 5; 
-    private static int m_coeffDiff; //pour 50 : 1.25 = {44, 38, 32, 25} / 1 = {45, 40, 35, 30} / 0.75 = {47, 43, 39, 35}
+    private static float m_coeffDiff;
     private static int m_lastDiceValue; //valeur tirée du dé précédent
     private static int m_lastDiceValidStage; //palier de validation du lancer précédent
     protected ArrayList <Clue> m_clueList = new ArrayList();// tous les personnages vivants peuvent accéder au tableau d'indices (modifient témoignages ou les regardent)
@@ -23,6 +25,9 @@ public abstract class LiveCharacter extends Character {
     public LiveCharacter(String name, String surname, Sex sex, int age, ArrayList <Clue> clueList) {
         super(name, surname, sex, age);
         m_clueList.addAll(clueList);
+        
+        //facile : 0.75 | moyen : 1 | difficile : 1.25
+        m_coeffDiff = (float) (getLevelChoice() == Difficulties.SIMPLE? 0.75 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 1.25));
     }
     
 
@@ -47,13 +52,22 @@ public abstract class LiveCharacter extends Character {
 
         
         //si ce lancé est dépendant du précédent, ajuste l'intervalle de validité
-        //si échec simple au précédent lancer et qu'on prend en compte l'ancien lancer
-        if (!newThrow && m_lastDiceValue > m_lastDiceValidStage && m_lastDiceValue < M_CRITICAL_FAILURE) {
-            int zone = 0;
-            do zone++; while (m_lastDiceValue > m_lastDiceValidStage + zone * ((M_SIDES - m_lastDiceValidStage) / 4));
-            validStage -= (int)(M_ZONE_VALUE * zone * m_coeffDiff); //application du malus dû à l'échec précédent
+        if (!newThrow) {
+            //si echec critique au précédent lancer 
+            if (m_lastDiceValue >= M_CRITICAL_FAILURE) {
+                diceValue = 100;//loupe autres lancers
+            }
+            //si réussite critique au précédent lancer
+            if (m_lastDiceValue <= M_CRITICAL_SUCCESS) {
+                validStage += 10; //application du bonus dû au succès précédent
+            }
+            //si échec simple au précédent lancer
+            if (m_lastDiceValue > m_lastDiceValidStage && m_lastDiceValue < M_CRITICAL_FAILURE) {
+                int zone = 0;
+                do zone++; while (m_lastDiceValue > m_lastDiceValidStage + zone * ((M_SIDES - m_lastDiceValidStage) / 4));
+                validStage -= (int)(M_ZONE_VALUE * zone * m_coeffDiff); //application du malus dû à l'échec précédent
+            }
         }
-        //si echec critique = loupe autres lancers
         
         
         //met à jour les attributs
@@ -63,18 +77,21 @@ public abstract class LiveCharacter extends Character {
         
         //détermine le résultat
         DiceResult result;
+        
         //plus fréquent
         if (diceValue <= validStage && diceValue > M_CRITICAL_SUCCESS) result = DiceResult.SUCCESS;
         else if (diceValue > validStage && diceValue < M_CRITICAL_FAILURE) result = DiceResult.FAILURE;
         
         //moins fréquent
         else if (diceValue <= M_CRITICAL_SUCCESS) result = DiceResult.CRITIC_SUCCESS;
-        else result = DiceResult.CRITIC_FAILURE;//if (throwResult >= M_CRITICAL_FAILURE)
+        else /*if (diceValue >= M_CRITICAL_FAILURE)*/ {
+            result = DiceResult.CRITIC_FAILURE;
+        }
         
         
         //affiche infos si souhaité
         if (display != null) {
-            System.out.printf("Jet de %s : %d / %d\t%s\n", display, diceValue, validStage, result.toString());
+            System.out.printf("Jet %s : %d / %d\t%s\n", display, diceValue, validStage, result.toString());
         }
         
         
@@ -85,7 +102,9 @@ public abstract class LiveCharacter extends Character {
     public static DiceResult rollMultiDice(int[] validStage, String[] display, boolean newThrow) {
         DiceResult action = DiceResult.ERROR;
         for (int i = 0; i < validStage.length; i++) {
-            action = rollDice(validStage[i], (i < display.length)? display[i] : null, (i == 0)? newThrow : false);
+            String text = (display != null && i < display.length)? display[i] : null;//y a t'il du texte à afficher pour ce lancer
+            boolean previousImpact = (i == 0)? newThrow : false;//(seulement pour le premier lancer) est ce une nouvelle suite de lancers?
+            action = rollDice(validStage[i], text, previousImpact);
         }
         return action;
     }

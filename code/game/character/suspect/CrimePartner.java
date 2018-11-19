@@ -77,7 +77,7 @@ public class CrimePartner extends Suspect implements Lie {
         
         //affiche ce qu'il reussit a faire
         String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
-        String heard = "J'ai entendu" + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
+        String heard = "J'ai entendu " + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
         
         int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {

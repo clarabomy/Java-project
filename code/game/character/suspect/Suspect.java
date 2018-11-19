@@ -78,7 +78,7 @@ public abstract class Suspect extends LiveCharacter {
        
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
         int[] stats = {player.getIntelligence(), player.getManipulation()};
-        String[] category = {"intelligence", "manipulation"};
+        String[] category = {"d'intelligence", "de manipulation"};
         rollMultiDice(stats , category, true);
         
         //applique le choix

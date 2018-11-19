@@ -47,7 +47,7 @@ public class Innocent extends Suspect {
     @Override
     public void giveTestimony() {
         String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
-        String heard = "J'ai entendu" + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
+        String heard = "J'ai entendu " + this.m_clueList.get(this.m_testimonyRef[1]).getContent() + ".";
         
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
