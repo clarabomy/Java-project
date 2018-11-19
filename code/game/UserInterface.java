@@ -75,7 +75,7 @@ public class UserInterface {//codé - débugé
     
     public UserInterface execContinue() {
         //saisie bloquante d'un caractère entrée
-        System.out.println("\t\tAppuyez sur entrée pour continuer...");
+        System.out.println("   Appuyez sur entrée pour continuer...");
         try {
             System.in.read();
         } 

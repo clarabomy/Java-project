@@ -5,7 +5,7 @@ package project.game.character;
  *
  * @author ISEN
  */
-public enum Sex {WOMAN, MAN;
+public enum Sex {FEMME, HOMME;
 
 @Override
     public String toString() {

@@ -2,6 +2,7 @@
 package project.game.character;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import project.game.investigation.NoticeClues;
 
 /**
@@ -11,7 +12,7 @@ import project.game.investigation.NoticeClues;
 public class Victim extends Character implements NoticeClues {
     protected String m_deathDate;
     protected String m_deathCause;
-    protected ArrayList <Integer> m_refProof;
+    protected ArrayList <Integer> m_refProof = new ArrayList();
 
 
 
@@ -20,7 +21,8 @@ public class Victim extends Character implements NoticeClues {
         super(name, surname, sex, age);
         this.m_deathDate = deathDate;
         this.m_deathCause = deathCause;
-        this.m_refProof = new ArrayList(refProof);
+        //this.m_refProof = new ArrayList(refProof);
+        this.m_refProof.addAll(refProof);
     }
 
     
@@ -42,7 +44,7 @@ public class Victim extends Character implements NoticeClues {
     @Override
     public void presentCharacter() {
         //Victime : nom, sexe, age (phrase différente)
-        String victimPresentation = "La victime est " + (m_sex == Sex.WOMAN? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.WOMAN? "elle s'appelait" : "il s'appelait") + this.getFullName() + ".";
+        String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait" : "il s'appelait") + this.getFullName() + ".";
         m_console.display(victimPresentation, false).execContinue();
     }
 

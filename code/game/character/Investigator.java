@@ -56,7 +56,7 @@ public class Investigator extends LiveCharacter {
     /*$$ METHODS $$*/    
     @Override
     public void presentCharacter() {
-        String text = "Vous êtes " + this.getFullName() + (m_sex.equals(Sex.WOMAN)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
+        String text = "Vous êtes " + this.getFullName() + (m_sex.equals(Sex.FEMME)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
         m_console.display(text, false).execContinue();    
     }//end void presentCharacter
     

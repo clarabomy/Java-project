@@ -52,7 +52,7 @@ public abstract class Suspect extends LiveCharacter {
     public void presentCharacter() {
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
         String text = "Bonjour, je m'appelle " + this.getFullName() + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
-        m_console.display(text, false).execContinue();
+        m_console.display(this.getFullName(), text, false).execContinue();
     }
     
     @Override
@@ -64,15 +64,15 @@ public abstract class Suspect extends LiveCharacter {
         String condition = "Etat : " + (this.m_stress > 50? "stressé" : "détendu");
         String physicalDescript = "Description physique : " + this.m_physicalAspect + ", " + this.m_look;
         
-        m_console.display(name, true);
-        m_console.display(sex, true);
-        m_console.display(age, true);
-        m_console.display(condition, true);
+        m_console.display(name, false);
+        m_console.display(sex, false);
+        m_console.display(age, false);
+        m_console.display(condition, false);
         m_console.display(physicalDescript, false).execContinue();
         
     }
     
-    public void BeInterrogated(Investigator player) {
+    public void beInterrogated(Investigator player) {
         String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
         int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execSingleChoice();
        
@@ -108,13 +108,13 @@ public abstract class Suspect extends LiveCharacter {
         m_console.display(this.getFullName(),"Euh... je ne m'en souviens pas...", false);
     }
     
-    public void BeDisculpated(){
+    public void beDisculpated(){
         this.setFindedInnocent(true);
         String text = "Vous avez choisi de disculper " + this.getFullName();
         m_console.display(text, false).execContinue();
     }
     
-    public void BeArrested(){
+    public void beArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
         if (this instanceof Murderer) {

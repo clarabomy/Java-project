@@ -9,8 +9,8 @@ package project;
 public class Source {
     public static void main(String[] args) {
         //Débug du jeu
-        //Test unitTest = new Test();
-        //unitTest.debug();
+        Test unitTest = new Test();
+        unitTest.debug();
         
         //unitTest.test1();
         

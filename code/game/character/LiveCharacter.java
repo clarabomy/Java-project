@@ -25,11 +25,12 @@ public abstract class LiveCharacter extends Character {
         m_clueList.addAll(clueList);
     }
     
-    
+
     /*$$ GETTERS & SETTERS $$*/
     public Clue getClue(int index) {
         return m_clueList.get(index);
     }
+
     
     public ArrayList <Clue> getClueList() {
         return m_clueList;
@@ -83,7 +84,9 @@ public abstract class LiveCharacter extends Character {
     
     public static DiceResult rollMultiDice(int[] validStage, String[] display, boolean newThrow) {
         DiceResult action = DiceResult.ERROR;
-        for (int i = 0; i < validStage.length; i++) action = rollDice(validStage[i], (i < display.length)? display[i] : null, (i == 0)? newThrow : false);
+        for (int i = 0; i < validStage.length; i++) {
+            action = rollDice(validStage[i], (i < display.length)? display[i] : null, (i == 0)? newThrow : false);
+        }
         return action;
     }
 }

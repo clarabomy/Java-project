@@ -25,7 +25,11 @@ public class Investigation {
     /*$$ CONSTRUCTOR $$*/
     public Investigation(Investigator player, ArrayList <Suspect> suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
-        Investigation.m_suspectsList = new ArrayList(suspectsList);
+        this.m_suspectsList = new ArrayList();
+        //for (Suspect suspect : suspectsList) {
+        //    this.m_suspectsList.add(suspect);
+        //}
+        //this.m_suspectsList.addAll(suspectsList);
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);
@@ -102,13 +106,13 @@ public class Investigation {
 
             switch(action) {
                 case 0:
-                    m_suspectsList.get(choicePlayer).BeInterrogated(m_player);
+                    m_suspectsList.get(choicePlayer).beInterrogated(m_player);
                     break;
                 case 1:
-                    m_suspectsList.get(choicePlayer).BeDisculpated();
+                    m_suspectsList.get(choicePlayer).beDisculpated();
                     break;
                 case 2:
-                    m_suspectsList.get(choicePlayer).BeArrested();
+                    m_suspectsList.get(choicePlayer).beArrested();
                     break;
             }
         }

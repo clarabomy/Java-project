@@ -29,7 +29,7 @@ public class Innocent extends Suspect {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.getFullName(), "Je suis innocent. Concentrez vous sur les autres suspects, plutôt que de perdre votre temps.", false);
+                m_console.display(this.getFullName(), "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps.", false);
                 break;
             case SUCCESS:
                 m_console.display(this.getFullName(), this.m_alibi, false);
