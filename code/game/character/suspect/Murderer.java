@@ -51,7 +51,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
                 break;
             case CRITIC_FAILURE:
                 String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "là? Vraiment? Bien, je vais vous le dire : ",
-                        part2 = "j'étais occupé à assassiner " + "nameVicitm" + " !";
+                        part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
                 m_console.display(this.getFullName(), part1 + part2, false);
                 break;
         }
@@ -79,7 +79,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         
         int nbSuspectsIncluded = (int) (Math.random() * 3); //entre 0 et 3
         if (nbSuspectsIncluded == 0) {
-            this.m_falseAlibi += ", seul.";
+            this.m_falseAlibi += ", seul";
         }
         else {
             for (int i = 0; i < nbSuspectsIncluded; i++) {
@@ -166,7 +166,7 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
     public void confess(){
         String nom = this.getFullName();
         m_console.display(nom, "C'est bon, je vais tout vous avouer...", false).execContinue();
-        m_console.display(nom, "Raconte ce qui s'est passé (pourquoi, comment)", false).execContinue();
+        m_console.display(nom, "C'est moi le coupable ! AH AH AH AH AH !", false).execContinue();
         
         String text = "J'ai fait tout ça pour " + m_motive + ". Et vous, qu'auriez-vous fait à ma place?";
         m_console.display(nom, text, false).execContinue();

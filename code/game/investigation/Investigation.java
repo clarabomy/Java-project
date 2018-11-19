@@ -25,11 +25,7 @@ public class Investigation {
     /*$$ CONSTRUCTOR $$*/
     public Investigation(Investigator player, ArrayList <Suspect> suspectsList, Victim corpse, InvestElement[] elements) {
         this.m_player = player;
-        this.m_suspectsList = new ArrayList();
-        //for (Suspect suspect : suspectsList) {
-        //    this.m_suspectsList.add(suspect);
-        //}
-        //this.m_suspectsList.addAll(suspectsList);
+        this.m_suspectsList = new ArrayList(suspectsList);
         this.m_corpse = corpse;
         this.m_elements = new InvestElement[elements.length];
         System.arraycopy(elements, 0, this.m_elements, 0, elements.length);

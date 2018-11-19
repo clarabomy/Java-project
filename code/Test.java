@@ -16,6 +16,7 @@ import project.game.investigation.InvestElementType;
 import project.game.investigation.Investigation;
 import project.game.investigation.Proof;
 import project.game.investigation.Testimony;
+import project.game.investigation.TestimonyType;
 
 
 /**
@@ -41,23 +42,17 @@ public class Test {
         m_elements = new InvestElement[2];
         m_player = new Investigator("Joueur", "Prénom", Sex.HOMME, 30, 60, 70, m_clueList, "progress");    
         
-        CrimePartner m_crimePartner = new CrimePartner("CrimePartName", "CrimePartSurname", Sex.HOMME, 32, 66, 70, "lookCrimePart", "physicalCrimePart", false, m_testimonyRef, "alibiCrimePart", m_clueList);
-        Murderer m_murderer = new Murderer("Criminel", "Jean Michel", Sex.HOMME, 30, 70, m_testimonyRef, "lookMurderer", "physicalAspectMurderer", "motive", m_clueList);
         Innocent m_innocent1 = new Innocent("Innocent1", "Jean François", Sex.HOMME, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi", m_clueList);
         Innocent m_innocent2 = new Innocent("Innocent2", "Huguette", Sex.FEMME, 55, 30, 50, "look2", "physicalAspect2", false, m_testimonyRef, "alibi2", m_clueList);
+        m_suspectsList.add(m_innocent1);
+        m_suspectsList.add(m_innocent2);
         
         int[] m_testimonyRef = {1,2};
         
         m_refProof.add(1);
         m_refProof.add(2);
-        InvestElement investelem1 = new InvestElement(InvestElementType.CRIME_SCENE, m_refProof);
-        Testimony clue1 = new Testimony (m_innocent1, false, "content_clue1");
-        Testimony clue2 = new Testimony (m_innocent2, false, "content_clue2");
-        Proof clue3 = new Proof (investelem1, "contentClue3", false);
-        
-        m_clueList.add(clue1);
-        m_clueList.add(clue2);
-        m_clueList.add(clue3);
+       
+        //m_clueList.add(clue3);
         //(InvestElement element, String content, boolean isFounded)
         //Innocent m_innocent1 = new Innocent("Innocent1", "Jean François", Sex.HOMME, 70, 80, 80, "look", "physicalAspect", false, m_testimonyRef, "alibi", m_clueList);
         //Innocent m_innocent2 = new Innocent("Innocent2", "Huguette", Sex.FEMME, 55, 30, 50, "look2", "physicalAspect2", false, m_testimonyRef, "alibi2", m_clueList);
@@ -66,7 +61,6 @@ public class Test {
         //m_suspectsList.add(m_murderer);
         //m_suspectsList.add(m_crimePartner);
         
-        //m_corpse = new Victim("VictimName", "VictimSurname", Sex.FEMME, 25, "deathDate", "deathCause", m_refProof);
         
         //m_refProof.add(int1);
         //m_refProof.add(int2);
@@ -98,15 +92,15 @@ public class Test {
         
         
         //project.game.investigation.suspect
-        //this.testCrimePartner();
-        this.testInnocent();
+       //this.testCrimePartner(); //débug en cours
+        //this.testInnocent(); //débug en cours
         //this.testMurderer();//débug en cours
-        
+          this.testVictim(); //débug en cours
+
         
         //project.game.investigation
         //this.testInvestElement();
         //this.testInvestigator();
-        //this.testVictim();
         
         
         //project.game
@@ -131,7 +125,16 @@ public class Test {
     
     //project.game.investigation.suspect
     public void testCrimePartner() {
+        Murderer m_murderer = new Murderer("Criminel", "Jean Michel", Sex.HOMME, 30, 70, m_testimonyRef, "lookMurderer", "physicalAspectMurderer", "motive", m_clueList);
+        CrimePartner m_crimePartner = new CrimePartner("CrimePartName", "CrimePartSurname", Sex.HOMME, 32, 66, 70, "lookCrimePart", "physicalCrimePart", false, m_testimonyRef, "alibiCrimePart", m_clueList, m_murderer.getFullName());
+         m_suspectsList.add(m_crimePartner);
+        //m_crimePartner.giveAlibi(); //erreur fonctions dés
         
+        //m_crimePartner.giveTestimony(); //erreur fonctions dés
+        
+        //m_crimePartner.createFalseAlibi(); //débug ok mais null
+        
+        //m_crimePartner.createFalseTestimony(TestimonyType.SEEN); //débug ok 
     }
     
     public void testInnocent() {
@@ -150,20 +153,17 @@ public class Test {
     
     public void testMurderer() {//debug en cours
         //Murderer criminel = (Murderer) m_suspectsList[0];
+        //Murderer criminel = new Murderer("Criminel", "Jean Michel", Sex.HOMME, 30, 70, m_testimonyRef, "lookMurderer", "physicalAspectMurderer", "motive", m_clueList);
+
+        //criminel.createFalseAlibi();//débug ok
         
-        //criminel.createTestimony();//code en cours
+        //criminel.giveTestimony(); //pb fonctions dés
+        
+        //criminel.createFalseTestimony(TestimonyType.HEARD); //débug ok
         
         //criminel.confess();//débug ok
         
-        //criminel.contradiction();//débug ok
-        
-        //criminel.createFalseAlibi();//débug ok
-        
-        //m_console.display(criminel.getMotive(), false).execContinue();//débug ok
-        
-        //criminel.giveAlibi();//débug ok
-        
-        //criminel.giveTestimony();//débug ok
+        //criminel.beArrested(); //débug ok
     }
     
     
@@ -178,7 +178,16 @@ public class Test {
     }
     
     public void testVictim() {
+        m_corpse = new Victim("VictimName", "VictimSurname", Sex.FEMME, 25, "deathDate", "deathCause", m_refProof);
+        //m_corpse.presentCharacter();
+        InvestElement elem = new InvestElement (InvestElementType.CRIME_SCENE, m_refProof);
+        Proof clue4 = new Proof (elem, "contentClue4", false);
+        m_clueList.add(clue4);
+        Proof clue3 = new Proof (elem, "contentClue3", false);
         
+        m_clueList.add(clue3);
+        clue4.assignVictim(m_corpse, 1);
+        //m_corpse.analyse(m_player); //bug indexOutOfBoundsException
     }
     
     

@@ -6,6 +6,7 @@
 package project.game.character.suspect;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import project.game.character.Sex;
 import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
@@ -24,11 +25,12 @@ public class CrimePartner extends Suspect implements Lie {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi, ArrayList <Clue> clueList) {
+    public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean findedInnocent, int[] testimonyRef, String alibi, ArrayList <Clue> clueList, String murdererName) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect, findedInnocent, testimonyRef, clueList);
         this.m_alibi = alibi;
         this.m_falseAlibi = null;
         this.m_cooperation = cooperationLevel;
+        this.m_murdererName = murdererName;
     }
 
     
@@ -61,7 +63,7 @@ public class CrimePartner extends Suspect implements Lie {
     
     @Override
     public void createFalseAlibi() {
-        this.m_falseAlibi = this.m_alibi + " Il y avait " + this.m_murdererName + "avec nous, aussi.";
+        this.m_falseAlibi = this.m_alibi + ". Il y avait aussi " + this.m_murdererName + " avec moi.";
     }
     
     @Override
@@ -111,6 +113,10 @@ public class CrimePartner extends Suspect implements Lie {
         switch (category) {
             case SEEN:
                 ArrayList <String> suspect = suspectsNameList();
+                //System.out.println(suspect.size());
+                //for (int i = 0; i < suspect.size(); i++) {
+                  //  System.out.println(suspect.get(i));
+                //}
                 suspect.remove(this.getFullName());
                 suspect.remove(this.m_murdererName);
                 
@@ -122,11 +128,15 @@ public class CrimePartner extends Suspect implements Lie {
         }
         testimony += " près du lieu du crime.";
         
-        
+        System.out.println(testimony);
+        for (int i = 0; i < m_clueList.size(); i++) System.out.println(m_clueList.get(i).getContent());
+
         //Dans le tableau d'indice, ajoute le témoignage avec islie = true et enregistre position
         this.m_testimonyRef[category == TestimonyType.SEEN? 0 : 1] = m_clueList.size();//index 0 : ce qu'il a vu, 1 : ce qu'il a entendu
         Testimony lie = new Testimony(this, true, testimony);
         m_clueList.add(lie);
+        
+        //for (int i = 0; i < m_clueList.size(); i++) System.out.println(m_clueList.get(i).getContent());
     }
 }
 

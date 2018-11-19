@@ -65,7 +65,7 @@ public class Investigator extends LiveCharacter {
         //afficher niveau manipulation, intelligence et popularité;
         String intelligence = "Votre niveau d'intelligence : " + this.m_intelligence;
         String manipulation = "Votre niveau de manipulation : " + this.m_manipulation;
-        m_console.display(intelligence, true);
+        m_console.display(intelligence, false);
         m_console.display(manipulation, false).execContinue();
     }//end void displayInfos
     

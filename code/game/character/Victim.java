@@ -44,7 +44,7 @@ public class Victim extends Character implements NoticeClues {
     @Override
     public void presentCharacter() {
         //Victime : nom, sexe, age (phrase différente)
-        String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait" : "il s'appelait") + this.getFullName() + ".";
+        String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait " : "il s'appelait ") + this.getFullName() + ".";
         m_console.display(victimPresentation, false).execContinue();
     }
 
