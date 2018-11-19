@@ -48,8 +48,12 @@ public abstract class Suspect extends LiveCharacter {
     
    
     /*$$ METHODS $$*/
-    abstract void giveAlibi();
-    abstract void giveTestimony();
+    @Override
+    public void presentCharacter() {
+        //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
+        String text = "Bonjour, je m'appelle " + this.getFullName() + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
+        m_console.display(text, false).execContinue();
+    }
     
     @Override
     public void displayStats() {
@@ -66,16 +70,7 @@ public abstract class Suspect extends LiveCharacter {
         m_console.display(condition, true);
         m_console.display(physicalDescript, false).execContinue();
         
-    }//end void displayInfos
-    
-    
-    @Override
-    public void presentCharacter() {
-        //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
-        String text = "Bonjour, je m'appelle " + this.getFullName() + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
-        m_console.display(text, false).execContinue();
-    }//end void presentCharacter
-    
+    }
     
     public void BeInterrogated(Investigator player) {
         String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
@@ -97,27 +92,9 @@ public abstract class Suspect extends LiveCharacter {
         }
     }
     
+    abstract void giveAlibi();
     
-    public void BeDisculpated(){
-        this.setFindedInnocent(true);
-        String text = "Vous avez choisi de disculper " + this.getFullName();
-        m_console.display(text, false).execContinue();
-    }
-    
-    
-    public void BeArrested(){
-        //Si c'est coupable = bonne fin => enquête réussi
-        //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
-        if (this instanceof Murderer) {
-            m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
-            //this.confess();
-        }
-        else {
-            //perso clame son innocence lors de son proces...
-            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
-        }
-    }
-    
+    abstract void giveTestimony();
     
     protected void textNoSpeak() {
         m_console.display("Enquêteur", "Le suspect refuse de parler.", false);
@@ -129,5 +106,24 @@ public abstract class Suspect extends LiveCharacter {
     
     protected void textForget() {
         m_console.display(this.getFullName(),"Euh... je ne m'en souviens pas...", false);
+    }
+    
+    public void BeDisculpated(){
+        this.setFindedInnocent(true);
+        String text = "Vous avez choisi de disculper " + this.getFullName();
+        m_console.display(text, false).execContinue();
+    }
+    
+    public void BeArrested(){
+        //Si c'est coupable = bonne fin => enquête réussi
+        //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
+        if (this instanceof Murderer) {
+            m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
+            ((Murderer) this).confess();//cast pour utiliser la méthode
+        }
+        else {
+            //perso clame son innocence lors de son proces...
+            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
+        }
     }
 }

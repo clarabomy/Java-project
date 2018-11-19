@@ -100,7 +100,6 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         this.m_falseAlibi += ".";
     }
 
-    
     @Override
     public void giveTestimony() {
         //crée temoignage si n'en a pas
@@ -163,7 +162,6 @@ public class Murderer extends Suspect implements Lie  {//majoritairement codé -
         Testimony lie = new Testimony(this, true, testimony);
         m_clueList.add(lie);
     }
-    
     
     public void confess(){
         String nom = this.getFullName();

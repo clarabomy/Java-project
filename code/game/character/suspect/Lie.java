@@ -14,5 +14,6 @@ public interface Lie {
     
     /*$$ METHODS $$*/
     abstract void createFalseAlibi();
+    
     abstract void createFalseTestimony(TestimonyType category);
 }

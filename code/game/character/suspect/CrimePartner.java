@@ -59,7 +59,6 @@ public class CrimePartner extends Suspect implements Lie {
         this.m_console.execContinue();
     }
     
-    
     @Override
     public void createFalseAlibi() {
         this.m_falseAlibi = this.m_alibi + " Il y avait " + this.m_murdererName + "avec nous, aussi.";
@@ -99,7 +98,6 @@ public class CrimePartner extends Suspect implements Lie {
         }
         m_console.execContinue();
     }
-    
     
     @Override
     public void createFalseTestimony(TestimonyType category) {//crée témoigage bidon avec aléatoire

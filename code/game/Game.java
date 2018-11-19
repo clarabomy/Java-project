@@ -2,6 +2,7 @@
 package project.game;
 
 import java.io.File;
+import java.util.ArrayList;
 import project.game.investigation.Investigation;
 
 /**
@@ -12,6 +13,15 @@ public class Game {
     protected Investigation m_currentGame;//memberOfClass_attributeName
     protected static Difficulties m_levelChoice;
     protected UserInterface m_console;
+    protected static ArrayList<String> m_weaponList;//armes à l'initialisation
+    protected static ArrayList<String> m_mobileList;//mobiles à l'initialisation
+    protected static ArrayList<String> m_victimList;//victimes à l'initialisation
+    
+    protected static String m_murderer;//à l'initialisation
+    protected static String m_weapon;//à l'initialisation
+    protected static String m_mobile;//à l'initialisation
+    protected static String m_victim;//à l'initialisation
+    
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -27,6 +37,34 @@ public class Game {
     
     public static int getDifficulty() {
         return m_levelChoice == Difficulties.SIMPLE? 0 : (m_levelChoice == Difficulties.MEDIUM? 1 : 2);
+    }
+    
+    public static ArrayList<String> getWeaponList() {
+        return m_weaponList;
+    }
+    
+    public static ArrayList<String> getMobileList() {
+        return m_mobileList;
+    }
+    
+    public static ArrayList<String> getVictimList() {
+        return m_victimList;
+    }
+    
+    public static String getMurderer() {
+        return m_murderer;
+    }
+    
+    public static String getVictim() {
+        return m_victim;
+    }
+    
+    public static String getWeapon() {
+        return m_weapon;
+    }
+    
+    public static String getMobile() {
+        return m_mobile;
     }
     
     /*$$ METHODS $$*/   

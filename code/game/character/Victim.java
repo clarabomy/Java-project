@@ -29,7 +29,6 @@ public class Victim extends Character implements NoticeClues {
         return m_deathDate;
     }
 
-    
     public String getDeathCause() {
         return m_deathCause;
     }
@@ -45,9 +44,8 @@ public class Victim extends Character implements NoticeClues {
         //Victime : nom, sexe, age (phrase différente)
         String victimPresentation = "La victime est " + (m_sex == Sex.WOMAN? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.WOMAN? "elle s'appelait" : "il s'appelait") + this.getFullName() + ".";
         m_console.display(victimPresentation, false).execContinue();
-    }//end void presentCharacter
+    }
 
-    
     @Override
     public void analyse(Investigator player) { //autopsie
         //donne la cause de la mort + date de la mort
@@ -60,5 +58,5 @@ public class Victim extends Character implements NoticeClues {
             player.m_clueList.get(m_refProof.get(i)).setFounded(true);
         }
         m_console.display(analyseText + proofText, false).execContinue();
-    }//end void analyse
+    }
 }

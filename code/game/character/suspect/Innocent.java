@@ -44,7 +44,6 @@ public class Innocent extends Suspect {
         m_console.execContinue();
     }
 
-    
     @Override
     public void giveTestimony() {
         String seen = "J'ai vu " + this.m_clueList.get(this.m_testimonyRef[0]).getContent() + ".";
@@ -66,5 +65,5 @@ public class Innocent extends Suspect {
                 break;
         }
         m_console.execContinue();
-    }//end void giveTestimony
+    }
 }

@@ -25,30 +25,10 @@ public abstract class Character {
 
     
     /*$$ GETTERS & SETTERS $$*/
-    /*public String getName() {
-        return m_name;
-    }
-
-    
-    public String getSurname() {
-        return m_surname;
-    }
-*/
-    
     public String getFullName() {
         return m_surname + " " + m_name;
     }
 
-    
-    public Sex getSex() {
-        return m_sex;
-    }
-
-    
-    public int getAge() {
-        return m_age;
-    }
-    
     
     /*$$ METHODS $$*/
     public abstract void presentCharacter();
