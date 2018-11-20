@@ -2,6 +2,7 @@
 package project.game.character.suspect;
 
 import project.game.Game;
+import static project.game.Game.getConsole;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
@@ -15,6 +16,7 @@ import project.game.investigation.Deposition;
 public abstract class Suspect extends LiveCharacter {
     protected int m_difficulty;
     protected int m_stress;
+    protected int m_cooperation;
     protected String m_look;
     protected String m_physicalAspect;
     protected boolean m_consideredInnocent;
@@ -25,9 +27,10 @@ public abstract class Suspect extends LiveCharacter {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect) {
+    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect) {
         super(name, surname, sex, age);
         this.m_stress = stressLevel;
+        this.m_cooperation = cooperationLevel;
         this.m_look = look;
         this.m_physicalAspect = physicalAspect;
         this.m_consideredInnocent = false;
@@ -38,6 +41,35 @@ public abstract class Suspect extends LiveCharacter {
     public boolean isConsideredInnocent() {
         return m_consideredInnocent;
     }
+
+    public int getStress() {
+        return m_stress;
+    }
+    
+    public int getCooperation() {
+        return m_cooperation;
+    }
+
+    public String getLook() {
+        return m_look;
+    }
+
+    public String getAspect() {
+        return m_physicalAspect;
+    }
+
+    public Deposition getHeard() {
+        return m_heardTestimony;
+    }
+
+    public Deposition getSeen() {
+        return m_seenTestimony;
+    }
+
+    public Deposition getAlibi() {
+        return m_alibi;
+    }
+    
     
    
     /*$$ METHODS $$*/
@@ -45,7 +77,7 @@ public abstract class Suspect extends LiveCharacter {
     public void presentCharacter() {
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
         String text = "Bonjour, je m'appelle " + this.m_fullName + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
-        m_console.display(this.m_fullName, text, false).execContinue();
+        getConsole().display(this.m_fullName, text, false).execContinue();
     }
     
     @Override
@@ -59,17 +91,17 @@ public abstract class Suspect extends LiveCharacter {
         String condition = "Etat : " + (this.m_stress > 50? "stressé" : "détendu");
         String physicalDescript = "Description physique : " + this.m_physicalAspect + ", " + this.m_look;
         
-        m_console.display(identity, false);
-        m_console.display(sex, false);
-        m_console.display(age, false);
-        m_console.display(condition, false);
-        m_console.display(physicalDescript, false).execContinue();
+        getConsole().display(identity, false)
+                .display(sex, false)
+                .display(age, false)
+                .display(condition, false)
+                .display(physicalDescript, false).execContinue();
         
     }
     
     public void beInterrogated(Investigator player) {
         String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose?"};
-        int choix = m_console.display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execChoice();
+        int choix = getConsole().display("Enquêteur", "Vous voilà au poste, dites moi...", choices, false).execChoice();
        
         //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
         int[] stats = {player.getIntelligence(), player.getManipulation()};
@@ -92,33 +124,33 @@ public abstract class Suspect extends LiveCharacter {
     abstract void giveTestimony();
     
     protected void textNoSpeak() {
-        m_console.display("Enquêteur", "Le suspect refuse de parler.", false);
+        getConsole().display("Enquêteur", "Le suspect refuse de parler.", false);
     }
     
     protected void textLawyer() {
-        m_console.display(this.m_fullName, "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+        getConsole().display(this.m_fullName, "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
     }
     
     protected void textForget() {
-        m_console.display(this.m_fullName,"Euh... je ne m'en souviens pas...", false);
+        getConsole().display(this.m_fullName,"Euh... je ne m'en souviens pas...", false);
     }
     
     public void beDisculpated(){
         this.m_consideredInnocent = true;
         String text = "Vous avez choisi de disculper " + this.m_fullName;
-        m_console.display(text, false).execContinue();
+        getConsole().display(text, false).execContinue();
     }
     
     public void beArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
         if (this instanceof Murderer) {
-            m_console.display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
+            getConsole().display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
             ((Murderer) this).confess();//cast pour utiliser la méthode
         }
         else {
             //perso clame son innocence lors de son proces...
-            m_console.display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
+            getConsole().display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
         }
     }
 }

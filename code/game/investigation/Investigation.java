@@ -2,7 +2,7 @@
 package project.game.investigation;
 
 import java.util.ArrayList;
-import project.game.UserInterface;
+import static project.game.Game.getConsole;
 import project.game.character.Investigator;
 import project.game.character.Victim;
 import project.game.character.suspect.Suspect;
@@ -20,7 +20,6 @@ public class Investigation {
     protected Victim m_victim;
     protected InvestElement m_crimeWeapon;
     protected InvestElement m_crimeScene;
-    protected UserInterface m_console;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -37,10 +36,30 @@ public class Investigation {
     /*$ GETTERS & SETTERS $*/
     public static ArrayList <String> suspectsNameList() {
         ArrayList <String> listName = new ArrayList();
-        for (int i = 0; i < m_suspectsList.size(); i++) {
-            listName.add(m_suspectsList.get(i).getFullName());
+        for (Suspect currentSuspect : m_suspectsList) {//parcours tout m_suspectsList en mettant élément courant dans currentSuspect
+            listName.add(currentSuspect.getFullName());
         }
         return listName;
+    }
+    
+    public Investigator getInvestigator() {
+        return m_player;
+    }
+    
+    public ArrayList <Suspect> getSuspectsList() {
+        return m_suspectsList;
+    }
+    
+    public Victim getVictim() {
+        return m_victim;
+    }
+    
+    public InvestElement getCrimeWeapon() {
+        return m_crimeWeapon;
+    }
+    
+    public InvestElement getCrimeScene() {
+        return m_crimeScene;
     }
     
     
@@ -53,7 +72,7 @@ public class Investigation {
                                 "Aller voir mon supérieur."}; //menu du jeu
         
         do {
-            switch (m_console.clean().display("Enquêteur", "Aujourd'hui, je vais...", choicesList, false).execChoice()) {
+            switch (getConsole().clean().display("Enquêteur", "Aujourd'hui, je vais...", choicesList, false).execChoice()) {
                 case 1:
                     cluesMenu();
                     break;
@@ -77,9 +96,9 @@ public class Investigation {
                                 "S'occuper d'autre chose."};  //menu principal
         
         do {
-            m_console.clean();
+            getConsole().clean();
             m_player.consultClues();
-            switch(m_console.display("Enquêteur", "C'est parti pour...", choicesList, false).execChoice()) {
+            switch(getConsole().display("Enquêteur", "C'est parti pour...", choicesList, false).execChoice()) {
                 case 1: 
                     m_player.checkContradiction();
                     break;
@@ -101,7 +120,7 @@ public class Investigation {
                                 "Ailleurs."};  //menu principal
         
         do {
-            switch(m_console.clean().display("Enquêteur", "Voyons voir ce qu'on trouve...", choicesList, false).execChoice()) {
+            switch(getConsole().clean().display("Enquêteur", "Voyons voir ce qu'on trouve...", choicesList, false).execChoice()) {
                 case 1: 
                     m_victim.analyse(m_player);
                     break;
@@ -135,8 +154,8 @@ public class Investigation {
                 suspectsList[i] = text;
             }
             
-            int target = m_console.display("Enquêteur", "Je dois voir...", suspectsList, false).execChoice();
-            switch(m_console.clean().display("Enquêteur", "Pour...", choicesList, false).execChoice()) {
+            int target = getConsole().clean().display("Enquêteur", "Je dois voir...", suspectsList, false).execChoice();
+            switch(getConsole().display("Enquêteur", "Pour...", choicesList, false).execChoice()) {
                 case 1: 
                     m_suspectsList.get(target).beInterrogated(m_player);
                     break;

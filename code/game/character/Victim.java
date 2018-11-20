@@ -2,6 +2,7 @@
 package project.game.character;
 
 import java.util.ArrayList;
+import static project.game.Game.getConsole;
 import project.game.investigation.NoticeClues;
 import project.game.investigation.Proof;
 
@@ -34,6 +35,10 @@ public class Victim extends Character implements NoticeClues {
     public String getDeathCause() {
         return m_deathCause;
     }
+
+    public ArrayList<Proof> getProofList() {
+        return m_proofList;
+    }
     
     
     /*$$ METHODS $$*/
@@ -41,24 +46,19 @@ public class Victim extends Character implements NoticeClues {
     public void presentCharacter() {
         //Victime : nom, sexe, age (phrase différente)
         String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait " : "il s'appelait ") + this.m_fullName + ".";
-        m_console.display(victimPresentation, false).execContinue();
+        getConsole().display(victimPresentation, false).execContinue();
     }
 
     @Override
     public void analyse(Investigator player) { //autopsie
-        //donne la cause de la mort + date de la mort
-        //+ indices associées (passeront de non trouvé à trouvé)
-        
-        m_console.display("debug", true);
-        
         String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte le " + this.getDeathDate() + " pour cause de " + this.getDeathCause();
         String proofText = "De plus, ils y ont trouvé les indices suivants ";
-        for (int i = 0; i < m_proofList.size(); i++) {
-            proofText += "\n\t - " + m_proofList.get(i).getContent();
+        for (Proof actualProof : m_proofList) {
+            proofText += "\n\t - " + actualProof.getContent();
         }
         if (!player.m_clueList.containsAll(m_proofList)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
             player.m_clueList.addAll(m_proofList);
         }
-        m_console.display(analyseText + proofText, false).execContinue();
+        getConsole().display(analyseText + proofText, false).execContinue();
     }
 }

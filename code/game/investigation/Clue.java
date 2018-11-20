@@ -1,7 +1,6 @@
 
 package project.game.investigation;
 
-import project.game.UserInterface;
 
 /**
  *
@@ -9,7 +8,6 @@ import project.game.UserInterface;
  */
 public abstract class Clue {
     protected String m_content;
-    protected UserInterface m_console;
     
     
     /*$$ CONSTRUCTOR $$*/

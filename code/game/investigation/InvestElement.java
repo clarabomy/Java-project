@@ -2,7 +2,7 @@
 package project.game.investigation;
 
 import java.util.ArrayList;
-import project.game.UserInterface;
+import static project.game.Game.getConsole;
 import project.game.character.Investigator;
 
 /**
@@ -11,13 +11,22 @@ import project.game.character.Investigator;
  */
 public class InvestElement implements NoticeClues {
     protected ArrayList<Proof> m_proofList;//preuves savent d'ou elles proviennent
-    protected UserInterface m_console;
+    protected String m_type;
 
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public InvestElement(ArrayList<Proof> proofList) {
+    public InvestElement(String type, ArrayList<Proof> proofList) {
+        this.m_type = type;
         this.m_proofList = proofList;
+    }
+
+    public String getType() {
+        return m_type;
+    }
+    
+    public ArrayList<Proof> getProofList() {
+        return m_proofList;
     }
     
     
@@ -36,10 +45,11 @@ public class InvestElement implements NoticeClues {
            proofText = "Ils y ont relevé les indices suivants :";
         }
         
-        for (int i = 0; i < m_proofList.size(); i++) {
-            proofText += "\n\t - " + m_proofList.get(i).m_content;
-            player.setClue((Clue) m_proofList.get(i));//ajoute preuves à la liste d'indices
+        
+        for (Proof currentProof : m_proofList) {//parcours tout m_proofList en mettant élément courant dans currentProof
+            proofText += "\n\t - " + currentProof.m_content;
+            player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
         }
-        m_console.display(analyseText + proofText, false).execContinue();
+        getConsole().display(analyseText + proofText, false).execContinue();
     }
 }

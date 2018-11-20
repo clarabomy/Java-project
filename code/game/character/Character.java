@@ -1,7 +1,6 @@
 
 package project.game.character;
 
-import project.game.UserInterface;
 
 /**
  *
@@ -11,7 +10,6 @@ public abstract class Character {
     protected String m_fullName;
     protected Sex m_sex;
     protected int m_age;
-    protected UserInterface m_console = new UserInterface();
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -27,6 +25,14 @@ public abstract class Character {
         return m_fullName;
     }
 
+    public Sex getSex() {
+        return m_sex;
+    }
+
+    public int getAge() {
+        return m_age;
+    }
+    
     
     /*$$ METHODS $$*/
     private String fullName (String name, String surname) {

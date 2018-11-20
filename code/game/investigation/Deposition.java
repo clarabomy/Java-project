@@ -22,6 +22,10 @@ public class Deposition extends Clue {
         this.m_category = category;
         this.m_depositor = depositor;
     }
+
+    public boolean isLie() {
+        return m_isLie;
+    }
     
     /*$$ METHODS $$*/
     @Override

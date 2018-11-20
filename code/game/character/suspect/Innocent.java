@@ -1,6 +1,7 @@
 
 package project.game.character.suspect;
 
+import static project.game.Game.getConsole;
 import project.game.character.Sex;
 import project.game.investigation.Deposition;
 import project.game.investigation.DepositionType;
@@ -11,14 +12,10 @@ import project.game.investigation.DepositionType;
  */
 
 public class Innocent extends Suspect {
-    protected int m_cooperation;
-
-    
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
     public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String heard, String seen) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect);
-        this.m_cooperation = cooperationLevel;
+        super(name, surname, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
         
         //String depositor, String content, DepositionType category, boolean isLie
         m_heardTestimony = new Deposition(this.m_fullName, heard, DepositionType.HEARD, false);
@@ -34,7 +31,7 @@ public class Innocent extends Suspect {
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 String text = "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps.";
-                m_console.display(this.m_fullName, text, false);
+                getConsole().display(this.m_fullName, text, false);
                 
                 Deposition declaration = new Deposition(this.m_fullName, text, DepositionType.ALIBI, false);
                 if (!this.m_clueList.contains(declaration)) {
@@ -42,7 +39,7 @@ public class Innocent extends Suspect {
                 }
                 break;
             case SUCCESS:
-                m_console.display(this.m_fullName, this.m_alibi.getContent(), false);
+                getConsole().display(this.m_fullName, this.m_alibi.getContent(), false);
                 
                 if (!this.m_clueList.contains(m_alibi)) {
                     this.m_clueList.add(m_alibi);
@@ -55,7 +52,7 @@ public class Innocent extends Suspect {
                 this.textLawyer();
                 break;
         }
-        m_console.execContinue();
+        getConsole().execContinue();
     }
 
     @Override
@@ -66,7 +63,7 @@ public class Innocent extends Suspect {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.m_fullName, seen + heard, false);
+                getConsole().display(this.m_fullName, seen + heard, false);
                 
                 //l'inspecteur enregistre ce qu'il entend de nouveau
                 if (!m_clueList.contains(m_heardTestimony)) {
@@ -78,13 +75,13 @@ public class Innocent extends Suspect {
                 break;
             case SUCCESS:
                 if (Math.random() < 0.5) {//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
-                    m_console.display(this.m_fullName, heard, false);
+                    getConsole().display(this.m_fullName, heard, false);
                     if (!m_clueList.contains(m_heardTestimony)) {
                         m_clueList.add(m_heardTestimony);
                     }
                 }
                 else {
-                    m_console.display(this.m_fullName, seen + heard, false);
+                    getConsole().display(this.m_fullName, seen + heard, false);
                     if (!m_clueList.contains(m_seenTestimony)) {
                         m_clueList.add(m_seenTestimony);
                     }
@@ -97,6 +94,6 @@ public class Innocent extends Suspect {
                 this.textForget();//mais garde temoignage en mémoire
                 break;
         }
-        m_console.execContinue();
+        getConsole().execContinue();
     }
 }

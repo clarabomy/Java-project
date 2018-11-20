@@ -3,6 +3,7 @@ package project.game.character;
 
 import java.util.ArrayList;
 import project.game.Difficulties;
+import static project.game.Game.getConsole;
 import static project.game.Game.getLevelChoice;
 import project.game.investigation.Clue;
 
@@ -96,7 +97,7 @@ public abstract class LiveCharacter extends Character {
         
         //affiche infos si souhaité
         if (display != null) {
-            System.out.printf("Jet %s : %d / %d\t%s\n", display, diceValue, validStage, result.toString());
+            getConsole().display("Jet " + display + " : " + diceValue + " / " + validStage + "\t" + result.toString() + "\n", false).execContinue();
         }
         
         
@@ -108,8 +109,8 @@ public abstract class LiveCharacter extends Character {
         DiceResult action = DiceResult.ERROR;
         for (int i = 0; i < validStage.length; i++) {
             String text = (display != null && i < display.length)? display[i] : null;//y a t'il du texte à afficher pour ce lancer
-            boolean previousImpact = (i == 0)? newThrow : false;//(seulement pour le premier lancer) est ce une nouvelle suite de lancers?
-            action = rollDice(validStage[i], text, previousImpact);
+            action = rollDice(validStage[i], text, newThrow);
+            newThrow = false;//seul le premier lancer est une nouvelle suite de lancers
         }
         return action;
     }

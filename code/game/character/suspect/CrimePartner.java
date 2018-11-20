@@ -6,6 +6,7 @@
 package project.game.character.suspect;
 
 import java.util.ArrayList;
+import static project.game.Game.getConsole;
 import project.game.character.Sex;
 import static project.game.investigation.Investigation.suspectsNameList;
 import project.game.investigation.Deposition;
@@ -16,7 +17,6 @@ import project.game.investigation.DepositionType;
  * @author ISEN
  */
 public class CrimePartner extends Suspect implements Lie {
-    protected int m_cooperation;
     protected String m_falseAlibi;
     protected String m_murdererName;
 
@@ -24,8 +24,7 @@ public class CrimePartner extends Suspect implements Lie {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie
     public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect);
-        this.m_cooperation = cooperationLevel;
+        super(name, surname, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
         this.m_murdererName = murdererName;
         m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
         
@@ -35,8 +34,7 @@ public class CrimePartner extends Suspect implements Lie {
     }
     //chargement partie
     public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName, String falseHeard, String falseSeen) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect);
-        this.m_cooperation = cooperationLevel;
+        super(name, surname, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
         this.m_murdererName = murdererName;
         m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
         m_heardTestimony = new Deposition(this.m_fullName, falseHeard, DepositionType.HEARD, true);
@@ -60,7 +58,7 @@ public class CrimePartner extends Suspect implements Lie {
                 if (this.m_falseAlibi == null) {
                     this.createFalse(DepositionType.ALIBI);
                 }
-                this.m_console.display(this.m_fullName, this.m_falseAlibi, false);
+                getConsole().display(this.m_fullName, this.m_falseAlibi, false);
                 
                 declaration = new Deposition(this.m_fullName, m_falseAlibi, DepositionType.ALIBI, true);
                 if (!this.m_clueList.contains(declaration)) {
@@ -68,7 +66,7 @@ public class CrimePartner extends Suspect implements Lie {
                 }
                 break;
             case FAILURE:
-                this.m_console.display(this.m_fullName, this.m_alibi.getContent(), false);
+                getConsole().display(this.m_fullName, this.m_alibi.getContent(), false);
                 
                 if (!this.m_clueList.contains(m_alibi)) {
                     this.m_clueList.add(m_alibi);
@@ -77,7 +75,7 @@ public class CrimePartner extends Suspect implements Lie {
             case CRITIC_FAILURE:
                 String part1 = "Ce soir là, j'ai participé à ce meurtre. Voilà. Vous êtes content ? ",
                         part2 = "Maintenant, vous pouvez arrêter avec vos questions : je n'en dirai pas plus.";
-                this.m_console.display(this.m_fullName, part1 + part2, false);
+                getConsole().display(this.m_fullName, part1 + part2, false);
                 
                 declaration = new Deposition(this.m_fullName, part1 + part2, DepositionType.ALIBI, false);
                 if (!this.m_clueList.contains(declaration)) {
@@ -85,7 +83,7 @@ public class CrimePartner extends Suspect implements Lie {
                 }
                 break;
         }
-        this.m_console.execContinue();
+        getConsole().execContinue();
     }
     
     @Override
@@ -105,7 +103,7 @@ public class CrimePartner extends Suspect implements Lie {
         int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.m_fullName, seen + heard, false);
+                getConsole().display(this.m_fullName, seen + heard, false);
                 
                 //l'inspecteur enregistre ce qu'il entend de nouveau
                 if (!m_clueList.contains(m_heardTestimony)) {
@@ -117,13 +115,13 @@ public class CrimePartner extends Suspect implements Lie {
                 break;
             case SUCCESS:
                 if (Math.random() < 0.5) {//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
-                    m_console.display(this.m_fullName, heard, false);
+                    getConsole().display(this.m_fullName, heard, false);
                     if (!m_clueList.contains(m_heardTestimony)) {
                         m_clueList.add(m_heardTestimony);
                     }
                 }
                 else {
-                    m_console.display(this.m_fullName, seen + heard, false);
+                    getConsole().display(this.m_fullName, seen + heard, false);
                     if (!m_clueList.contains(m_seenTestimony)) {
                         m_clueList.add(m_seenTestimony);
                     }
@@ -139,7 +137,7 @@ public class CrimePartner extends Suspect implements Lie {
                 this.textForget();
                 break;
         }
-        m_console.execContinue();
+        getConsole().execContinue();
     }
     
     @Override
@@ -152,10 +150,6 @@ public class CrimePartner extends Suspect implements Lie {
                 ArrayList <String> suspect = suspectsNameList();
                 suspect.remove(this.m_fullName);
                 suspect.remove(this.m_murdererName);
-                /*System.out.println(suspect.size());
-                for (int i = 0; i < suspect.size(); i++) {
-                    System.out.println(suspect.get(i));
-                }*/
                 
                 text = "J'ai vu " + suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)] + " près du lieu du crime.";
                 

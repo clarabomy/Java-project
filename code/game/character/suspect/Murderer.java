@@ -2,6 +2,7 @@
 package project.game.character.suspect;
 
 import java.util.ArrayList;
+import static project.game.Game.getConsole;
 import static project.game.character.LiveCharacter.rollMultiDice;
 import project.game.character.Sex;
 import static project.game.character.suspect.Lie.M_COHERENCE_VALID;
@@ -20,7 +21,7 @@ public class Murderer extends Suspect implements Lie {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie
     public Murderer(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect);
+        super(name, surname, sex, age, stressLevel, 0, look, physicalAspect);
         this.m_motive = motive;
         
         m_heardTestimony = null;
@@ -29,7 +30,7 @@ public class Murderer extends Suspect implements Lie {
     }
     //chargement partie
     public Murderer(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive, String falseAlibi, String falseHeard, String falseSeen) {
-        super(name, surname, sex, age, stressLevel, look, physicalAspect);
+        super(name, surname, sex, age, stressLevel, 0, look, physicalAspect);
         this.m_motive = motive;
         
         m_alibi = new Deposition(this.m_fullName, falseAlibi, DepositionType.ALIBI, true);
@@ -37,6 +38,9 @@ public class Murderer extends Suspect implements Lie {
         m_seenTestimony = new Deposition(this.m_fullName, falseSeen, DepositionType.SEEN, true);
     }
 
+    public String getMotive() {
+        return m_motive;
+    }
     
     
     /*$$ METHODS $$*/
@@ -52,7 +56,7 @@ public class Murderer extends Suspect implements Lie {
                 if (this.m_alibi == null) {
                     this.createFalse(DepositionType.ALIBI);
                 }
-                this.m_console.display(this.m_fullName, this.m_alibi.getContent(), false);
+                getConsole().display(this.m_fullName, this.m_alibi.getContent(), false);
                 
                 if (!this.m_clueList.contains(m_alibi)) {
                     this.m_clueList.add(m_alibi);
@@ -65,7 +69,7 @@ public class Murderer extends Suspect implements Lie {
             case CRITIC_FAILURE:
                 String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "là? Vraiment? Bien, je vais vous le dire : ",
                         part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
-                m_console.display(this.m_fullName, part1 + part2, false);
+                getConsole().display(this.m_fullName, part1 + part2, false);
                 
                 Deposition declaration = new Deposition(this.m_fullName, part1 + part2, DepositionType.ALIBI, false);
                 if (!this.m_clueList.contains(declaration)) {
@@ -73,7 +77,7 @@ public class Murderer extends Suspect implements Lie {
                 }
                 break;
         }
-        this.m_console.execContinue();
+        getConsole().execContinue();
     }
 
     @Override
@@ -93,7 +97,7 @@ public class Murderer extends Suspect implements Lie {
         int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                m_console.display(this.m_fullName, seen + heard, false);
+                getConsole().display(this.m_fullName, seen + heard, false);
                 
                 //l'inspecteur enregistre ce qu'il entend de nouveau
                 if (!m_clueList.contains(m_heardTestimony)) {
@@ -105,13 +109,13 @@ public class Murderer extends Suspect implements Lie {
                 break;
             case SUCCESS:
                 if (Math.random() < 0.5) {//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
-                    m_console.display(this.m_fullName, heard, false);
+                    getConsole().display(this.m_fullName, heard, false);
                     if (!m_clueList.contains(m_heardTestimony)) {
                         m_clueList.add(m_heardTestimony);
                     }
                 }
                 else {
-                    m_console.display(this.m_fullName, seen + heard, false);
+                    getConsole().display(this.m_fullName, seen + heard, false);
                     if (!m_clueList.contains(m_seenTestimony)) {
                         m_clueList.add(m_seenTestimony);
                     }
@@ -127,7 +131,7 @@ public class Murderer extends Suspect implements Lie {
                 this.textForget();
                 break;
         }
-        m_console.execContinue();
+        getConsole().execContinue();
     }
     
     @Override
@@ -191,10 +195,10 @@ public class Murderer extends Suspect implements Lie {
     }
     
     public void confess(){
-        m_console.display(m_fullName, "C'est bon, je vais tout vous avouer...", false).execContinue();
-        m_console.display(m_fullName, "C'est moi le coupable ! AH AH AH AH AH !", false).execContinue();
+        getConsole().display(m_fullName, "C'est bon, je vais tout vous avouer...", false).execContinue();
+        getConsole().display(m_fullName, "C'est moi le coupable ! AH AH AH AH AH !", false).execContinue();
         
         String text = "J'ai fait tout ça pour " + m_motive + ". Et vous, qu'auriez-vous fait à ma place?";
-        m_console.display(m_fullName, text, false).execContinue();
+        getConsole().display(m_fullName, text, false).execContinue();
     }
 }

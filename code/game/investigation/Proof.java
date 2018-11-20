@@ -1,6 +1,8 @@
 
 package project.game.investigation;
 
+import static project.game.Game.getConsole;
+
 
 /**
  *
@@ -11,7 +13,7 @@ public class Proof extends Clue {
 
     
     /*$$ CONSTRUCTOR $$*/
-    //nouvelle partie et initialisation
+    //nouvelle partie et chargement
     public Proof(String origin, String content) {
         super(content);
         m_origin = origin;
@@ -30,6 +32,6 @@ public class Proof extends Clue {
     public void display() {
         //affiche ce que contient la preuve et d'où elle vient (sang trouvé sur arme, cheveux trouvés sur scène de crime, etc.)
         String proofDisplay = "Ohh, je viens de trouver une preuve (" + this.getContent() + ").";
-        m_console.display("Enquêteur", proofDisplay, false).execContinue();
+        getConsole().display("Enquêteur", proofDisplay, false).execContinue();
     }
 }
