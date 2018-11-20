@@ -17,7 +17,8 @@ import project.game.investigation.DepositionType;
 public class Murderer extends Suspect implements Lie {
     protected String m_motive;
     
-    /*$$ CONSTRUCTOR $$*/    
+    /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie
     public Murderer(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect);
         this.m_motive = motive;
@@ -25,6 +26,15 @@ public class Murderer extends Suspect implements Lie {
         m_heardTestimony = null;
         m_seenTestimony = null;
         m_alibi = null;
+    }
+    //chargement partie
+    public Murderer(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive, String falseAlibi, String falseHeard, String falseSeen) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect);
+        this.m_motive = motive;
+        
+        m_alibi = new Deposition(this.m_fullName, falseAlibi, DepositionType.ALIBI, true);
+        m_heardTestimony = new Deposition(this.m_fullName, falseHeard, DepositionType.HEARD, true);
+        m_seenTestimony = new Deposition(this.m_fullName, falseSeen, DepositionType.SEEN, true);
     }
 
     

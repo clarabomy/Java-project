@@ -17,6 +17,7 @@ public class Victim extends Character implements NoticeClues {
 
 
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public Victim(String name, String surname, Sex sex, int age, String deathDate, String deathCause, ArrayList <Proof> proofList) {
         super(name, surname, sex, age);
         this.m_deathDate = deathDate;
@@ -55,7 +56,9 @@ public class Victim extends Character implements NoticeClues {
         for (int i = 0; i < m_proofList.size(); i++) {
             proofText += "\n\t - " + m_proofList.get(i).getContent();
         }
-        player.m_clueList.addAll(m_proofList);//ajoute tout ce qui a été trouvé à la liste d'indices
+        if (!player.m_clueList.containsAll(m_proofList)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
+            player.m_clueList.addAll(m_proofList);
+        }
         m_console.display(analyseText + proofText, false).execContinue();
     }
 }

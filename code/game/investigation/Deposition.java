@@ -15,6 +15,7 @@ public class Deposition extends Clue {
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public Deposition(String depositor, String content, DepositionType category, boolean isLie) {
         super(content);
         this.m_isLie = isLie;

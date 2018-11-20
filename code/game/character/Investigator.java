@@ -1,6 +1,7 @@
 
 package project.game.character;
 
+import java.util.ArrayList;
 import static project.game.Game.getMobile;
 import static project.game.Game.getMobileList;
 import static project.game.Game.getMurderer;
@@ -8,6 +9,7 @@ import static project.game.Game.getVictim;
 import static project.game.Game.getVictimList;
 import static project.game.Game.getWeapon;
 import static project.game.Game.getWeaponList;
+import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
 
 /**
@@ -17,25 +19,45 @@ import static project.game.investigation.Investigation.suspectsNameList;
 public class Investigator extends LiveCharacter {
     protected int m_manipulation;
     protected int m_intelligence;
-    protected String m_progress;//"<meurtrier> a tué <victime> avec <arme> pour cause de <mobile>"//Phrase type remplie à l'initialisation du nouvelle partie (phrase à troue) avec ce qu'a déterminé le joueur
-    protected String m_progressMurderer;
-    protected String m_progressVictim;
-    protected String m_progressWeapon;
-    protected String m_progressMobile;
+    protected String m_progress;//Phrase type remplie à l'initialisation du nouvelle partie (phrase à trous) avec ce qu'a déterminé le joueur
+    protected String m_supposedMurderer;
+    protected String m_supposedVictim;
+    protected String m_supposedWeapon;
+    protected String m_supposedMobile;
     
     /*$$ CONSTRUCTOR $$*/
-    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, String progress) {
+    //nouvelle partie
+    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel) {
         super(name, surname, sex, age);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
-        this.m_progress = progress;
         
-        m_progressMurderer = "<Meurtrier>";
-        m_progressVictim = "<Victime>";
-        m_progressWeapon = "<Arme>";
-        m_progressMobile = "<Mobile>";
+        this.constructProgress(null, null, null, null);
+    }
+    
+    //chargement partie
+    public Investigator(String name, String surname, Sex sex, int age, int manipulationLevel, int intelligenceLevel, ArrayList<Clue> clueList, String[] suppositions) {
+        super(name, surname, sex, age);
+        m_clueList.addAll(clueList);// équivaut à m_clueList = clueList;
+        this.m_manipulation = manipulationLevel;
+        this.m_intelligence = intelligenceLevel;
+        
+        if (suppositions == null) {
+            this.constructProgress(null, null, null, null);
+        }
+        else {
+            this.constructProgress(suppositions[0], suppositions[1], suppositions[2], suppositions[3]);
+        }
     }
 
+    private void constructProgress(String murderer, String victim, String weapon, String mobile) {
+        m_supposedMurderer = murderer != null? murderer : "<meurtrier>";
+        m_supposedVictim = victim != null? victim : "<victime>";
+        m_supposedWeapon = weapon != null? weapon : "<arme>";
+        m_supposedMobile = mobile != null? mobile : "<mobile>";
+        
+        m_progress = m_supposedMurderer + " à tué " + m_supposedVictim + " avec " + m_supposedWeapon + " pour cause de " + m_supposedMobile;
+    }
     
     /*$$ GETTERS & SETTERS $$*/
     public String getProgress() {
@@ -65,7 +87,7 @@ public class Investigator extends LiveCharacter {
         String manipulation = "Votre niveau de manipulation : " + this.m_manipulation;
         m_console.display(intelligence, false);
         m_console.display(manipulation, false).execContinue();
-    }//end void displayInfos
+    }
     
     public void crossClue(){
         /*
@@ -76,31 +98,31 @@ public class Investigator extends LiveCharacter {
             joueur choisit une des possibilités
         */
         this.consultClues().displayProgress();//affiche indices puis progression
-        int designed = 0;
-        String choices[] = {m_progressMurderer, m_progressVictim, m_progressWeapon, m_progressMobile};
+        int designed;
+        String choices[] = {m_supposedMurderer, m_supposedVictim, m_supposedWeapon, m_supposedMobile};
         switch (m_console.display("Quel champ voulez-vous changer ?", choices, false).execChoice()) {
             case 1:
                 String[] listSuspects = (String[]) suspectsNameList().toArray();
                 designed = m_console.display("Le coupable serait le suspect...", listSuspects, false).execChoice();
-                m_progressMurderer = listSuspects[designed];//met à jour le suspect
+                m_supposedMurderer = listSuspects[designed];//met à jour le suspect
                 break;
             case 2:
                 //liste des victimes à l'initialisation
                 String[] morgue = (String[]) getVictimList().toArray();
                 designed = m_console.display("La victime est...", morgue, false).execChoice();
-                m_progressWeapon = morgue[designed];
+                m_supposedWeapon = morgue[designed];
                 break;
             case 3:
                 //liste des armes à l'initialisation
                 String[] arsenal = (String[]) getWeaponList().toArray();
                 designed = m_console.display("L'arme du crime est...", arsenal, false).execChoice();
-                m_progressWeapon = arsenal[designed];
+                m_supposedWeapon = arsenal[designed];
                 break;
             case 4:
                 //liste des mobiles à l'initialisation
                 String[] possibility = (String[]) getMobileList().toArray();
                 designed = m_console.display("Le mobile est...", possibility, false).execChoice();
-                m_progressWeapon = possibility[designed];
+                m_supposedWeapon = possibility[designed];
                 break;
         }
     }
@@ -120,25 +142,25 @@ public class Investigator extends LiveCharacter {
     }
     
     public void displayProgress(){
-        String progress = m_progress.replace("<Murderer>", m_progressMurderer)
-                                    .replace("<Victim>", m_progressVictim)
-                                    .replace("<Weapon>", m_progressWeapon)
-                                    .replace("<Mobile>", m_progressMobile);
+        String progress = m_progress.replace("<Murderer>", m_supposedMurderer)
+                                    .replace("<Victim>", m_supposedVictim)
+                                    .replace("<Weapon>", m_supposedWeapon)
+                                    .replace("<Mobile>", m_supposedMobile);
         m_console.display(progress, true);
     }
     
     public void checkContradiction(){//sur progression ou sur listClues?
         int nbErrors = 0;
-        if (this.m_progressMurderer.equals(getMurderer())) {
+        if (this.m_supposedMurderer.equals(getMurderer())) {
             nbErrors++;
         }
-        if (this.m_progressVictim.equals(getVictim())) {
+        if (this.m_supposedVictim.equals(getVictim())) {
             nbErrors++;
         }
-        if (this.m_progressWeapon.equals(getWeapon())) {
+        if (this.m_supposedWeapon.equals(getWeapon())) {
             nbErrors++;
         }
-        if (this.m_progressMobile.equals(getMobile())) {
+        if (this.m_supposedMobile.equals(getMobile())) {
             nbErrors++;
         }
         

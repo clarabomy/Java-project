@@ -7,6 +7,6 @@ package project.game.investigation;
 
 /**
  *
- * @author Thibaut
+ * @author ISEN
  */
 public enum DepositionType {HEARD, SEEN, ALIBI}

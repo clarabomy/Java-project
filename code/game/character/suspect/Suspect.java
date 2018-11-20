@@ -24,6 +24,7 @@ public abstract class Suspect extends LiveCharacter {
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public Suspect(String name, String surname, Sex sex, int age, int stressLevel, String look, String physicalAspect) {
         super(name, surname, sex, age);
         this.m_stress = stressLevel;
@@ -31,6 +32,11 @@ public abstract class Suspect extends LiveCharacter {
         this.m_physicalAspect = physicalAspect;
         this.m_consideredInnocent = false;
         this.m_difficulty = Game.getDifficulty();
+    }
+    
+    
+    public boolean isConsideredInnocent() {
+        return m_consideredInnocent;
     }
     
    

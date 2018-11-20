@@ -15,8 +15,9 @@ public class InvestElement implements NoticeClues {
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public InvestElement(ArrayList<Proof> proofList) {
-        this.m_proofList = new ArrayList(proofList);
+        this.m_proofList = proofList;
     }
     
     

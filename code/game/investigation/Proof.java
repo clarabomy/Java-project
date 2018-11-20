@@ -7,11 +7,11 @@ package project.game.investigation;
  * @author ISEN
  */
 public class Proof extends Clue {
-    //protected InvestElement m_element;
     protected String m_origin;//garde une trace de là ou est trouvé l'indice
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et initialisation
     public Proof(String origin, String content) {
         super(content);
         m_origin = origin;

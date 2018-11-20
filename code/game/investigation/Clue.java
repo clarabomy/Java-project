@@ -13,6 +13,7 @@ public abstract class Clue {
     
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public Clue(String content) {
         this.m_content = content;
     }

@@ -16,12 +16,13 @@ import project.game.investigation.DepositionType;
  * @author ISEN
  */
 public class CrimePartner extends Suspect implements Lie {
-    protected String m_falseAlibi;
     protected int m_cooperation;
+    protected String m_falseAlibi;
     protected String m_murdererName;
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie
     public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect);
         this.m_cooperation = cooperationLevel;
@@ -31,6 +32,17 @@ public class CrimePartner extends Suspect implements Lie {
         this.m_falseAlibi = null;
         m_heardTestimony = null;
         m_seenTestimony = null;
+    }
+    //chargement partie
+    public CrimePartner(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName, String falseHeard, String falseSeen) {
+        super(name, surname, sex, age, stressLevel, look, physicalAspect);
+        this.m_cooperation = cooperationLevel;
+        this.m_murdererName = murdererName;
+        m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
+        m_heardTestimony = new Deposition(this.m_fullName, falseHeard, DepositionType.HEARD, true);
+        m_seenTestimony = new Deposition(this.m_fullName, falseSeen, DepositionType.SEEN, true);
+        
+        this.m_falseAlibi = null;
     }
 
     

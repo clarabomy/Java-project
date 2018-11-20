@@ -15,7 +15,8 @@ public class Innocent extends Suspect {
 
     
     /*$$ CONSTRUCTOR $$*/
-    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String heard, String seen, String alibi) {
+    //nouvelle partie et chargement
+    public Innocent(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String heard, String seen) {
         super(name, surname, sex, age, stressLevel, look, physicalAspect);
         this.m_cooperation = cooperationLevel;
         
@@ -59,8 +60,8 @@ public class Innocent extends Suspect {
 
     @Override
     public void giveTestimony() {
-        String seen = "J'ai vu " + this.m_seenTestimony.getContent() + ".";
-        String heard = "J'ai entendu " + this.m_heardTestimony.getContent() + ".";
+        String seen = "J'ai vu " + this.m_seenTestimony.getContent() + ".";//sortir de cet endroit(?)
+        String heard = "J'ai entendu " + this.m_heardTestimony.getContent() + ".";//alors que je passais pas loin, lors du drame(?)
         
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {

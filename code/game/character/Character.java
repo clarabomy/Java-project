@@ -15,6 +15,7 @@ public abstract class Character {
 
     
     /*$$ CONSTRUCTOR $$*/
+    //nouvelle partie et chargement
     public Character(String name, String surname, Sex sex, int age) {
         this.m_fullName = this.fullName(name, surname);
         this.m_sex = sex;
