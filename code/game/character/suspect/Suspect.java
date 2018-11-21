@@ -150,7 +150,8 @@ public abstract class Suspect extends LiveCharacter {
         }
         else {
             //perso clame son innocence lors de son proces...
-            getConsole().display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false).execContinue();
+            getConsole().display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);
+            getConsole().display("GAME OVER", false).execContinue();
         }
     }
 }

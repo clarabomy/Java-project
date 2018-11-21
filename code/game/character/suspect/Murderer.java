@@ -67,8 +67,8 @@ public class Murderer extends Suspect implements Lie {
                 this.textForget();
                 break;
             case CRITIC_FAILURE:
-                String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "là? Vraiment? Bien, je vais vous le dire : ",
-                        part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
+                String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "-là? Vraiment? Bien, je vais vous le dire : ",
+                       part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
                 getConsole().display(this.m_fullName, part1 + part2, false);
                 
                 Deposition declaration = new Deposition(this.m_fullName, part1 + part2, DepositionType.ALIBI, false);

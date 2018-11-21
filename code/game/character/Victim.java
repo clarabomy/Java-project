@@ -51,10 +51,10 @@ public class Victim extends Character implements NoticeClues {
 
     @Override
     public void analyse(Investigator player) { //autopsie
-        String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte le " + this.getDeathDate() + " pour cause de " + this.getDeathCause();
-        String proofText = "De plus, ils y ont trouvé les indices suivants ";
+        String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte le " + this.getDeathDate() + " pour cause de " + this.getDeathCause() + ". ";
+        String proofText = "De plus, ils y ont trouvé les indices suivants : ";
         for (Proof actualProof : m_proofList) {
-            proofText += "\n\t - " + actualProof.getContent();
+            proofText += "\n   - " + actualProof.getContent();
         }
         if (!player.m_clueList.containsAll(m_proofList)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
             player.m_clueList.addAll(m_proofList);

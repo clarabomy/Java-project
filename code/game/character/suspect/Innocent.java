@@ -30,7 +30,7 @@ public class Innocent extends Suspect {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                String text = "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps.";
+                String text = "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps avec moi.";
                 getConsole().display(this.m_fullName, text, false);
                 
                 Deposition declaration = new Deposition(this.m_fullName, text, DepositionType.ALIBI, false);
@@ -63,6 +63,7 @@ public class Innocent extends Suspect {
         int[] validStage = {m_stress, m_cooperation};
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
+                //m_heardTestimony.display();
                 getConsole().display(this.m_fullName, seen + heard, false);
                 
                 //l'inspecteur enregistre ce qu'il entend de nouveau

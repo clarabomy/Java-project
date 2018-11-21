@@ -37,19 +37,20 @@ public class InvestElement implements NoticeClues {
         String proofText;
         
         if (m_proofList.get(0).getOrigin().equals("crimeScene")) {
-            analyseText = "L'équipe sur le terrain a fouillé la scène de crime.";
+            analyseText = "L'équipe sur le terrain a fouillé la scène de crime. ";
             proofText = "Elle a réuni les indices suivants : ";
         }
         else {//if (m_proofList.get(0).getOrigin().equals("crimeWeapon"))
-           analyseText = "Les scientifiques ont analysé l'arme du crime.";
+           analyseText = "Les scientifiques ont analysé l'arme du crime. ";
            proofText = "Ils y ont relevé les indices suivants :";
         }
-        
+        getConsole().display(analyseText + proofText, false);
         
         for (Proof currentProof : m_proofList) {//parcours tout m_proofList en mettant élément courant dans currentProof
-            proofText += "\n\t - " + currentProof.m_content;
+            currentProof.display();
             player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
         }
-        getConsole().display(analyseText + proofText, false).execContinue();
+        
+        getConsole().execContinue();
     }
 }

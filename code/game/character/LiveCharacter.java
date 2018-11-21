@@ -97,7 +97,7 @@ public abstract class LiveCharacter extends Character {
         
         //affiche infos si souhaité
         if (display != null) {
-            getConsole().display("Jet " + display + " : " + diceValue + " / " + validStage + "\t" + result.toString() + "\n", false).execContinue();
+            getConsole().display("Jet " + display + " : " + diceValue + " / " + validStage + "\t" + result.toString(), false);
         }
         
         
