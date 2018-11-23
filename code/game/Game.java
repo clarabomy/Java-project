@@ -31,7 +31,7 @@ import project.game.investigation.Proof;
  */
 public class Game {
     protected static String m_saveFolderPath = ".\\src\\project\\savesGame\\";//chemin d'accès au dossier de sauvegardes
-    protected static String m_saveFileExtension = ".sv";
+    protected static String m_saveFileExtension = ".sv";//extension bateau pour limiter les bidouillages
     protected static UserInterface m_console = new UserInterface();//memberOfClass_attributeName
     protected static Difficulties m_levelChoice;
     
@@ -46,7 +46,7 @@ public class Game {
         
     }
     
-    private String createFullName() {
+    private String createFullName(Sex genre) {
         String text;
         text = "Prenom Nom";
         return text;
@@ -100,7 +100,8 @@ public class Game {
             choicesList.add("Règles du jeu");
             choicesList.add("Quitter le bureau d'enquête");     //quitter jeu
         
-            switch (m_console.clean().display("Standardiste", "Bienvenue au Bureau d'enquête. Que puis-je pour vous?", convertArrayList(choicesList), true).execChoice()) {
+            int choix = m_console.clean().display("Standardiste", "Bienvenue au Bureau d'enquête. Que puis-je pour vous?", convertArrayList(choicesList), true).execChoice();
+            switch (choix) {
                 case 1:
                     newInvestigation();
                     gameRules();
@@ -111,26 +112,16 @@ public class Game {
                 case 3:
                     if (this.m_currentInvestigation != null) {
                         saveInvestigation();
+                        break;
                     }
                     else {
-                        dropInvestigation();
+                        choix++;
                     }
-                    break;
                 case 4:
-                    if (this.m_currentInvestigation != null) {
-                        dropInvestigation();
-                    }
-                    else {
-                        gameRules();
-                    }
+                    dropInvestigation();
                     break;
                 case 5:
-                    if (this.m_currentInvestigation != null) {
-                        gameRules();
-                    }
-                    else {
-                        exitGame = true;
-                    }
+                    gameRules();
                     break;
                 case 6:
                     exitGame = true;
@@ -217,7 +208,10 @@ public class Game {
         m_console.display("Vous", "Alors voyons voir les nouvelles enquêtes !", true).execContinue("Vous choisissez une affaire");
         {
             //initialise classes avec aléatoire
-            int nbInnocents = 4, nbPreuvesVictime = 3, nbPreuvesArme = 4, nbPreuvesSceneDeCrime = 6;
+            int nbInnocents = m_levelChoice == Difficulties.SIMPLE? 5 : (m_levelChoice == Difficulties.MEDIUM? 10 : 15);
+            
+            
+            int nbPreuvesVictime = 3, nbPreuvesArme = 4, nbPreuvesSceneDeCrime = 6;
             int age = 35, manipulation = 60, intelligence = 75, stress = 50, cooperation = 30;
 
 
@@ -228,7 +222,8 @@ public class Game {
                 proofList = new ArrayList();
                 proofList.add(new Proof("victime", "contenu"));
             }
-            Victim corpse = new Victim("Prenom Nom", Sex.HOMME, age, "date et heure de la mort", "cause de la mort", proofList);
+            Sex genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
+            Victim corpse = new Victim(createFullName(genre), genre, age, "date et heure de la mort", "cause de la mort", proofList);
 
             for (int i = 0; i < nbPreuvesArme; i++) {
                 proofList = new ArrayList();
@@ -246,15 +241,22 @@ public class Game {
 
             //PERSONNAGES
             ArrayList<Suspect> suspectsList = new ArrayList();
-            Murderer criminal = new Murderer("prenom criminel", Sex.HOMME, age, stress, "look", "aspect physique", "motivation");
+            
+            genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
+            Murderer criminal = new Murderer(createFullName(genre), genre, age, stress, "look", "aspect physique", "motivation");
             suspectsList.add(criminal);
-            suspectsList.add(new CrimePartner("prenom partner", Sex.HOMME, age, stress, cooperation, "look", "aspect physique", "alibi", criminal.getFullName()));
+            
+            genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
+            suspectsList.add(new CrimePartner(createFullName(genre), genre, age, stress, cooperation, "look", "aspect physique", "alibi", criminal.getFullName()));
+            
             for (int i = 0; i < nbInnocents; i++) {
-                suspectsList.add(new Innocent("prenom innocent" + i, Sex.HOMME, age, stress, cooperation, "look", "aspect physique", "alibi", "entendu", "vu"));
+                genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
+                suspectsList.add(new Innocent(createFullName(genre), genre, age, stress, cooperation, "look", "aspect physique", "alibi", "entendu", "vu"));
             }
+            
             Collections.shuffle(suspectsList);//melanger tableau
 
-            Investigator player = new Investigator("fullName", sex, manipulation, intelligence, criminal.getFullName(), corpse.getFullName(), weapon.getType(), scene.getType());
+            Investigator player = new Investigator(fullName, sex, manipulation, intelligence, criminal.getFullName(), corpse.getFullName(), weapon.getType(), scene.getType());
 
 
 
