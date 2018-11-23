@@ -166,9 +166,10 @@ public class Game {
     public void newInvestigation() {
         //etape 1 : nom perso (nom fichier)
         String fullName = null;
-        m_console.clean().display("Vous", "Je m'appelle ", true);
+        //m_console.clean().display("Vous", "Je m'appelle ", true);
+        m_console.clean().display("Standardiste", "Veuillez entrer vos nom et prénom :", false);
         do {
-            fullName = m_console.execSaisie();
+            fullName = m_console.execInput();
             if (Arrays.asList(getSaveFilesName()).contains(fullName)) {//si nom déjà utilisé (nom enquêteur = nom fichier save)
                 fullName = null;
                 m_console.display("Vous", "Mais non, bien sûr! Je ne m'appelle pas comme ça, mon vrai nom, c'est ", true);
