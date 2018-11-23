@@ -108,8 +108,9 @@ public class UserInterface {
         return choice;
     }
     
-    public String execSaisie() {//à coder
-        
-        return "nouveau joueur";
+    public String execInput() {//à coder
+        Scanner input = new Scanner(System.in);
+        String keyboard = input.nextLine();
+        return keyboard;
     }
 }
