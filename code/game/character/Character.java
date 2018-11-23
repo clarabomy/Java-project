@@ -14,8 +14,8 @@ public abstract class Character {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Character(String name, String surname, Sex sex, int age) {
-        this.m_fullName = this.fullName(name, surname);
+    public Character(String fullName, Sex sex, int age) {
+        this.m_fullName = fullName;
         this.m_sex = sex;
         this.m_age = age;
     }
@@ -35,9 +35,6 @@ public abstract class Character {
     
     
     /*$$ METHODS $$*/
-    private String fullName (String name, String surname) {
-        return surname + " " + name;
-    }
     
     public abstract void presentCharacter();
 }

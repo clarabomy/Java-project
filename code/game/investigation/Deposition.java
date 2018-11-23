@@ -1,6 +1,8 @@
 
 package project.game.investigation;
 
+import static project.game.Game.getConsole;
+
 
 
 
@@ -17,10 +19,10 @@ public class Deposition extends Clue {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
     public Deposition(String depositor, String content, DepositionType category, boolean isLie) {
-        super(content);
-        this.m_isLie = isLie;
-        this.m_category = category;
-        this.m_depositor = depositor;
+        super((category == DepositionType.SEEN? "J'ai vu " : category == DepositionType.HEARD? "j'ai entendu " : category == DepositionType.ROLE? "Je suis " : "" + "") + content);
+        m_isLie = isLie;
+        m_category = category;
+        m_depositor = depositor;
     }
 
     public boolean isLie() {
@@ -30,7 +32,6 @@ public class Deposition extends Clue {
     /*$$ METHODS $$*/
     @Override
     public void display() {
-        //Témoignage de nom_personnage : ce qu'il a dit
-        //m_console.display(this.getSuspect().getFullName(), this.getContent(), false).execContinue();
+        getConsole().display(m_depositor, getContent(), true);
     }
 }

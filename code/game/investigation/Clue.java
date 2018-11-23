@@ -24,5 +24,5 @@ public abstract class Clue {
 
     
     /*$$ METHODS $$*/
-    public abstract void display();//formatedText?
+    public abstract void display();
 }

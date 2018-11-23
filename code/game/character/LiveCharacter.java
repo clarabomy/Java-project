@@ -25,8 +25,8 @@ public abstract class LiveCharacter extends Character {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement partie
-    public LiveCharacter(String name, String surname, Sex sex, int age) {
-        super(name, surname, sex, age);
+    public LiveCharacter(String fullName, Sex sex, int age) {
+        super(fullName, sex, age);
         
         //facile : 0.75 | moyen : 1 | difficile : 1.25
         m_coeffDiff = (float) (getLevelChoice() == Difficulties.SIMPLE? 0.75 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 1.25));

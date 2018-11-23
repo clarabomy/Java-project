@@ -1,8 +1,9 @@
 
 package project.game.character.suspect;
 
-import project.game.Game;
+import project.game.Difficulties;
 import static project.game.Game.getConsole;
+import static project.game.Game.getLevelChoice;
 import project.game.character.Investigator;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
@@ -27,14 +28,14 @@ public abstract class Suspect extends LiveCharacter {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Suspect(String name, String surname, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect) {
-        super(name, surname, sex, age);
+    public Suspect(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect) {
+        super(fullName, sex, age);
         this.m_stress = stressLevel;
         this.m_cooperation = cooperationLevel;
         this.m_look = look;
         this.m_physicalAspect = physicalAspect;
         this.m_consideredInnocent = false;
-        this.m_difficulty = Game.getDifficulty();
+        this.m_difficulty = getLevelChoice() == Difficulties.SIMPLE? 0 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 2);
     }
     
     
@@ -77,7 +78,7 @@ public abstract class Suspect extends LiveCharacter {
     public void presentCharacter() {
         //Affiche la description littéraire de qui il est (nom, sexe, age) + description physique (look, physicalAspect)
         String text = "Bonjour, je m'appelle " + this.m_fullName + ". J'ai " + this.m_age + " ans. Vous vouliez me voir ?";
-        getConsole().display(this.m_fullName, text, false).execContinue();
+        getConsole().display(this.m_fullName, text, false).execContinue(null);
     }
     
     @Override
@@ -95,7 +96,7 @@ public abstract class Suspect extends LiveCharacter {
                 .display(sex, false)
                 .display(age, false)
                 .display(condition, false)
-                .display(physicalDescript, false).execContinue();
+                .display(physicalDescript, false).execContinue(null);
         
     }
     
@@ -117,6 +118,7 @@ public abstract class Suspect extends LiveCharacter {
                 this.giveTestimony();
                 break;
         }
+        getConsole().execContinue(null);
     }
     
     abstract void giveAlibi();
@@ -124,34 +126,34 @@ public abstract class Suspect extends LiveCharacter {
     abstract void giveTestimony();
     
     protected void textNoSpeak() {
-        getConsole().display("Enquêteur", "Le suspect refuse de parler.", false);
+        getConsole().display("Enquêteur", "Le suspect refuse de parler.", true);
     }
     
     protected void textLawyer() {
-        getConsole().display(this.m_fullName, "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", false);
+        getConsole().display(this.m_fullName, "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !", true);
     }
     
     protected void textForget() {
-        getConsole().display(this.m_fullName,"Euh... je ne m'en souviens pas...", false);
+        getConsole().display(this.m_fullName,"Euh... je ne m'en souviens pas...", true);
     }
     
     public void beDisculpated(){
         this.m_consideredInnocent = true;
         String text = "Vous avez choisi de disculper " + this.m_fullName;
-        getConsole().display(text, false).execContinue();
+        getConsole().display(text, false).execContinue(null);
     }
     
     public void beArrested(){
         //Si c'est coupable = bonne fin => enquête réussi
         //Sinon => il y a eu de nouveaux meurtres => vous êtes virés !
         if (this instanceof Murderer) {
-            getConsole().display("Bravo, vous avez réussi à trouver le coupable",false).execContinue();
+            getConsole().display("Bravo, vous avez réussi à trouver le coupable",false).execContinue(null);
             ((Murderer) this).confess();//cast pour utiliser la méthode
         }
         else {
             //perso clame son innocence lors de son proces...
             getConsole().display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !", false);
-            getConsole().display("GAME OVER", false).execContinue();
+            getConsole().display("GAME OVER", false).execContinue(null);
         }
     }
 }

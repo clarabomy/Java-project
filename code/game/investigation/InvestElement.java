@@ -51,6 +51,6 @@ public class InvestElement implements NoticeClues {
             player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
         }
         
-        getConsole().execContinue();
+        getConsole().execContinue(null);
     }
 }

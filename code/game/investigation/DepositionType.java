@@ -9,4 +9,4 @@ package project.game.investigation;
  *
  * @author ISEN
  */
-public enum DepositionType {HEARD, SEEN, ALIBI}
+public enum DepositionType {HEARD, SEEN, ALIBI, ROLE}

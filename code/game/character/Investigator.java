@@ -2,6 +2,7 @@
 package project.game.character;
 
 import java.util.ArrayList;
+import static project.game.Game.convertArrayList;
 import static project.game.Game.getConsole;
 import static project.game.Game.getMobileList;
 import static project.game.Game.getVictimList;
@@ -16,7 +17,6 @@ import static project.game.investigation.Investigation.suspectsNameList;
 public class Investigator extends LiveCharacter {
     protected int m_manipulation;
     protected int m_intelligence;
-    protected String m_progress;//Phrase type remplie à l'initialisation du nouvelle partie (phrase à trous) avec ce qu'a déterminé le joueur
     protected String m_supposedMurderer;
     protected String m_supposedVictim;
     protected String m_supposedWeapon;
@@ -28,8 +28,8 @@ public class Investigator extends LiveCharacter {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie
-    public Investigator(int manipulationLevel, int intelligenceLevel, String trueMurderer, String trueVictim, String trueWeapon, String trueMobile) {
-        super("", "", null, 30);//pas d'impact
+    public Investigator(String fullName, Sex gender, int manipulationLevel, int intelligenceLevel, String trueMurderer, String trueVictim, String trueWeapon, String trueMobile) {
+        super(fullName, gender, 30);
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
         
@@ -38,12 +38,12 @@ public class Investigator extends LiveCharacter {
         this.m_trueWeapon = trueWeapon;
         this.m_trueMobile = trueMobile;
         
-        this.constructProgress(null, null, null, null);
+        //this.constructProgress(null, null, null, null);
     }
     
     //chargement partie
-    public Investigator(int manipulationLevel, int intelligenceLevel, String trueMurderer, String trueVictim, String trueWeapon, String trueMobile, ArrayList<Clue> clueList, String[] suppositions) {
-        super("", "", null, 30);//pas d'impact
+    public Investigator(String fullName, Sex gender, int manipulationLevel, int intelligenceLevel, String trueMurderer, String trueVictim, String trueWeapon, String trueMobile, ArrayList<Clue> clueList, String[] suppositions) {
+        super(fullName, gender, 30);
         m_clueList.addAll(clueList);// équivaut à m_clueList = clueList;
         this.m_manipulation = manipulationLevel;
         this.m_intelligence = intelligenceLevel;
@@ -52,29 +52,18 @@ public class Investigator extends LiveCharacter {
         this.m_trueVictim = trueVictim;
         this.m_trueWeapon = trueWeapon;
         this.m_trueMobile = trueMobile;
-        
+        /*
         if (suppositions == null) {
             this.constructProgress(null, null, null, null);
         }
         else {
             this.constructProgress(suppositions[0], suppositions[1], suppositions[2], suppositions[3]);
         }
+        */
     }
 
-    private void constructProgress(String murderer, String victim, String weapon, String mobile) {
-        m_supposedMurderer = murderer != null? murderer : "<meurtrier>";
-        m_supposedVictim = victim != null? victim : "<victime>";
-        m_supposedWeapon = weapon != null? weapon : "<arme>";
-        m_supposedMobile = mobile != null? mobile : "<mobile>";
-        
-        m_progress = m_supposedMurderer + " à tué " + m_supposedVictim + " avec " + m_supposedWeapon + " pour cause de " + m_supposedMobile;
-    }
     
     /*$$ GETTERS & SETTERS $$*/
-    public String getProgress() {
-        return m_progress;
-    }
-    
     public int getIntelligence() {
         return m_intelligence;
     }
@@ -104,9 +93,9 @@ public class Investigator extends LiveCharacter {
     /*$$ METHODS $$*/    
     @Override
     public void presentCharacter() {
-        String text = "Vous êtes " + (m_sex.equals(Sex.FEMME)? ", une enquêtrice" : ", un enquêteur") + " de talent!";
-        getConsole().display(text, false).execContinue();    
-    }//end void presentCharacter
+        String text = "Vous êtes " + (m_sex.equals(Sex.FEMME)? "une enquêtrice" : "un enquêteur") + " de talent!";
+        getConsole().display(text, false).execContinue(null);    
+    }
     
     @Override
     public void displayStats() {
@@ -114,7 +103,7 @@ public class Investigator extends LiveCharacter {
         String intelligence = "Votre niveau d'intelligence : " + this.m_intelligence;
         String manipulation = "Votre niveau de manipulation : " + this.m_manipulation;
         getConsole().display(intelligence, false);
-        getConsole().display(manipulation, false).execContinue();
+        getConsole().display(manipulation, false).execContinue(null);
     }
     
     public void crossClue(){
@@ -130,25 +119,25 @@ public class Investigator extends LiveCharacter {
         String choices[] = {m_supposedMurderer, m_supposedVictim, m_supposedWeapon, m_supposedMobile};
         switch (getConsole().display("Quel champ voulez-vous changer ?", choices, false).execChoice()) {
             case 1:
-                String[] listSuspects = (String[]) suspectsNameList().toArray();
+                String[] listSuspects = convertArrayList(suspectsNameList());
                 designed = getConsole().display("Le coupable serait le suspect...", listSuspects, false).execChoice();
                 m_supposedMurderer = listSuspects[designed];//met à jour le suspect
                 break;
             case 2:
                 //liste des victimes à l'initialisation
-                String[] morgue = (String[]) getVictimList().toArray();
+                String[] morgue = convertArrayList(getVictimList());
                 designed = getConsole().display("La victime est...", morgue, false).execChoice();
                 m_supposedWeapon = morgue[designed];
                 break;
             case 3:
                 //liste des armes à l'initialisation
-                String[] arsenal = (String[]) getWeaponList().toArray();
+                String[] arsenal = convertArrayList(getWeaponList());
                 designed = getConsole().display("L'arme du crime est...", arsenal, false).execChoice();
                 m_supposedWeapon = arsenal[designed];
                 break;
             case 4:
                 //liste des mobiles à l'initialisation
-                String[] possibility = (String[]) getMobileList().toArray();
+                String[] possibility = convertArrayList(getMobileList());
                 designed = getConsole().display("Le mobile est...", possibility, false).execChoice();
                 m_supposedWeapon = possibility[designed];
                 break;
@@ -162,51 +151,75 @@ public class Investigator extends LiveCharacter {
         }
         else {
             for (int i = 0; i < m_clueList.size(); i++) {
+                //m_clueList.get(i).display();
                 getConsole().display("Indice " + (i+1) + " : " + m_clueList.get(i).getContent(), true);
             }
         }
-        getConsole().execContinue();
+        getConsole().execContinue(null);
         return this;
     }
     
     public void displayProgress(){
-        String progress = m_progress.replace("<Murderer>", m_supposedMurderer)
-                                    .replace("<Victim>", m_supposedVictim)
-                                    .replace("<Weapon>", m_supposedWeapon)
-                                    .replace("<Mobile>", m_supposedMobile);
+        String progress = "<1> à tué <2> avec <3> pour cause de <4>";
+        progress = progress.replace("<1>", m_supposedMurderer != null? m_supposedMurderer : "<meurtrier>")
+                            .replace("<2>", m_supposedVictim  != null? m_supposedVictim   : "<victime>")
+                            .replace("<3>", m_supposedWeapon  != null? m_supposedWeapon   : "<arme>")
+                            .replace("<4>", m_supposedMobile  != null? m_supposedMobile   : "<mobile>");
         getConsole().display(progress, true);
     }
     
     public void checkContradiction(){//sur progression ou sur listClues?
-        int nbErrors = 0;
-        if (this.m_supposedMurderer.equals(this.m_trueMurderer)) {
+        int nbErrors = 0, nbNull = 0;
+        
+        if (m_supposedMurderer == null) {
+            nbNull++;
+        }
+        else if (!m_supposedMurderer.equals(m_trueMurderer)) {
             nbErrors++;
         }
-        if (this.m_supposedVictim.equals(this.m_trueVictim)) {
+        
+        if (m_supposedVictim == null) {
+            nbNull++;
+        }
+        else if (!m_supposedVictim.equals(m_trueVictim)) {
             nbErrors++;
         }
-        if (this.m_supposedWeapon.equals(this.m_trueWeapon)) {
+        
+        if (m_supposedWeapon == null) {
+            nbNull++;
+        }
+        else if (!m_supposedWeapon.equals(m_trueWeapon)) {
             nbErrors++;
         }
-        if (this.m_supposedMobile.equals(this.m_trueMobile)) {
+        
+        if (m_supposedMobile == null) {
+            nbNull++;
+        }
+        else if (!m_supposedMobile.equals(m_trueMobile)) {
             nbErrors++;
         }
         
         String text = "";
-        switch(rollDice(this.m_intelligence, "intelligence", true)) {
-            case CRITIC_SUCCESS:
-                text = nbErrors == 0? "Il y a " + nbErrors : "Il n'y a pas de";
-                break;
-            case SUCCESS:
-                text = nbErrors == 0? "Il y a des" : "Il n'y a pas de";
-                break;
-            case FAILURE:
-                text = "Mmmmh... Je me demande s'il y a des";
-                break;
-            case CRITIC_FAILURE:
-                text = "Je pense qu'il y a " + (int) (Math.random() * 4);
-                break;
+        if (nbNull == 4) {
+            text = "Je n'ai pas encore réfléchi à ce qui s'est passé.";
         }
-        getConsole().display("Enquêteur", text + " failles dans mon raisonnement.", false).execContinue();
+        else {
+            switch(rollDice(m_intelligence, "intelligence", true)) {
+                case CRITIC_SUCCESS:
+                    text = nbErrors == 0? "Il y a " + nbErrors : "Il n'y a pas de";
+                    break;
+                case SUCCESS:
+                    text = nbErrors == 0? "Il y a des" : "Il n'y a pas de";
+                    break;
+                case FAILURE:
+                    text = "Mmmmh... Je me demande s'il y a des";
+                    break;
+                case CRITIC_FAILURE:
+                    text = "Je pense qu'il y a " + (int) (Math.random() * 4);
+                    break;
+            }
+            text += " failles dans mon raisonnement." + (nbNull > 0? " Il reste aussi " + nbNull + " paramètre" + (nbNull > 1? "s" : "") + " à déterminer." : "");
+        }
+        getConsole().display("Enquêteur", text, false).execContinue(null);
     }
 }

@@ -68,11 +68,11 @@ public class Investigation {
         boolean previousMenu = false;
         String[] choicesList = {"Consulter mes indices.",
                                 "Passer en revue les éléments de l'enquête.",
-                                "M'occuper des suspects.\n", 
-                                "Aller voir mon supérieur."}; //menu du jeu
+                                "Appeler un suspect.\n", 
+                                "Retourner au bureau."}; //menu du jeu
         
         do {
-            switch (getConsole().clean().display("Enquêteur", "Aujourd'hui, je vais...", choicesList, false).execChoice()) {
+            switch (getConsole().clean().display("Enquêteur", "Aujourd'hui, je vais...", choicesList, true).execChoice()) {
                 case 1:
                     cluesMenu();
                     break;
@@ -142,7 +142,7 @@ public class Investigation {
         String[] choicesList = {"L'interroger.", 
                                 "L'innocenter.", 
                                 "L'arrêter (présumé coupable).\n",
-                                "Hum. Je ne sais plus."};  //menu principal
+                                "Hum. En fait, il peut partir."};  //menu principal
         
         do {
             String[] suspectsList = new String[m_suspectsList.size()];
@@ -154,8 +154,8 @@ public class Investigation {
                 suspectsList[i] = text;
             }
             
-            int target = getConsole().clean().display("Enquêteur", "Je dois voir...", suspectsList, false).execChoice();
-            switch(getConsole().display("Enquêteur", "Pour...", choicesList, false).execChoice()) {
+            int target = getConsole().clean().display("Enquêteur", "Je veux voir", suspectsList, false).execChoice() - 1;
+            switch(getConsole().display("Enquêteur", "Pour", choicesList, false).execChoice()) {
                 case 1: 
                     m_suspectsList.get(target).beInterrogated(m_player);
                     break;
