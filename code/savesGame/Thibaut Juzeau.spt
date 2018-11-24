@@ -1,0 +1,121 @@
+GLOBAL
+gameDifficulty:SIMPLE
+SUSPECTS
+classSuspect:CrimePartner
+fullNameSuspect:Marion Pasquier
+ageSuspect     :64
+sexSuspect     :homme
+lookSuspect    :look2
+aspectSuspect  :aspect1
+stressSuspect     :29
+cooperationSuspect:36
+innocentSuspect   :false
+alibiSuspect:alibi
+seenSuspect :null
+heardSuspect:null
+classSuspect:Innocent
+fullNameSuspect:Alice Deolivera
+ageSuspect     :19
+sexSuspect     :homme
+lookSuspect    :look1
+aspectSuspect  :aspect2
+stressSuspect     :64
+cooperationSuspect:73
+innocentSuspect   :false
+alibiSuspect:alibi
+seenSuspect :vu
+heardSuspect:entendu
+classSuspect:Innocent
+fullNameSuspect:Jean Bomy
+ageSuspect     :50
+sexSuspect     :homme
+lookSuspect    :look1
+aspectSuspect  :aspect2
+stressSuspect     :72
+cooperationSuspect:69
+innocentSuspect   :false
+alibiSuspect:alibi
+seenSuspect :vu
+heardSuspect:entendu
+classSuspect:Murderer
+fullNameSuspect:Antoine Bomy
+ageSuspect     :37
+sexSuspect     :homme
+lookSuspect    :look2
+aspectSuspect  :aspect2
+stressSuspect     :57
+cooperationSuspect:0
+innocentSuspect   :false
+alibiSuspect:null
+seenSuspect :null
+heardSuspect:null
+motiveMurderer:la folie
+classSuspect:Innocent
+fullNameSuspect:Claire Fourmond
+ageSuspect     :18
+sexSuspect     :homme
+lookSuspect    :look2
+aspectSuspect  :aspect2
+stressSuspect     :65
+cooperationSuspect:79
+innocentSuspect   :false
+alibiSuspect:alibi
+seenSuspect :vu
+heardSuspect:entendu
+VICTIM
+fullNameVictim:Luc Deolivera
+sexVictim     :homme
+ageVictim     :63
+deathDateVictim :il y a 6 jours, à 17h2
+deathCauseVictim:blessure par balle
+VICTIMPROOF
+contentProofVictim:contenu
+contentProofVictim:contenu
+contentProofVictim:contenu
+WEAPON
+typeWeapon:type d'arme
+WEAPONPROOF
+contentProofWeapon:contenu
+SCENE
+typeScene:type d'endroit
+SCENEPROOF
+contentProofScene:contenu
+contentProofScene:contenu
+contentProofScene:contenu
+INVESTIGATOR
+nameInvestigator:Thibaut Juzeau
+sexInvestigator:homme
+manipulationInvestigator:66
+intelligenceInvestigator:71
+CLUES
+classClue :proof
+originClue:victime
+contentClue:contenu
+classClue :proof
+originClue:victime
+contentClue:contenu
+classClue :proof
+originClue:victime
+contentClue:contenu
+classClue :proof
+originClue:arme du crime
+contentClue:contenu
+classClue :proof
+originClue:scène de crime
+contentClue:contenu
+classClue :proof
+originClue:scène de crime
+contentClue:contenu
+classClue :proof
+originClue:scène de crime
+contentClue:contenu
+classClue :deposition
+isLie     :false
+category  :ROLE
+depositor :Claire Fourmond
+contentClue:Je suis innocent dans cette affaire
+classClue :deposition
+isLie     :false
+category  :HEARD
+depositor :Jean Bomy
+contentClue:J'ai entendu entendu

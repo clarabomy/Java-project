@@ -18,9 +18,9 @@ public class Innocent extends Suspect {
         super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, consideredInnocent);
         
         //String depositor, String content, DepositionType category, boolean isLie
-        m_heardTestimony = new Deposition(this.m_fullName, heard, DepositionType.HEARD, false);
-        m_seenTestimony = new Deposition(this.m_fullName, seen, DepositionType.SEEN, false);
-        m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
+        m_heardTestimony = new Deposition(m_fullName, heard, DepositionType.HEARD, false);
+        m_seenTestimony = new Deposition(m_fullName, seen, DepositionType.SEEN, false);
+        m_alibi = new Deposition(m_fullName, alibi, DepositionType.ALIBI, false);
     }
     
     
@@ -31,25 +31,25 @@ public class Innocent extends Suspect {
         switch(rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 //String text = "Je suis innocent. Concentrez-vous sur les autres suspects, plutôt que de perdre votre temps avec moi.";
-                Deposition declaration = new Deposition(this.m_fullName, "innocent dans cette affaire", DepositionType.ROLE, false);
+                Deposition declaration = new Deposition(m_fullName, "innocent dans cette affaire", DepositionType.ROLE, false);
                 declaration.display();
                 
-                if (!this.m_clueList.contains(declaration)) {
-                    this.m_clueList.add(declaration);
+                if (!m_clueList.contains(declaration)) {
+                    m_clueList.add(declaration);
                 }
                 break;
             case SUCCESS:
                 m_alibi.display();
                 
-                if (!this.m_clueList.contains(m_alibi)) {
-                    this.m_clueList.add(m_alibi);
+                if (!m_clueList.contains(m_alibi)) {
+                    m_clueList.add(m_alibi);
                 }
                 break;
             case FAILURE:
-                this.textNoSpeak();
+                textNoSpeak();
                 break;
             case CRITIC_FAILURE:
-                this.textLawyer();
+                textLawyer();
                 break;
         }
     }
@@ -79,10 +79,10 @@ public class Innocent extends Suspect {
                 }
                 break;
             case FAILURE:
-                this.textNoSpeak();
+                textNoSpeak();
                 break;
             case CRITIC_FAILURE:
-                this.textForget();//mais garde temoignage en mémoire
+                textForget();//mais garde temoignage en mémoire
                 break;
         }
     }

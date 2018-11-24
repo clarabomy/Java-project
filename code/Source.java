@@ -11,7 +11,7 @@ import project.game.Game;
 public class Source {
     public static void main(String[] args) {
         //Exécution du jeu
-        Game thread = new Game();
-        thread.gameMenu();
+        Game JavaSpector = new Game();
+        JavaSpector.gameMenu();
     }
 }

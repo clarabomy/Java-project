@@ -31,7 +31,7 @@ public class Proof extends Clue {
     @Override
     public void display() {
         //affiche ce que contient la preuve et d'où elle vient (sang trouvé sur arme, cheveux trouvés sur scène de crime, etc.)
-        String proofDisplay = "   - Preuve découverte : " + this.getContent();
-        getConsole().display(proofDisplay, false);
+        String proofDisplay = "   - Preuve découverte : " + getContent();
+        getConsole().display(proofDisplay);
     }
 }

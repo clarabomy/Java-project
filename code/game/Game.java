@@ -13,10 +13,11 @@ import project.game.investigation.Investigation;
 public class Game {
     protected static UserInterface m_console = new UserInterface();//memberOfClass_attributeName
     protected static FileManager m_files = new FileManager();
-    protected static Initialize m_construct = new Initialize();
+    protected static DataManager m_dataSave = new DataManager();
     
-    protected static Difficulties m_levelChoice;
+    protected static Difficulty m_levelChoice;
     protected Investigation m_currentInvestigation = null;
+    protected static boolean m_endedGame = false;
     
 
     
@@ -30,10 +31,17 @@ public class Game {
         return m_console;
     }
     
-    public static Difficulties getLevelChoice() {
+    public static Difficulty getLevelChoice() {
         return m_levelChoice;
     }
     
+    public static boolean isEndedGame() {
+        return m_endedGame;
+    }
+    
+    public static void setEndedGame() {
+        m_endedGame = true;
+    }
     
     /*$$ METHODS $$*/
     public static String[] convertArrayList(ArrayList <String> choices) {
@@ -55,80 +63,72 @@ public class Game {
             boolean gotInvest = m_currentInvestigation != null;
             
             ArrayList choicesList = new ArrayList();
-            choicesList.add("Commencer une nouvelle enquête");  //nouvelle partie
-            if (gotSaves) {
-                choicesList.add("Reprendre une enquête");       //charger partie
+            {
+                choicesList.add("Commencer une nouvelle enquête" + (gotSaves || gotInvest? "" : "\n\n"));
+                if (m_currentInvestigation != null) {
+                    choicesList.add("Continuer l'enquête en cours");
+                    choicesList.add("Déposer un rapport d'enquête (sauvegarde)" + (gotSaves? "" : "\n\n"));
+                }
+                if (gotSaves) {
+                    choicesList.add("Reprendre une enquête");
+                    choicesList.add("Abandonner une enquête\n\n");
+                }      
+                choicesList.add("Règles du jeu");
+                choicesList.add("Quitter le bureau d'enquête");
             }
-            if (this.m_currentInvestigation != null) {          //sauvegarder partie
-                choicesList.add("Déposer un rapport d'enquête (sauvegarde)");
-            }
-            if (gotSaves) {
-                choicesList.add("Abandonner une enquête\n\n");  //abandonner partie
-            }      
-            choicesList.add("Règles du jeu");
-            choicesList.add("Quitter le bureau d'enquête");     //quitter jeu
         
             
-            int choix = m_console.clean().display("Standardiste", "Bienvenue au Bureau d'enquête. Que puis-je pour vous?", convertArrayList(choicesList), true).execChoice();
-            {//gère différents cas, incrémentations successives
-                if (!gotSaves && choix >= 2) {
-                    choix++;
-                }
-                if (!gotSaves && !gotInvest && choix >= 2) {
-                    choix++;
-                }
-                if (!gotSaves && !gotInvest && choix >= 3) {
-                    choix++;
-                }
-                if (!gotSaves && gotInvest && choix >= 4) {
-                    choix++;
-                }
-                if (gotSaves && !gotInvest && choix >= 3) {
-                    choix++;
-                }
+            int choix = m_console.clean().display("Standardiste", "Bienvenue à JavaSpector. Que puis-je pour vous?", convertArrayList(choicesList)).execChoice();
+            if ((!gotInvest && choix >=2) || (!gotSaves && gotInvest && choix >= 4)) {
+                choix += 2;
             }
+            if (!gotSaves && !gotInvest && choix >= 2) {
+                choix += 4;
+            }
+                
             switch (choix) {
                 case 1:
                     newInvestigation();
-                    gameRules();
                     break;
                 case 2:
-                    //continueInvestigation
-                    m_currentInvestigation = m_construct.importGame(m_files.readSaveFile());
+                    //continueCurrentInvestigation
                     m_currentInvestigation.investigationMenu();
                     break;
                 case 3:
-                    //saveInvestigation
-                    ArrayList <String> gameData = m_construct.exportGame(m_currentInvestigation);
+                    //saveCurrentInvestigation
+                    ArrayList <String> gameData = m_dataSave.exportGame(m_currentInvestigation);
                     m_files.writeSaveFile(m_currentInvestigation.getInvestigator().getFullName(), convertArrayList(gameData));
                     break;
                 case 4:
-                    //dropInvestigation
-                    m_console.display((m_files.deleteSaveFile()? "Partie supprimée." : "Echec de suppression.") + "\nRetours au menu principal.", false).execContinue(null);
+                    //loadInvestigation
+                    ArrayList<String> contentFile = m_files.readSaveFile(m_files.selectFile("charger"));
+                    if (contentFile != null) {
+                        m_currentInvestigation = m_dataSave.importGame(contentFile);
+                        m_currentInvestigation.investigationMenu();
+                    }
                     break;
                 case 5:
-                    gameRules();
+                    //dropInvestigation
+                    m_console.display(m_files.deleteSaveFile(m_files.selectFile("supprimer"))? "Opération réussite." : "Echec de suppression.");
                     break;
                 case 6:
+                    String text = "Vous avez pour objectif de trouver le coupable parmi une série de suspects.\n"
+                            + "Ainsi, vous interrogerez à tour de rôle les suspects afin d’obtenir des dépositions "
+                            + "que vous pourrez relier aux preuves que vous trouverez en analysant les différents éléments de l’enquête.\n\n" +
+                            "Mais, cela ne sera pas si simple ! Prenez garde, le meurtrier peut compter sur son fidèle partenaire pour vous tromper.";
+                    m_console.display("Règles du jeu\n")
+                            .display(text)
+                            .execContinue("Compris !");
+                    break;
+                case 7:
                     exitGame = true;
                     break;
             }
+            
+            if (isEndedGame()) {
+                m_files.deleteSaveFile("partie en cours");
+            }
         } while (!exitGame);//quitte le jeu en choisissant l'option dédiée
-    }
-    
-    
-    public void gameRules(){
-        //affiche lecture en fichier
-        /*
-        deux grands axes : 
-        personnages
-            Enqueteur (capacités)
-            Suspects (spécificités des catégories et capacités)
-        éléments d'enquête
-            Victime (spécificités)
-            Arme et Scène du crime (spécificités)
-            Indices (spécificités des catégories)
-        */
     }
     
     public void newInvestigation() {
@@ -136,20 +136,20 @@ public class Game {
         String fullName = null;
         m_console.clean();
         do {
-            String name = m_console.display("Standardiste", "Veuillez entrer votre nom :", false).execInput();
-            String surname = m_console.display("Standardiste", "Et maintenant votre prénom :", false).execInput();
+            String name = m_console.display("Standardiste", "Veuillez entrer votre nom :").execInput();
+            String surname = m_console.display("Standardiste", "Et maintenant votre prénom :").execInput();
             fullName = surname + ' ' + name;
             if (Arrays.asList(m_files.getSavesName()).contains(fullName)) {//si nom déjà utilisé (nom enquêteur = nom fichier save)
                 fullName = null;
-                m_console.display("Vous", "Mais non, bien sûr! Je ne m'appelle pas comme ça.", true);
+                m_console.display("Vous", "Mais non, bien sûr! Je ne m'appelle pas comme ça.");
             }
         } while (fullName == null);
         
         
         //etape 2 : sexe perso
         Sex gender = null;
-        String[] sexList = {"Un talentueux inspecteur.", "Une talentueuse inspectrice."};
-        switch (m_console.display("Vous", "Je suis", sexList, true).execChoice()) {
+        String[] sexList = {"Un talentueux inspecteur !", "Une talentueuse inspectrice !"};
+        switch (m_console.display("Vous", "Croyez moi, je suis", sexList).execChoice()) {
             case 1:
                 gender = Sex.HOMME;
                 break;
@@ -161,26 +161,26 @@ public class Game {
         
         //etape 3 : difficulté enquête
         String[] diffList = {"Basiques.", "Classiques.", "Avancées."};
-        switch (m_console.display("Vous", "Et je suis tout à fait capable de résoudre des enquêtes", diffList, true).execChoice()) {
+        switch (m_console.display("Vous", "Et je suis tout à fait capable de résoudre des enquêtes", diffList).execChoice()) {
             case 1:
-                m_levelChoice = Difficulties.SIMPLE;
+                m_levelChoice = Difficulty.SIMPLE;
                 break;
             case 2:
-                m_levelChoice = Difficulties.MEDIUM;
+                m_levelChoice = Difficulty.MEDIUM;
                 break;
             case 3:
-                m_levelChoice = Difficulties.DIFFICULT;
+                m_levelChoice = Difficulty.DIFFICULT;
                 break;
         }
+        m_console.display("Standardiste", "Mmmh. Votre futur supérieur vous attend à l'intérieur.").execContinue("Vous quittez la récéption");
         
         
         //etape 4 : initialisation
-        m_console.display("Standardiste", "Alors voici des enquêtes à votre niveau !", true).execContinue("Vous choisissez une affaire");
-        m_currentInvestigation = m_construct.createGame(fullName, gender);
+        m_currentInvestigation = m_dataSave.createGame(fullName, gender);
+        m_currentInvestigation.getInvestigator().presentCharacter();
         
-        
-        //etape 5 : lancer jeu
-        m_console.display("Standardiste", "Allez, M" + (gender == Sex.HOMME? ". " : "me. ") + fullName.split(" ")[1] + ". Il faut se lancer, maintenant.", true).execContinue("Vous ouvrez le dossier"); 
+        //etape 5 : lancement du jeu
+        m_console.display("Votre supérieur", "Voici des enquêtes à votre niveau, je vous laisse en choisir une.").execContinue("Vous choisissez une affaire");
         m_currentInvestigation.investigationMenu();
     }
 }

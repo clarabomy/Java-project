@@ -19,7 +19,7 @@ public class Deposition extends Clue {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
     public Deposition(String depositor, String content, DepositionType category, boolean isLie) {
-        super((category == DepositionType.SEEN? "J'ai vu " : category == DepositionType.HEARD? "j'ai entendu " : category == DepositionType.ROLE? "Je suis " : "" + "") + content);
+        super((category == DepositionType.SEEN? "J'ai vu " : category == DepositionType.HEARD? "J'ai entendu " : category == DepositionType.ROLE? "Je suis " : "" + "") + content);
         m_isLie = isLie;
         m_category = category;
         m_depositor = depositor;
@@ -42,6 +42,6 @@ public class Deposition extends Clue {
     /*$$ METHODS $$*/
     @Override
     public void display() {
-        getConsole().display(m_depositor, getContent(), true);
+        getConsole().display(m_depositor, getContent());
     }
 }

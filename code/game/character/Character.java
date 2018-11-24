@@ -8,16 +8,16 @@ package project.game.character;
  */
 public abstract class Character {
     protected String m_fullName;
-    protected Sex m_sex;
+    protected static Sex m_sex;
     protected int m_age;
 
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
     public Character(String fullName, Sex sex, int age) {
-        this.m_fullName = fullName;
-        this.m_sex = sex;
-        this.m_age = age;
+        m_fullName = fullName;
+        m_sex = sex;
+        m_age = age;
     }
     
     /*$$ GETTERS & SETTERS $$*/

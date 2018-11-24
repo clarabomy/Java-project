@@ -2,7 +2,7 @@
 package project.game.character;
 
 import java.util.ArrayList;
-import project.game.Difficulties;
+import project.game.Difficulty;
 import static project.game.Game.getConsole;
 import static project.game.Game.getLevelChoice;
 import project.game.investigation.Clue;
@@ -20,7 +20,7 @@ public abstract class LiveCharacter extends Character {
     private static int m_lastDiceValue; //valeur tirée du dé précédent
     private static int m_lastDiceValidStage; //palier de validation du lancer précédent
     //ajoute à clueList les preuves des éléments d'enquête quand les trouve + ajoute les dépositions quand les écoute
-    protected ArrayList <Clue> m_clueList = new ArrayList();
+    protected static ArrayList <Clue> m_clueList = new ArrayList();
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -29,7 +29,7 @@ public abstract class LiveCharacter extends Character {
         super(fullName, sex, age);
         
         //facile : 0.75 | moyen : 1 | difficile : 1.25
-        m_coeffDiff = (float) (getLevelChoice() == Difficulties.SIMPLE? 0.75 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 1.25));
+        m_coeffDiff = (float) (getLevelChoice() == Difficulty.SIMPLE? 0.75 : (getLevelChoice() == Difficulty.MEDIUM? 1 : 1.25));
     }
     
 
@@ -44,12 +44,16 @@ public abstract class LiveCharacter extends Character {
     }
     
     public void setClue(Clue newClue) {
-        this.m_clueList.add(newClue);
+        m_clueList.add(newClue);
+    }
+    
+    public static void dropClueList() {
+        m_clueList = new ArrayList();
     }
     
     
     /*$$ METHODS $$*/
-    public abstract void displayStats();
+    public abstract LiveCharacter displayStats();
     
    
     public static DiceResult rollDice(int validStage, String display, boolean newThrow) {
@@ -97,7 +101,7 @@ public abstract class LiveCharacter extends Character {
         
         //affiche infos si souhaité
         if (display != null) {
-            getConsole().display("Jet " + display + " : " + diceValue + " / " + validStage + "\t" + result.toString(), false);
+            getConsole().display("Jet " + display + " : " + diceValue + " / " + validStage + "\t" + result.toString());
         }
         
         

@@ -21,9 +21,9 @@ public class Victim extends Character implements NoticeClues {
     //nouvelle partie et chargement
     public Victim(String fullName, Sex sex, int age, String deathDate, String deathCause, ArrayList <Proof> proofList) {
         super(fullName, sex, age);
-        this.m_deathDate = deathDate;
-        this.m_deathCause = deathCause;
-        this.m_proofList = new ArrayList(proofList);
+        m_deathDate = deathDate;
+        m_deathCause = deathCause;
+        m_proofList = new ArrayList(proofList);
     }
 
     
@@ -44,21 +44,21 @@ public class Victim extends Character implements NoticeClues {
     /*$$ METHODS $$*/
     @Override
     public void presentCharacter() {
-        //Victime : nom, sexe, age (phrase différente)
-        String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait " : "il s'appelait ") + this.m_fullName + ".";
-        getConsole().display(victimPresentation, false).execContinue(null);
+        String victimPresentation = "La victime est " + (m_sex == Sex.FEMME? "une femme de " : "un homme de ") + m_age + " ans. Sa carte d'indentité indique qu'" + (m_sex == Sex.FEMME? "elle s'appelait " : "il s'appelait ") + m_fullName + ".";
+        getConsole().display(victimPresentation);
     }
 
     @Override
     public void analyse(Investigator player) { //autopsie
-        String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte " + m_deathDate + " pour cause de " + this.getDeathCause() + ". ";
-        String proofText = "De plus, ils y ont trouvé les indices suivants : ";
-        for (Proof actualProof : m_proofList) {
-            proofText += "\n   - " + actualProof.getContent();
+        presentCharacter();
+        String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte " + m_deathDate + " pour cause de " + getDeathCause() + ".\n";
+        String proofText = "De plus, ils y ont trouvé les indices suivants :";
+        getConsole().display(analyseText + proofText);
+        for (Proof currentProof : m_proofList) {
+            getConsole().display("   - " + currentProof.getContent());
+            if (!player.getClueList().contains(currentProof)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
+                player.setClue((Proof) currentProof);//ajoute preuves à la liste d'indices
+            }
         }
-        if (!player.m_clueList.containsAll(m_proofList)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
-            player.m_clueList.addAll(m_proofList);
-        }
-        getConsole().display(analyseText + proofText, false).execContinue(null);
     }
 }

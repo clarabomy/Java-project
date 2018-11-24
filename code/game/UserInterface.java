@@ -27,7 +27,7 @@ public class UserInterface {
             list += "(Choix "+ (++m_nbChoices) + ") " + choice + "\n\t";
         }
     
-        return list.substring(0, list.length() - 2);//retire dernier \n\t
+        return list.substring(0, list.length() - 1);//retire dernier \n
     }
     
     
@@ -36,38 +36,38 @@ public class UserInterface {
         for (int i = 0; i < M_CONSOLE_SIZE; i++) {//concatène tous les retours à la ligne
             swipe += "\n";
         }
-        System.out.println(swipe);//affiche tout d'un coup
+        System.out.print(swipe);//affiche tout d'un coup
         
         m_nbChoices = 0;
         return this;
     }
     
     
-    public UserInterface display(String text, boolean lineBreak){//version 1
-        System.out.print(text + "\n" + (lineBreak? "\n" : ""));
+    public UserInterface display(String text){//version 1
+        System.out.println(text + "\n");
 
         m_nbChoices = 0;
         return this;
     }
     
     
-    public UserInterface display(String text, String[] choices, boolean lineBreak){//version 2
-        System.out.print(text + "\n" + concatList(choices) + "\n" + (lineBreak? "\n" : ""));//concatList compte nb de choix
+    public UserInterface display(String text, String[] choices){//version 2
+        System.out.println(text + "\n" + concatList(choices));//concatList compte nb de choix
         
         return this;
     }
     
     
-    public UserInterface display(String speaker, String text, boolean lineBreak){//version 3
-        System.out.print("(" + speaker + ") " + text + "\n" + (lineBreak? "\n" : ""));
+    public UserInterface display(String speaker, String text){//version 3
+        System.out.println("(" + speaker + ") " + text + "\n");
         
         m_nbChoices = 0;
         return this;
     }
     
     
-    public UserInterface display(String speaker, String text, String[] choices, boolean lineBreak){//version 4
-        System.out.print("(" + speaker + ") " + text + "\n" + concatList(choices) + "\n" + (lineBreak? "\n" : ""));//concatList compte nb de choix
+    public UserInterface display(String speaker, String text, String[] choices){//version 4
+        System.out.println("(" + speaker + ") " + text + "\n" + concatList(choices));//concatList compte nb de choix
         
         return this;
     }
@@ -103,15 +103,16 @@ public class UserInterface {
                 keyboard.next(); 
             }
         } while (correctChoice == false);
-        System.out.println();
+        System.out.println("\n");
         
         return choice;
     }
     
     public String execInput() {
+        System.out.print(" - ");
         Scanner input = new Scanner(System.in);
         String keyboard = input.nextLine();
-        System.out.println();
+        System.out.println("\n");
         return keyboard;
     }
 }

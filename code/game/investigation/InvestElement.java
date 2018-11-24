@@ -17,8 +17,8 @@ public class InvestElement implements NoticeClues {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
     public InvestElement(String type, ArrayList<Proof> proofList) {
-        this.m_type = type;
-        this.m_proofList = proofList;
+        m_type = type;
+        m_proofList = proofList;
     }
 
     public String getType() {
@@ -44,13 +44,13 @@ public class InvestElement implements NoticeClues {
            analyseText = "Les scientifiques ont analysé l'arme du crime. ";
            proofText = "Ils y ont relevé les indices suivants :";
         }
-        getConsole().display(analyseText + proofText, false);
+        getConsole().display(analyseText + proofText);
         
         for (Proof currentProof : m_proofList) {//parcours tout m_proofList en mettant élément courant dans currentProof
             currentProof.display();
-            player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
+            if (!player.getClueList().contains(currentProof)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
+                player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
+            }
         }
-        
-        getConsole().execContinue(null);
     }
 }

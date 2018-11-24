@@ -22,7 +22,7 @@ public class Murderer extends Suspect implements Lie {
     //nouvelle partie
     public Murderer(String fullName, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive) {
         super(fullName, sex, age, stressLevel, 0, look, physicalAspect, false);
-        this.m_motive = motive;
+        m_motive = motive;
         
         m_heardTestimony = null;
         m_seenTestimony = null;
@@ -31,11 +31,11 @@ public class Murderer extends Suspect implements Lie {
     //chargement partie
     public Murderer(String fullName, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean consideredInnocent, String motive, String falseAlibi, String falseHeard, String falseSeen) {
         super(fullName, sex, age, stressLevel, 0, look, physicalAspect, consideredInnocent);
-        this.m_motive = motive;
+        m_motive = motive;
         
-        m_alibi = new Deposition(this.m_fullName, falseAlibi, DepositionType.ALIBI, true);
-        m_heardTestimony = new Deposition(this.m_fullName, falseHeard, DepositionType.HEARD, true);
-        m_seenTestimony = new Deposition(this.m_fullName, falseSeen, DepositionType.SEEN, true);
+        m_alibi = new Deposition(m_fullName, falseAlibi, DepositionType.ALIBI, true);
+        m_heardTestimony = new Deposition(m_fullName, falseHeard, DepositionType.HEARD, true);
+        m_seenTestimony = new Deposition(m_fullName, falseSeen, DepositionType.SEEN, true);
     }
 
     public String getMotive() {
@@ -49,7 +49,7 @@ public class Murderer extends Suspect implements Lie {
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
-                this.textLawyer();
+                textLawyer();
                 break;
             case SUCCESS:
                 //crée alibi s'il n'en a pas
@@ -69,11 +69,11 @@ public class Murderer extends Suspect implements Lie {
             case CRITIC_FAILURE:
                 //String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "-là? Vraiment? Bien, je vais vous le dire : ",
                 //       part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
-                Deposition declaration = new Deposition(this.m_fullName, " le criminel que vous recherchez", DepositionType.ROLE, false);
+                Deposition declaration = new Deposition(m_fullName, " le criminel que vous recherchez", DepositionType.ROLE, false);
                 declaration.display();
                 
-                if (!this.m_clueList.contains(declaration)) {
-                    this.m_clueList.add(declaration);
+                if (!m_clueList.contains(declaration)) {
+                    m_clueList.add(declaration);
                 }
                 break;
         }
@@ -82,14 +82,14 @@ public class Murderer extends Suspect implements Lie {
     @Override
     public void giveTestimony() {
         //crée temoignage si n'en a pas
-        if (this.m_heardTestimony == null) {
-            this.createFalse(DepositionType.HEARD);
+        if (m_heardTestimony == null) {
+            createFalse(DepositionType.HEARD);
         }
-        if (this.m_seenTestimony == null) {
-            this.createFalse(DepositionType.SEEN);
+        if (m_seenTestimony == null) {
+            createFalse(DepositionType.SEEN);
         }
         
-        int[] validStage = {M_COHERENCE_VALID[this.m_difficulty], M_CREDIBILITY_VALID[this.m_difficulty]};
+        int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 m_seenTestimony.display();
@@ -112,13 +112,13 @@ public class Murderer extends Suspect implements Lie {
                 }
                 break;
             case FAILURE:
-                this.textNoSpeak();
+                textNoSpeak();
                 break;
             case CRITIC_FAILURE:
                 m_heardTestimony = null;
                 m_seenTestimony = null;
                 
-                this.textForget();
+                textForget();
                 break;
         }
     }
@@ -126,7 +126,7 @@ public class Murderer extends Suspect implements Lie {
     @Override
     public void createFalse(DepositionType category) {//crée témoigage bidon avec aléatoire
         ArrayList <String> suspect = suspectsNameList();
-        suspect.remove(this.m_fullName);
+        suspect.remove(m_fullName);
                 
         String text;
         switch (category) {
@@ -134,13 +134,13 @@ public class Murderer extends Suspect implements Lie {
                 String[] object = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"};
                 text = suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)] + " près du lieu du crime.";
                 
-                m_seenTestimony = new Deposition(this.m_fullName, text, category, true);
+                m_seenTestimony = new Deposition(m_fullName, text, category, true);
                 break;
             case HEARD:
                 String[] sound = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
                 text = sound[(int) (Math.random() * sound.length)] + " près du lieu du crime.";
                 
-                m_heardTestimony = new Deposition(this.m_fullName, text, category, true);
+                m_heardTestimony = new Deposition(m_fullName, text, category, true);
                 break;
             case ALIBI:
                 String[] activity   = {"J'ai travaillé", 
@@ -178,7 +178,7 @@ public class Murderer extends Suspect implements Lie {
                 }
                 text += ".";
                 
-                m_alibi = new Deposition(this.m_fullName, text, category, true);
+                m_alibi = new Deposition(m_fullName, text, category, true);
                 break;
         }
     }
@@ -187,7 +187,7 @@ public class Murderer extends Suspect implements Lie {
         String part1 = "C'est bon, je vais tout vous avouer...\n",
                 part2 = "C'est moi le coupable ! AH AH AH AH AH !\n",
                 part3 = "J'ai fait tout ça pour " + m_motive + ". Et vous, qu'auriez-vous fait à ma place?";
-        Deposition truth = new Deposition(this.m_fullName, part1 + part2 + part3, DepositionType.ROLE, true);
+        Deposition truth = new Deposition(m_fullName, part1 + part2 + part3, DepositionType.ROLE, true);
         truth.display();
     }
 }
