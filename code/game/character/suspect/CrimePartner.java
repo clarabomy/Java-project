@@ -24,7 +24,7 @@ public class CrimePartner extends Suspect implements Lie {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie
     public CrimePartner(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName) {
-        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
+        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, false);
         this.m_murdererName = murdererName;
         m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
         
@@ -33,8 +33,8 @@ public class CrimePartner extends Suspect implements Lie {
         m_seenTestimony = null;
     }
     //chargement partie
-    public CrimePartner(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName, String falseHeard, String falseSeen) {
-        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
+    public CrimePartner(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean consideredInnocent, String alibi, String murdererName, String falseHeard, String falseSeen) {
+        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, consideredInnocent);
         this.m_murdererName = murdererName;
         m_alibi = new Deposition(this.m_fullName, alibi, DepositionType.ALIBI, false);
         m_heardTestimony = new Deposition(this.m_fullName, falseHeard, DepositionType.HEARD, true);

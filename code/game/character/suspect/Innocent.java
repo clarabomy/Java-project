@@ -14,8 +14,8 @@ import project.game.investigation.DepositionType;
 public class Innocent extends Suspect {
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Innocent(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String heard, String seen) {
-        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect);
+    public Innocent(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean consideredInnocent, String alibi, String heard, String seen) {
+        super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, consideredInnocent);
         
         //String depositor, String content, DepositionType category, boolean isLie
         m_heardTestimony = new Deposition(this.m_fullName, heard, DepositionType.HEARD, false);

@@ -108,9 +108,10 @@ public class UserInterface {
         return choice;
     }
     
-    public String execInput() {//à coder
+    public String execInput() {
         Scanner input = new Scanner(System.in);
         String keyboard = input.nextLine();
+        System.out.println();
         return keyboard;
     }
 }

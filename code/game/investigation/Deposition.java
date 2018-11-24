@@ -28,6 +28,16 @@ public class Deposition extends Clue {
     public boolean isLie() {
         return m_isLie;
     }
+
+    public DepositionType getCategory() {
+        return m_category;
+    }
+
+    public String getDepositor() {
+        return m_depositor;
+    }
+    
+    
     
     /*$$ METHODS $$*/
     @Override

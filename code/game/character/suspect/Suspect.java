@@ -28,13 +28,13 @@ public abstract class Suspect extends LiveCharacter {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Suspect(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect) {
+    public Suspect(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean consideredInnocent) {
         super(fullName, sex, age);
         this.m_stress = stressLevel;
         this.m_cooperation = cooperationLevel;
         this.m_look = look;
         this.m_physicalAspect = physicalAspect;
-        this.m_consideredInnocent = false;
+        this.m_consideredInnocent = consideredInnocent;
         this.m_difficulty = getLevelChoice() == Difficulties.SIMPLE? 0 : (getLevelChoice() == Difficulties.MEDIUM? 1 : 2);
     }
     

@@ -93,7 +93,7 @@ public class Investigation {
         boolean previousMenu = false;
         String[] choicesList = {"Chercher des incohérences.", 
                                 "Relier les indices.\n", 
-                                "S'occuper d'autre chose."};  //menu principal
+                                "Retourner à l'enquête."};  //menu principal
         
         do {
             getConsole().clean();
@@ -117,7 +117,7 @@ public class Investigation {
         String[] choicesList = {"Sur la victime (autopsie).", 
                                 "Sur l'arme du crime (analyse).", 
                                 "Sur la scène du crime (fouille).\n",
-                                "Ailleurs."};  //menu principal
+                                "Retourner à l'enquête."};  //menu principal
         
         do {
             switch(getConsole().clean().display("Enquêteur", "Voyons voir ce qu'on trouve...", choicesList, false).execChoice()) {
@@ -142,7 +142,7 @@ public class Investigation {
         String[] choicesList = {"L'interroger.", 
                                 "L'innocenter.", 
                                 "L'arrêter (présumé coupable).\n",
-                                "Hum. En fait, il peut partir."};  //menu principal
+                                "Retourner à l'enquête."};  //menu principal
         
         do {
             String[] suspectsList = new String[m_suspectsList.size()];

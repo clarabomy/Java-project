@@ -4,9 +4,9 @@ package project.game.character;
 import java.util.ArrayList;
 import static project.game.Game.convertArrayList;
 import static project.game.Game.getConsole;
-import static project.game.Game.getMobileList;
-import static project.game.Game.getVictimList;
-import static project.game.Game.getWeaponList;
+import static project.game.Initialize.getMobileList;
+import static project.game.Initialize.getVictimList;
+import static project.game.Initialize.getWeaponList;
 import project.game.investigation.Clue;
 import static project.game.investigation.Investigation.suspectsNameList;
 
@@ -38,7 +38,10 @@ public class Investigator extends LiveCharacter {
         this.m_trueWeapon = trueWeapon;
         this.m_trueMobile = trueMobile;
         
-        //this.constructProgress(null, null, null, null);
+        m_supposedMurderer = null;
+        m_supposedVictim = null;
+        m_supposedWeapon = null;
+        m_supposedMobile = null;
     }
     
     //chargement partie
@@ -52,14 +55,20 @@ public class Investigator extends LiveCharacter {
         this.m_trueVictim = trueVictim;
         this.m_trueWeapon = trueWeapon;
         this.m_trueMobile = trueMobile;
-        /*
+        
+        
         if (suppositions == null) {
-            this.constructProgress(null, null, null, null);
+            m_supposedMurderer = null;
+            m_supposedVictim = null;
+            m_supposedWeapon = null;
+            m_supposedMobile = null;
         }
         else {
-            this.constructProgress(suppositions[0], suppositions[1], suppositions[2], suppositions[3]);
+            m_supposedMurderer = suppositions[0];
+            m_supposedVictim = suppositions[1];
+            m_supposedWeapon = suppositions[2];
+            m_supposedMobile = suppositions[3];
         }
-        */
     }
 
     
