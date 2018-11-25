@@ -80,7 +80,7 @@ public class Game {
                 choicesList.add("Commencer une nouvelle enquête" + (gotSaves || gotInvest? "" : "\n\n"));
                 if (m_currentInvestigation != null) {
                     choicesList.add("Continuer l'enquête en cours");
-                    choicesList.add("Déposer un rapport d'enquête (sauvegarde)" + (gotSaves? "" : "\n\n"));
+                    choicesList.add("Déposer un rapport d'enquête" + (gotSaves? "" : "\n\n"));
                 }
                 if (gotSaves) {
                     choicesList.add("Reprendre une enquête");

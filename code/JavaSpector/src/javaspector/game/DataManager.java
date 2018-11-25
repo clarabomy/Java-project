@@ -431,7 +431,7 @@ public class DataManager {
                                     age = Integer.parseInt(value); 
                                     break; 
                                 case "sexSuspect     ": 
-                                    gender = value.equals(Sex.HOMME)? Sex.HOMME : Sex.FEMME; 
+                                    gender = value.equals(Sex.HOMME.toString())? Sex.HOMME : Sex.FEMME; 
                                     break; 
                                 case "lookSuspect    ": 
                                     look = value; 
@@ -492,7 +492,7 @@ public class DataManager {
                                 name = value; 
                                 break; 
                             case "sexVictim     ": 
-                                gender = value.equals(Sex.HOMME)? Sex.HOMME : Sex.FEMME; 
+                                gender = value.equals(Sex.HOMME.toString())? Sex.HOMME : Sex.FEMME; 
                                 break; 
                             case "ageVictim     ": 
                                 age = Integer.parseInt(value); 
@@ -549,7 +549,7 @@ public class DataManager {
                                 name = value; 
                                 break; 
                             case "sexInvestigator": 
-                                gender = value.equals(Sex.HOMME)? Sex.HOMME : Sex.FEMME; 
+                                gender = value.equals(Sex.HOMME.toString())? Sex.HOMME : Sex.FEMME; 
                                 break; 
                             case "manipulationInvestigator": 
                                 manip = Integer.parseInt(value); 

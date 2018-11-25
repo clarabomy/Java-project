@@ -75,12 +75,12 @@ public class Murderer extends Suspect implements Lie {
     public void giveAlibi() {
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
         //Depending on the throw of the die, the murderer acts differently
-        switch (rollMultiDice(validStage, null, false)) {
-            case CRITIC_SUCCESS:
+        switch (rollMultiDice(validStage, null, false)) {//result of the investigator : opponent of the murderer
+            case CRITIC_FAILURE:
                 textLawyer();
                 break;
                 
-            case SUCCESS:
+            case FAILURE:
                 // create alibi if there is not
                 if (m_alibi == null) {
                     createFalse(DepositionType.ALIBI);
@@ -93,11 +93,11 @@ public class Murderer extends Suspect implements Lie {
                 }
                 break;
                 
-            case FAILURE:
+            case SUCCESS:
                 m_alibi = null;
                 textForget();
                 break;
-            case CRITIC_FAILURE:
+            case CRITIC_SUCCESS:
                 Deposition declaration = new Deposition(m_fullName, " le criminel que vous recherchez", DepositionType.ROLE, false);
                 declaration.display();
                 
@@ -123,8 +123,8 @@ public class Murderer extends Suspect implements Lie {
         }
         
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
-        switch (rollMultiDice(validStage, null, false)) {
-            case CRITIC_SUCCESS:
+        switch (rollMultiDice(validStage, null, false)) {//result of the investigator : opponent of the murderer
+            case CRITIC_FAILURE:
                 m_seenTestimony.display();
                 m_heardTestimony.display();
                 
@@ -136,7 +136,7 @@ public class Murderer extends Suspect implements Lie {
                     m_clueList.add(m_seenTestimony);
                 }
                 break;
-            case SUCCESS:
+            case FAILURE:
                 //a fifty-fifty chance: either what he saw or what he heard
                 boolean tellSeen = Math.random() < 0.5;
                 (tellSeen? m_seenTestimony : m_heardTestimony).display();
@@ -145,10 +145,10 @@ public class Murderer extends Suspect implements Lie {
                     m_clueList.add((tellSeen? m_seenTestimony : m_heardTestimony));
                 }
                 break;
-            case FAILURE:
+            case SUCCESS:
                 textNoSpeak();
                 break;
-            case CRITIC_FAILURE:
+            case CRITIC_SUCCESS:
                 m_heardTestimony = null;
                 m_seenTestimony = null;
                 

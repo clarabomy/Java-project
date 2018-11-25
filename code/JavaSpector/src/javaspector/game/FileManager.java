@@ -19,8 +19,8 @@ import static javaspector.game.Game.m_console;
  * @author Clara BOMY
  */ 
 public class FileManager {
-    protected static String m_saveFolderPath = ".\\src\\javaspector\\savesGame\\";//path to the saves folder
-    protected static String m_saveFileExtension = ".spt";//house extension to limit external modifications
+    protected static String m_saveFolderPath = ".\\src\\savesJavaSpector\\";//path to the saves folder
+    protected static String m_saveFileExtension = ".txt";//could use .jsp, house extension, to limit external modifications
     protected String m_currentFileName = null;
     
     /** 
@@ -48,7 +48,7 @@ public class FileManager {
      */ 
     public String[] getSavesName() {
         ArrayList <String> saveList = new ArrayList();
-        FileFilter saveFilesOnly = (File f) -> f.getName().endsWith(m_saveFileExtension); //equals to new FileFilter() { public boolean accept(File f) { return f.getName().endsWith(".txt") ; } };
+        FileFilter saveFilesOnly = (File f) -> f.getName().endsWith(m_saveFileExtension); //equals to new FileFilter() { public boolean accept(File f) { return f.getName().endsWith("m_saveFileExtension") ; } };
         
         for (File fichier : new File(m_saveFolderPath).listFiles(saveFilesOnly)) {//"." = current repository => goes to backup directory and retrieves file names with .txt extension
             String nom = fichier.toString();
