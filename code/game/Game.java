@@ -17,7 +17,7 @@ public class Game {
     
     protected static Difficulty m_levelChoice;
     protected Investigation m_currentInvestigation = null;
-    protected static boolean m_endedGame = false;
+    protected static boolean m_endedGame;
     
 
     
@@ -88,6 +88,7 @@ public class Game {
                 
             switch (choix) {
                 case 1:
+                    m_endedGame = false;
                     newInvestigation();
                     break;
                 case 2:
@@ -97,6 +98,7 @@ public class Game {
                 case 3:
                     //saveCurrentInvestigation
                     ArrayList <String> gameData = m_dataSave.exportGame(m_currentInvestigation);
+                    m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());
                     m_files.writeSaveFile(m_currentInvestigation.getInvestigator().getFullName(), convertArrayList(gameData));
                     break;
                 case 4:
@@ -104,6 +106,7 @@ public class Game {
                     ArrayList<String> contentFile = m_files.readSaveFile(m_files.selectFile("charger"));
                     if (contentFile != null) {
                         m_currentInvestigation = m_dataSave.importGame(contentFile);
+                        m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());
                         m_currentInvestigation.investigationMenu();
                     }
                     break;
@@ -125,8 +128,9 @@ public class Game {
                     break;
             }
             
-            if (isEndedGame()) {
-                m_files.deleteSaveFile("partie en cours");
+            if (m_endedGame && m_files.getCurrentFileName() != null) {//s'il y a un fichier chargé, on le supprime
+                m_files.deleteSaveFile(m_files.getCurrentFileName());
+                m_currentInvestigation = null;
             }
         } while (!exitGame);//quitte le jeu en choisissant l'option dédiée
     }

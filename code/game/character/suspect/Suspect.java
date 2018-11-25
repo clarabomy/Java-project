@@ -147,16 +147,23 @@ public abstract class Suspect extends LiveCharacter {
             getConsole().display("Bravo, vous avez démasqué le coupable !");
             ((Murderer) this).confess();//cast pour utiliser la méthode
             getConsole().execContinue("Deux policiers débarquent alors pour arrêter le meurtrier")
-                    .execContinue("Votre chef vous félicite pour avoir résolu cette affaire")
-                    .execContinue("Vous rassemblez le contenu de l'enquête dans une boîte, que vous descendez ensuite aux archives")
-                    .execContinue("Puis, enfin, vous rentrez chez vous, avec la satisfaction du travail accompli");
+                        .execContinue("Votre chef vous félicite pour avoir résolu cette affaire")
+                        .execContinue("Vous rassemblez le contenu de l'enquête dans une boîte, que vous descendez ensuite aux archives")
+                        .execContinue("Puis, enfin, vous rentrez chez vous, avec la satisfaction du travail accompli");
         }
         else {
-            //perso clame son innocence lors de son proces...
-            getConsole().display("Votre supérieur","Il y a eu de nouveaux meurtres ! Vous êtes renvoyé !");
-            getConsole().display("GAME OVER").execContinue(null);
+            if (this instanceof CrimePartner) {
+                getConsole().display("Vous avez envoyé " + (m_sex == Sex.HOMME? "le" : "la") + " partenaire du criminel en prison.")
+                            .execContinue((m_sex == Sex.HOMME? "Il" : "Elle") + " a refusé de dire qui était le coupable");
+            }
+            else {
+                getConsole().display("Vous avez envoyé un innocent en prison.");
+            }
+            getConsole().execContinue("Les crimes ont donc continués")
+                        .execContinue("J'ai été renvoyé par mon supérieur pour incompétence")
+                        .execContinue("Me revoilà donc sur le marché du travail... Toujours à la recherche d'une enquête à résoudre");
         }
-        getConsole().execContinue("Merci d'avoir joué à JavaSpector!");
+        getConsole().execContinue("Merci d'avoir joué à JavaSpector ! ");
         setEndedGame();
     }
 }

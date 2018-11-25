@@ -23,6 +23,7 @@ import static project.game.Game.m_console;
 public class FileManager {
     protected static String m_saveFolderPath = ".\\src\\project\\savesGame\\";//chemin d'accès au dossier de sauvegardes
     protected static String m_saveFileExtension = ".spt";//extension bateau pour limiter les bidouillages
+    protected String m_currentFileName = null;
     
     public FileManager() {
         //crée dossier pour sauvegardes s'il n'existe pas
@@ -31,6 +32,15 @@ public class FileManager {
             directory.mkdir();
         }
     }
+    
+    public String getCurrentFileName() {
+        return m_saveFolderPath + m_currentFileName + m_saveFileExtension;
+    }
+    
+    public void setCurrentFileName(String name) {
+        m_currentFileName = name;
+    }
+    
     
     public String[] getSavesName() {
         ArrayList <String> saveList = new ArrayList();

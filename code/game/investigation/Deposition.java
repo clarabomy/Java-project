@@ -18,10 +18,10 @@ public class Deposition extends Clue {
     
     /*$$ CONSTRUCTOR $$*/
     //nouvelle partie et chargement
-    public Deposition(String depositor, String content, DepositionType category, boolean isLie) {
-        super((category == DepositionType.SEEN? "Je me souviens avoir vu " : category == DepositionType.HEARD? "Je me souviens avoir entendu " : category == DepositionType.ROLE? "Je suis " : "" + "") + content);
+    public Deposition(String depositor, String content, DepositionType type, boolean isLie) {
+        super((type == DepositionType.SEEN? "Je me souviens avoir vu " : type == DepositionType.HEARD? "Je me souviens avoir entendu " : type == DepositionType.ROLE? "Je suis " : "" + "") + content);
         m_isLie = isLie;
-        m_category = category;
+        m_category = type;
         m_depositor = depositor;
     }
 

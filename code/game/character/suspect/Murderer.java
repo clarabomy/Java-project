@@ -184,10 +184,9 @@ public class Murderer extends Suspect implements Lie {
     }
     
     public void confess(){
-        String part1 = "C'est bon, je vais tout vous avouer...\n",
-                part2 = "C'est moi le coupable ! AH AH AH AH AH !\n",
-                part3 = "J'ai fait tout ça pour " + m_motive + ". Et vous, qu'auriez-vous fait à ma place?";
-        Deposition truth = new Deposition(m_fullName, part1 + part2 + part3, DepositionType.ROLE, true);
+        String part1 = "le coupable. Eh oui, c'est MOI ! AH AH AH AH AH ! ",
+                part2 = "J'ai fait tout ça pour/par " + m_motive + " ! ";
+        Deposition truth = new Deposition(m_fullName, part1 + part2, DepositionType.ROLE, true);
         truth.display();
     }
 }
