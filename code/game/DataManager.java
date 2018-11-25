@@ -33,72 +33,6 @@ public class DataManager {
     protected final int m_ageMax = 80 - m_ageMin; 
      
      
-    protected static String[] m_weaponList = { 
-        "couteau", 
-        "batte de baseball", 
-        "revolver", 
-        "pelle", 
-        "pioche" 
-    }; 
-    protected static String[] m_mobileList = { 
-        "la folie", 
-        "l'argent", 
-        "l'adrénaline", 
-        "le pouvoir" 
-    }; 
-    protected String[] m_manList = { 
-        "Antoine", 
-        "Thomas", 
-        "Luc", 
-        "Paul", 
-        "Pierre", 
-        "Guillaume", 
-        "Alexandre" 
-    }; 
-    protected String[] m_whomanList = { 
-        "Claire", 
-        "Lucie", 
-        "Alice", 
-        "Morgane", 
-        "Camille", 
-        "Laure", 
-        "Marine" 
-    }; 
-    protected String[] m_nameList = { 
-        "Juzeau", 
-        "Dael", 
-        "Dang", 
-        "Morelle", 
-        "Deolivera", 
-        "Pasquier", 
-        "Fourmond", 
-        "Cordier", 
-        "Boore" 
-    }; 
-    protected String[] m_lookList = { 
-        "classe", 
-        "casual", 
-        "négligé", 
-        "gothique"                   
-    }; 
-    protected String[] m_aspectList = { 
-        "grand", 
-        "petit", 
-        "mince", 
-        "corpulent" 
-    }; 
-    protected String[] m_causeList = { 
-        "hémorragie interne", 
-        "blessures profondes", 
-        "arrêt cardiaque" 
-    }; 
-    protected String[] m_proofContentList = { 
-        "tâches de sang", 
-        "empreintes digital", 
-        "mégot de cigarette", 
-        "ticket de métro" 
-    }; 
-     
     public DataManager() { 
     } 
      
@@ -168,6 +102,38 @@ public class DataManager {
     } 
      
     private String createFullName(Sex genre) { 
+
+        String[] m_manList = { 
+            "Antoine", 
+            "Thomas", 
+            "Luc", 
+            "Paul", 
+            "Pierre", 
+            "Guillaume", 
+            "Alexandre" 
+        }; 
+        String[] m_whomanList = { 
+            "Claire", 
+            "Lucie", 
+            "Alice", 
+            "Morgane", 
+            "Camille", 
+            "Laure", 
+            "Marine" 
+        }; 
+        String[] m_nameList = { 
+            "Juzeau", 
+            "Dael", 
+            "Dang", 
+            "Morelle", 
+            "Deolivera", 
+            "Pasquier", 
+            "Fourmond", 
+            "Cordier", 
+            "Boore" 
+        }; 
+        
+        
         String surname = (genre == Sex.HOMME? m_manList : m_whomanList)[(int) (Math.random() * (genre == Sex.HOMME? m_manList : m_whomanList).length)]; 
         return surname + ' ' + m_nameList[(int) (Math.random() * m_nameList.length)]; 
     } 
@@ -175,7 +141,46 @@ public class DataManager {
      
     public Investigation createGame(String fullName, Sex gender) { 
         dropClueList(); 
-         
+        
+        
+        String[] m_weaponList = { 
+            "couteau", 
+            "batte de baseball", 
+            "revolver", 
+            "pelle", 
+            "pioche" 
+        }; 
+        String[] m_mobileList = { 
+            "la folie", 
+            "l'argent", 
+            "l'adrénaline", 
+            "le pouvoir" 
+        }; 
+        String[] m_lookList = { 
+            "classe", 
+            "casual", 
+            "négligé", 
+            "gothique"                   
+        }; 
+        String[] m_aspectList = { 
+            "grand", 
+            "petit", 
+            "mince", 
+            "corpulent" 
+        }; 
+        String[] m_causeList = { 
+            "hémorragie interne", 
+            "blessures profondes", 
+            "arrêt cardiaque" 
+        }; 
+        String[] m_proofContentList = { 
+            "tâches de sang", 
+            "empreintes digital", 
+            "mégot de cigarette", 
+            "ticket de métro" 
+        }; 
+        
+        
         //variables 
         Sex genre; 
         int age, stress, coop, manip, intel; 
