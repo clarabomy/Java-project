@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class UserInterface {
     protected static int m_nbChoices;
-    protected static final int M_CONSOLE_SIZE = 40;
+    protected static final int M_CONSOLE_SIZE = 50;
     
     
     /*$$ METHODS $$*/

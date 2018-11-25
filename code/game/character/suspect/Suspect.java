@@ -6,10 +6,10 @@ import static project.game.Game.getConsole;
 import static project.game.Game.getLevelChoice;
 import static project.game.Game.setEndedGame;
 import project.game.character.Investigator;
-import static project.game.character.Investigator.yourself;
 import project.game.character.LiveCharacter;
 import project.game.character.Sex;
 import project.game.investigation.Deposition;
+import static project.game.investigation.Investigation.getGenderJob;
 
 
 /**
@@ -86,7 +86,7 @@ public abstract class Suspect extends LiveCharacter {
         String part1 = "Nom, prénom           : " + m_fullName.split(" ")[1] + " " + m_fullName.split(" ")[0],
                 part2 = "Sexe                  : " + m_sex.toString(),
                 part3 = "Age                   : " + m_age + " ans",
-                part4 = "Etat                  : " + (m_stress > 50? "stressé" : "détendu"),
+                part4 = "Etat                  : " + (m_stress > 50? "stressé" : "détendu") + (m_sex == Sex.FEMME? "e" : ""),
                 part5 = "Description physique  : " + m_physicalAspect + ", " + m_look;
         getConsole().display("Informations sur le suspect : ")
                     .display(part1 + "\n" + part2 + "\n" + part3 + "\n" + part4 + "\n" + part5)
@@ -96,26 +96,36 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     public void beInterrogated(Investigator player) {
-        String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose de suspect?"};
-        int choix = getConsole().display(yourself(), "Vous voilà au poste, dites moi...", choices).execChoice();
-       
-        //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
-        getConsole().execContinue("Vous lancez vos dés");
-        int[] stats = {player.getIntelligence(), player.getManipulation()};
-        String[] category = {"d'intelligence", "de manipulation"};
-        rollMultiDice(stats , category, true);
+        boolean previousMenu = false;
         
-        //applique le choix
-        getConsole().execContinue(m_fullName + " lance ses dés");
-        switch (choix) {
-            case 1:
-                giveAlibi();
-                break;
-            case 2:
-                giveTestimony();
-                break;
-        }
-        getConsole().execContinue(null);
+        do {
+            String[] choices = {"Que faisiez-vous pendant le crime?", "Avez-vous vu ou entendu quelque chose de suspect?", "Vous pouvez partir."};
+            int choix = getConsole().display(getGenderJob(), "Dites moi...", choices).execChoice();
+            
+            if (choix != 3) {
+                //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
+                getConsole().execContinue("Vous lancez vos dés");
+                int[] stats = {player.getIntelligence(), player.getManipulation()};
+                String[] category = {"d'intelligence", "de manipulation"};
+                rollMultiDice(stats , category, true);
+
+                //applique le choix
+                getConsole().execContinue(m_fullName + " lance ses dés");
+                switch (choix) {
+                    case 1:
+                        giveAlibi();
+                        break;
+                    case 2:
+                        giveTestimony();
+                        break;
+                }
+                getConsole().execContinue("Vous prenez des notes");
+            }
+            else {
+                previousMenu = true;
+            }
+        } while (!previousMenu);
+        getConsole().execContinue("Vous raccompagnez " + m_fullName + " vers la sortie");
     }
     
     abstract void giveAlibi();
@@ -123,7 +133,7 @@ public abstract class Suspect extends LiveCharacter {
     abstract void giveTestimony();
     
     protected void textNoSpeak() {
-        getConsole().display("Enquêteur", "Le suspect refuse de parler.");
+        getConsole().display(getGenderJob(), "Le suspect refuse de parler.");
     }
     
     protected void textLawyer() {

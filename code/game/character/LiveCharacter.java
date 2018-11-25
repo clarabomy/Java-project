@@ -14,7 +14,7 @@ import project.game.investigation.Clue;
 public abstract class LiveCharacter extends Character {
     private static final int M_SIDES = 100;
     private static final int M_CRITICAL_SUCCESS = 15;
-    private static final int M_CRITICAL_FAILURE = 95;
+    private static final int M_CRITICAL_FAILURE = 100 - M_CRITICAL_SUCCESS;
     private static final int M_ZONE_VALUE = 5; 
     private static float m_coeffDiff;
     private static int m_lastDiceValue; //valeur tirée du dé précédent

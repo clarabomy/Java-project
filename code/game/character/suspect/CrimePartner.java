@@ -149,7 +149,7 @@ public class CrimePartner extends Suspect implements Lie {
                 m_heardTestimony = new Deposition(m_fullName, text, DepositionType.HEARD, true);
                 break;
             case ALIBI:
-                text = m_alibi.getContent() + ". Il y avait aussi " + m_murdererName + " avec moi.";
+                text = m_alibi.getContent() + " Il y avait aussi " + m_murdererName + " avec moi.";
                 
                 m_falseAlibi = new Deposition(m_fullName, text, DepositionType.ALIBI, true);
                 break;

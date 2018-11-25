@@ -36,10 +36,6 @@ public class Investigator extends LiveCharacter {
         return m_manipulation;
     }
     
-    public static String yourself() {
-        return m_sex.equals(Sex.HOMME)? "Enquêteur" : "Enquêtrice";
-    }
-    
     /*$$ METHODS $$*/    
     @Override
     public void presentCharacter() {
@@ -51,7 +47,7 @@ public class Investigator extends LiveCharacter {
     
     @Override
     public Investigator displayStats() {
-        getConsole().display("Rapport du test d'aptitude :")
+        getConsole().display("Rapport du test d'aptitude de " + m_fullName + " :")
                     .display("Votre niveau d'intelligence : " + m_intelligence + "\nVotre niveau de manipulation : " + m_manipulation)
                     .execContinue("Vous reposez le rapport");
         

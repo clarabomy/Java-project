@@ -8,7 +8,7 @@ package project.game.character;
  */
 public abstract class Character {
     protected String m_fullName;
-    protected static Sex m_sex;
+    protected Sex m_sex;
     protected int m_age;
 
     

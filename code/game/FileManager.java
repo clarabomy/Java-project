@@ -21,7 +21,7 @@ import static project.game.Game.m_console;
  * @author ISEN
  */
 public class FileManager {
-    protected static String m_saveFolderPath = ".\\src\\project\\savesGame\\";//chemin d'accès au dossier de sauvegardes
+    protected static String m_saveFolderPath = ".\\savesGame\\";//chemin d'accès au dossier de sauvegardes
     protected static String m_saveFileExtension = ".spt";//extension bateau pour limiter les bidouillages
     protected String m_currentFileName = null;
     
@@ -98,7 +98,7 @@ public class FileManager {
             writer.close();
         }
         catch (IOException e){
-            m_console.display("Erreur dans l'enregistrement de la partie.").execContinue(null);
+            m_console.display("Erreur dans l'enregistrement de la partie.").execContinue("Continuer");
         }
     }
     

@@ -36,11 +36,11 @@ public class InvestElement implements NoticeClues {
         String analyseText;
         String proofText;
         
-        if (m_proofList.get(0).getOrigin().equals("crimeScene")) {
+        if (m_proofList.get(0).getOrigin().equals("Scène de crime")) {
             analyseText = "L'équipe sur le terrain a fouillé la scène de crime. ";
             proofText = "Elle a réuni les indices suivants : ";
         }
-        else {//if (m_proofList.get(0).getOrigin().equals("crimeWeapon"))
+        else {//if (m_proofList.get(0).getOrigin().equals("Arme du crime"))
            analyseText = "Les scientifiques ont analysé l'arme du crime. ";
            proofText = "Ils y ont relevé les indices suivants :";
         }

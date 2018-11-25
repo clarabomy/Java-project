@@ -6,7 +6,7 @@ import static project.game.Game.convertArrayList;
 import static project.game.Game.getConsole;
 import static project.game.Game.isEndedGame;
 import project.game.character.Investigator;
-import static project.game.character.Investigator.yourself;
+import project.game.character.Sex;
 import project.game.character.Victim;
 import project.game.character.suspect.Suspect;
 
@@ -23,6 +23,7 @@ public class Investigation {
     protected Victim m_victim;
     protected InvestElement m_crimeWeapon;
     protected InvestElement m_crimeScene;
+    protected static String m_genderJob;
 
     
     /*$$ CONSTRUCTOR $$*/
@@ -33,6 +34,11 @@ public class Investigation {
         m_victim = corpse;
         m_crimeWeapon = weapon;
         m_crimeScene = scene;
+        m_genderJob = player.getSex() == Sex.HOMME? "Enquêteur" : "Enquêtrice";
+    }
+    
+    public static String getGenderJob() {
+        return m_genderJob;
     }
     
     
@@ -86,7 +92,7 @@ public class Investigation {
                 case 3:
                     getConsole().clean();
                     if (m_player.getClueList().isEmpty()) {
-                        getConsole().display(yourself(), "Je n'ai pas encore le moindre indice...");
+                        getConsole().display(m_genderJob, "Je n'ai pas encore le moindre indice...");
                     }
                     else {
                         m_player.consultClues();
@@ -114,7 +120,7 @@ public class Investigation {
                                 "Retourner à l'enquête."};  //menu principal
         
         do {
-            switch(getConsole().clean().display(yourself(), "Voyons voir les éléments de l'enquête...", choicesList).execChoice()) {
+            switch(getConsole().clean().display(m_genderJob, "Voyons voir les éléments de l'enquête...", choicesList).execChoice()) {
                 case 1: 
                     m_victim.analyse(m_player);
                     break;
@@ -152,7 +158,7 @@ public class Investigation {
             }
             suspectsList[m_suspectsList.size()] = "Annuler";
             
-            int target = getConsole().clean().display(yourself(), "Je veux voir", suspectsList).execChoice() - 1;
+            int target = getConsole().clean().display(m_genderJob, "Je veux voir", suspectsList).execChoice() - 1;
             if (target == m_suspectsList.size()) {
                 previousMenu = true;
             }

@@ -79,13 +79,12 @@ public class Game {
         
             
             int choix = m_console.clean().display("Standardiste", "Bienvenue à JavaSpector. Que puis-je pour vous?", convertArrayList(choicesList)).execChoice();
-            if ((!gotInvest && choix >=2) || (!gotSaves && gotInvest && choix >= 4)) {
-                choix += 2;
-            }
             if (!gotSaves && !gotInvest && choix >= 2) {
                 choix += 4;
             }
-                
+            else if ((!gotInvest && choix >=2) || (!gotSaves && gotInvest && choix >= 4)) {
+                choix += 2;
+            }
             switch (choix) {
                 case 1:
                     m_endedGame = false;
@@ -143,7 +142,16 @@ public class Game {
             String name = m_console.display("Standardiste", "Veuillez entrer votre nom :").execInput();
             String surname = m_console.display("Standardiste", "Et maintenant votre prénom :").execInput();
             fullName = surname + ' ' + name;
-            if (Arrays.asList(m_files.getSavesName()).contains(fullName)) {//si nom déjà utilisé (nom enquêteur = nom fichier save)
+            if (Arrays.asList(m_files.getSavesName()).contains(fullName) || //si nom déjà utilisé (nom enquêteur = nom fichier save)
+                    fullName.contains("\\") ||
+                    fullName.contains("/") ||
+                    fullName.contains(":") ||
+                    fullName.contains("*") ||
+                    fullName.contains("?") ||
+                    fullName.contains("\"") ||
+                    fullName.contains("<") ||
+                    fullName.contains(">") ||
+                    fullName.contains("|")) {
                 fullName = null;
                 m_console.display("Vous", "Mais non, bien sûr! Je ne m'appelle pas comme ça.");
             }
