@@ -75,6 +75,8 @@ public class Victim extends Character implements NoticeClues {
         String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte " + m_deathDate + " pour cause " + getDeathCause() + ".\n";
         String proofText = "De plus, ils y ont trouvé les indices suivants :";
         getConsole().display(analyseText + proofText);
+        
+        //Go throw the list of proofs present on the victim
         for (Proof currentProof : m_proofList) {
             getConsole().display("   - " + currentProof.getContent());
             if (!player.getClueList().contains(currentProof)) {//add everything that was found to the list of clues found at once

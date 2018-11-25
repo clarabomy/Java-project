@@ -74,10 +74,12 @@ public class Murderer extends Suspect implements Lie {
     @Override
     public void giveAlibi() {
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
+        //Depending on the throw of the die, the murderer acts differently
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 textLawyer();
                 break;
+                
             case SUCCESS:
                 // create alibi if there is not
                 if (m_alibi == null) {
@@ -85,10 +87,12 @@ public class Murderer extends Suspect implements Lie {
                 }
                 m_alibi.display();
                 
+                //if the alibi is not already in the found clue list, we add it
                 if (!m_clueList.contains(m_alibi)) {
                     m_clueList.add(m_alibi);
                 }
                 break;
+                
             case FAILURE:
                 m_alibi = null;
                 textForget();
@@ -97,6 +101,7 @@ public class Murderer extends Suspect implements Lie {
                 Deposition declaration = new Deposition(m_fullName, " le criminel que vous recherchez", DepositionType.ROLE, false);
                 declaration.display();
                 
+                //if the deposition is not already in the found clue list, we add it
                 if (!m_clueList.contains(declaration)) {
                     m_clueList.add(declaration);
                 }
@@ -158,6 +163,7 @@ public class Murderer extends Suspect implements Lie {
      */ 
     @Override
     public void createFalse(DepositionType category) {
+        //Remove the name of the murderer of the suspect list to make him coherent
         ArrayList <String> suspect = getSuspectsNameList();
         suspect.remove(m_fullName);
                 
@@ -167,12 +173,14 @@ public class Murderer extends Suspect implements Lie {
                 String[] object = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"};
                 text = suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)] + " près du lieu du crime.";
                 
+                 //Create the false seen testimony
                 m_seenTestimony = new Deposition(m_fullName, text, category, true);
                 break;
             case HEARD:
                 String[] sound = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
                 text = sound[(int) (Math.random() * sound.length)] + " près du lieu du crime.";
                 
+                //Create the false heard testimony
                 m_heardTestimony = new Deposition(m_fullName, text, category, true);
                 break;
             case ALIBI:
@@ -194,6 +202,7 @@ public class Murderer extends Suspect implements Lie {
                     text += ", seul";
                 }
                 else {
+                    //Constitue a coherent sentence
                     for (int i = 0; i < nbSuspectsIncluded; i++) {
                         if (i == 0) {
                             text += " avec ";

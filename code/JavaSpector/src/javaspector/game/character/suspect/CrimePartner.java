@@ -75,6 +75,7 @@ public class CrimePartner extends Suspect implements Lie {
     @Override
     public void giveAlibi() {
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
+        //Depending on the throw of the die, the crime partner acts differently
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 textLawyer();
@@ -85,13 +86,14 @@ public class CrimePartner extends Suspect implements Lie {
                 }
                 m_falseAlibi.display();
                 
+                //if the false alibi is not already in the found clue list, we add it
                 if (!m_clueList.contains(m_falseAlibi)) {
                     m_clueList.add(m_falseAlibi);
                 }
                 break;
             case FAILURE:
                 m_alibi.display();
-                
+                //if the alibi is not already in the found clue list, we add it
                 if (!m_clueList.contains(m_alibi)) {
                     m_clueList.add(m_alibi);
                 }
@@ -121,6 +123,8 @@ public class CrimePartner extends Suspect implements Lie {
         }
         
         int[] validStage = {M_COHERENCE_VALID[m_difficulty], M_CREDIBILITY_VALID[m_difficulty]};
+        
+        //Depending on the throw of the die, the crime partner acts differently
         switch (rollMultiDice(validStage, null, false)) {
             case CRITIC_SUCCESS:
                 m_seenTestimony.display();
@@ -130,6 +134,8 @@ public class CrimePartner extends Suspect implements Lie {
                 if (!m_clueList.contains(m_heardTestimony)) {
                     m_clueList.add(m_heardTestimony);
                 }
+                
+                //if the testimony is not already in the found clue list, we add it
                 if (!m_clueList.contains(m_seenTestimony)) {
                     m_clueList.add(m_seenTestimony);
                 }
@@ -139,6 +145,7 @@ public class CrimePartner extends Suspect implements Lie {
                 boolean tellSeen = Math.random() < 0.5;
                 (tellSeen? m_seenTestimony : m_heardTestimony).display();
                 
+                //if the testimony is not already in the found clue list, we add it
                 if (!m_clueList.contains((Clue)(tellSeen? m_seenTestimony : m_heardTestimony))) {
                     m_clueList.add((tellSeen? m_seenTestimony : m_heardTestimony));
                 }
@@ -166,22 +173,29 @@ public class CrimePartner extends Suspect implements Lie {
             case SEEN:
                 String[] object = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"};
                 
+                //Remove the name of the crime partner and of the murderer of the suspect list to make him coherent
                 ArrayList <String> suspect = getSuspectsNameList();
                 suspect.remove(m_fullName);
                 suspect.remove(m_murdererName);
                 
                 text = suspect.get((int) (Math.random() * suspect.size())) + " avec " + object[(int) (Math.random() * object.length)] + " près du lieu du crime.";
+                
+                //Create the false seen testimony
                 m_seenTestimony = new Deposition(m_fullName, text, DepositionType.SEEN, true);
                 break;
+                
             case HEARD:
                 String[] sound = {"un chien", "un coup de feu", "une voix d'homme", "une voix de femme"};
                 
                 text = sound[(int) (Math.random() * sound.length)] + " près du lieu du crime.";
+                //Create the false heard testimony
                 m_heardTestimony = new Deposition(m_fullName, text, DepositionType.HEARD, true);
                 break;
+                
             case ALIBI:
                 text = m_alibi.getContent() + " Il y avait aussi " + m_murdererName + " avec moi.";
                 
+                //Create the false alibi
                 m_falseAlibi = new Deposition(m_fullName, text, DepositionType.ALIBI, true);
                 break;
         }

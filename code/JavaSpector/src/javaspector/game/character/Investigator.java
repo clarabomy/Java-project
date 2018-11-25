@@ -79,7 +79,9 @@ public class Investigator extends LiveCharacter {
      */ 
     public Investigator consultClues(){
         getConsole().display("Indices découverts dans cette enquête :\n");
+        //go throw the list of found clues
         for (int i = 0; i < m_clueList.size(); i++) {
+            // determine the origin of the clue 
             String origin = m_clueList.get(i) instanceof Deposition? ((Deposition) m_clueList.get(i)).getDepositor() : ((Proof) m_clueList.get(i)).getOrigin();
             getConsole().display("Indice " + (i+1) + " : " + origin + " - " + m_clueList.get(i).getContent());
         }

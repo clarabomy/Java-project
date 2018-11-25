@@ -13,11 +13,11 @@ import javaspector.game.investigation.Clue;
  * @author Clara BOMY
  */ 
 public abstract class LiveCharacter extends Character {
-    private static final int M_SIDES = 100;
-    private static final int M_CRITICAL_SUCCESS = 15;
-    private static final int M_CRITICAL_FAILURE = M_SIDES - M_CRITICAL_SUCCESS;
-    private static final int M_ZONE_VALUE = 5; 
-    private static float m_coeffDiff;
+    private static final int M_SIDES = 100; //number of sides of die
+    private static final int M_CRITICAL_SUCCESS = 15; //level value below which the pitch is a critical success
+    private static final int M_CRITICAL_FAILURE = M_SIDES - M_CRITICAL_SUCCESS; //level value below which the pitch is a critical failure
+    private static final int M_ZONE_VALUE = 5; //value assigned to each failure interval
+    private static float m_coeffDiff; //coefficient applied according to difficulty
     private static int m_lastDiceValue; // value from the previous die
     private static int m_lastDiceValidStage; // validation stage of the previous throw
     
