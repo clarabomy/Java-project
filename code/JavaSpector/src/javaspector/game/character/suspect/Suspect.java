@@ -13,14 +13,14 @@ import static javaspector.game.investigation.Investigation.getGenderJob;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of the suspect
  * @author Clara BOMY
  */ 
 public abstract class Suspect extends LiveCharacter {
-    protected int m_difficulty;
-    protected int m_stress;
-    protected int m_cooperation;
-    protected String m_look;
+    protected int m_difficulty; //difficulty level of the game
+    protected int m_stress; 
+    protected int m_cooperation; 
+    protected String m_look; 
     protected String m_physicalAspect;
     protected boolean m_consideredInnocent;
     protected Deposition m_heardTestimony;
@@ -29,14 +29,14 @@ public abstract class Suspect extends LiveCharacter {
 
     /** 
      * Constructor of the class
-     * @param fullName              explications
-     * @param sex                   explications
-     * @param age                   explications
-     * @param stressLevel           explications
-     * @param cooperationLevel      explications
-     * @param look                  explications
-     * @param physicalAspect        explications
-     * @param consideredInnocent    explications
+     * @param fullName              full name of the suspect
+     * @param sex                   sex of the suspect
+     * @param age                   age of the suspect
+     * @param stressLevel           stress level of the suspect
+     * @param cooperationLevel      cooperation level of the suspect
+     * @param look                  look of the suspect
+     * @param physicalAspect        physical aspect of the suspect
+     * @param consideredInnocent    if the suspect is considered innocent by the investigator
      */ 
     public Suspect(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean consideredInnocent) {
         super(fullName, sex, age);
@@ -49,71 +49,71 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     /** 
-     * Getter of the class
-     * @return isConsideredInnocent explications
+     * Getter of the attribute isConsideredInnocent
+     * @return isConsideredInnocent if the suspect is considered innocent by the investigator
      */ 
     public boolean isConsideredInnocent() {
         return m_consideredInnocent;
     }
 
     /** 
-     * Getter of the class
-     * @return stress   explications
+     * Getter of the stress level
+     * @return stress   stress level of the suspect
      */ 
     public int getStress() {
         return m_stress;
     }
     
     /** 
-     * Getter of the class
-     * @return cooperation  explications
+     * Getter of the cooperation level
+     * @return cooperation   cooperation level of the suspect
      */ 
     public int getCooperation() {
         return m_cooperation;
     }
 
     /** 
-     * Getter of the class
-     * @return look explications
+     * Getter of the look
+     * @return look    look of the suspect
      */ 
     public String getLook() {
         return m_look;
     }
 
     /** 
-     * Getter of the class
-     * @return aspect   explications
+     * Getter of the physical aspect
+     * @return aspect   physical aspect of the suspect
      */ 
     public String getAspect() {
         return m_physicalAspect;
     }
 
     /** 
-     * Getter of the class
-     * @return heard    explications
+     * Getter of the heard testimony of the suspect
+     * @return heard    heard testimony of the suspect
      */ 
     public Deposition getHeard() {
         return m_heardTestimony;
     }
 
     /** 
-     * Getter of the class
-     * @return seen     explications
+     * Getter of the heard testimony of the suspect
+     * @return seen    seen testimony of the suspect
      */ 
     public Deposition getSeen() {
         return m_seenTestimony;
     }
 
     /** 
-     * Getter of the class
-     * @return alibi    explications
+     * Getter of the alibi of the suspect
+     * @return alibi    alibi of the suspect
      */ 
     public Deposition getAlibi() {
         return m_alibi;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a presentation sentence
      */ 
     @Override
     public void presentCharacter() {
@@ -121,7 +121,7 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays the inforation sheet of the suspect
      * @return suspect  sends the reference to chain the calls
      */ 
     @Override
@@ -139,8 +139,8 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param player    explications
+     * To interrogate a suspect
+     * @param player    investigator who interrogates the suspect
      */ 
     public void beInterrogated(Investigator player) {
         boolean previousMenu = false;
@@ -150,13 +150,13 @@ public abstract class Suspect extends LiveCharacter {
             int choix = getConsole().display(getGenderJob(), "Dites moi...", choices).execChoice();
             
             if (choix != 3) {
-                //inspecteur utilise intelligence et manipulation pour essayer de récupérer des infos (jet affiché)
+                // inspector uses intelligence and manipulation to try to retrieve info 
                 getConsole().execContinue("Vous lancez vos dés");
                 int[] stats = {player.getIntelligence(), player.getManipulation()};
                 String[] category = {"d'intelligence", "de manipulation"};
                 rollMultiDice(stats , category, true);
 
-                //applique le choix
+                // apply the choice
                 getConsole().execContinue(m_fullName + " lance ses dés");
                 switch (choix) {
                     case 1:
@@ -176,38 +176,38 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the alibi to display based on the results of rolls of dice
      */ 
     abstract void giveAlibi();
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the testimony to display based on the results of rolls of dice
      */ 
     abstract void giveTestimony();
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a sentence when the suspect doesn't want to talk
      */ 
     protected void textNoSpeak() {
         getConsole().display(getGenderJob(), "Le suspect refuse de parler.");
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a sentence when the suspect is too stressed
      */ 
     protected void textLawyer() {
         getConsole().display(m_fullName, "Je n'ai rien à vous dire ! Je ne parlerai qu'en présence d'un avocat !");
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a sentence when the suspect doesn't want to cooperate
      */ 
     protected void textForget() {
         getConsole().display(m_fullName,"Euh... je ne m'en souviens plus...");
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * To disculp a suspect
      */ 
     public void beDisculpated(){
         m_consideredInnocent = true;
@@ -216,12 +216,12 @@ public abstract class Suspect extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * To arrest a suspect
      */ 
     public void beArrested(){
         if (this instanceof Murderer) {
             getConsole().display("Bravo, vous avez démasqué le coupable !");
-            ((Murderer) this).confess();//cast pour utiliser la méthode
+            ((Murderer) this).confess();//cast to use the method
             getConsole().execContinue("Deux policiers débarquent alors pour arrêter le meurtrier")
                         .execContinue("Votre chef vous félicite pour avoir résolu cette affaire")
                         .execContinue("Vous rassemblez le contenu de l'enquête dans une boîte, que vous descendez ensuite aux archives")
