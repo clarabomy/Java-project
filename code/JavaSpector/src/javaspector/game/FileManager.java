@@ -15,7 +15,7 @@ import static javaspector.game.Game.m_console;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Game save files manager
  * @author Clara BOMY
  */ 
 public class FileManager {
@@ -70,9 +70,9 @@ public class FileManager {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param action            explications
-     * @return selectedFile     explications
+     * Determines which file to act on
+     * @param action            text to display
+     * @return selectedFile     file choosen or null
      */ 
     public String selectFile(String action) {//charger / supprimer
         String[] saveList = getSavesName();
@@ -82,9 +82,9 @@ public class FileManager {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param fileName  explications
-     * @return saveData explications
+     * Recover the contents of a save file
+     * @param fileName  file to read
+     * @return saveData an arrayList width as many entries as lines in the file
      */ 
     public ArrayList <String> readSaveFile(String fileName) {
         ArrayList <String> saveData = new ArrayList();
@@ -109,9 +109,9 @@ public class FileManager {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param fileName  explications
-     * @param gameData  explications
+     * Write as a file the contents of the game data
+     * @param fileName  file to read
+     * @param gameData  an array width as many entries as lines to write in the file
      */ 
     public void writeSaveFile(String fileName, String[] gameData) {
         try {
@@ -130,9 +130,9 @@ public class FileManager {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param fileName          explications
-     * @return isFileDeleted    explications
+     * Deletes a save file
+     * @param fileName          file to delete
+     * @return isFileDeleted    true if done, else false
      */ 
     public boolean deleteSaveFile(String fileName) {
         if (!fileName.equals(m_saveFolderPath + "Annuler" + m_saveFileExtension)) {

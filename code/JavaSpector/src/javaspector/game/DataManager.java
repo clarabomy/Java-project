@@ -21,7 +21,7 @@ import javaspector.game.investigation.Proof;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Data manager of game instances
  * @author Clara BOMY
  */ 
 public class DataManager { 
@@ -32,10 +32,10 @@ public class DataManager {
      
      
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param type          explications
-     * @param murderer      explications
-     * @return deposition   explications
+     * Generates a random deposition
+     * @param type          the category of the deposition to create
+     * @param murderer      use of the murderer informations
+     * @return deposition   the text generated
      */ 
     public static String createDeposition(DepositionType type, Murderer murderer) { 
         String text = ""; 
@@ -101,9 +101,9 @@ public class DataManager {
     } 
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param genre         explications
-     * @return fullName     explications
+     * Generates a new random full name
+     * @param genre         determines whether uses feminine or masculine first name
+     * @return fullName     the full name generated
      */ 
     private String createFullName(Sex genre) {
         String[] m_manList = { 
@@ -146,10 +146,10 @@ public class DataManager {
     } 
      
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param fullName          explications
-     * @param gender            explications
-     * @return investigation    explications
+     * Randomly initializes an investigation according to difficulty
+     * @param fullName          full name choosen by the player
+     * @param gender            gender choosen by the player
+     * @return investigation    instance of playable investigation
      */ 
     public Investigation createGame(String fullName, Sex gender) { 
         dropClueList(); 
@@ -267,9 +267,9 @@ public class DataManager {
     } 
      
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param saveData          explications
-     * @return investigation    explications
+     * Initialize an investigation from a string array
+     * @param saveData          String array that contains the data
+     * @return investigation    instance of playable investigation
      */ 
     public Investigation importGame(ArrayList <String> saveData) {//charger 
         dropClueList(); 
@@ -473,9 +473,9 @@ public class DataManager {
     } 
      
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param currentInvestigation  explications
-     * @return gameData             explications
+     * Constitute a table of data from the instances of the game
+     * @param currentInvestigation  instance of played investigation
+     * @return gameData             String array that contains the data
      */ 
     public ArrayList <String> exportGame(Investigation currentInvestigation) {//sauvegarder 
         ArrayList <String> gameData = new ArrayList(); 

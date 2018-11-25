@@ -8,7 +8,7 @@ import javaspector.game.investigation.Investigation;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contain the game
  * @author Clara BOMY
  */ 
 public class Game {
@@ -21,7 +21,7 @@ public class Game {
     
     /** 
      * Getter of the class
-     * @return console  explications
+     * @return console  reference to the console - a single instance for the entire game
      */ 
     public static UserInterface getConsole() {
         return m_console;
@@ -29,7 +29,7 @@ public class Game {
     
     /** 
      * Getter of the class
-     * @return gameDifficulty   explications
+     * @return gameDifficulty   the difficulty of the actual investigation
      */ 
     public static Difficulty getLevelChoice() {
         return m_levelChoice;
@@ -37,7 +37,7 @@ public class Game {
     
     /** 
      * Getter of the class
-     * @return isEndedGame  explications
+     * @return isEndedGame  true if the investigation is finish, false then
      */ 
     public static boolean isEndedGame() {
         return m_endedGame;
@@ -51,23 +51,23 @@ public class Game {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param choices       explications
-     * @return StringTab    explications
+     * Convert an arrayList to a table
+     * @param list          arrayList to convert
+     * @return StringTab    array resulting
      */ 
-    public static String[] convertArrayList(ArrayList <String> choices) {
-        String[] list = new String[choices.size()];
+    public static String[] convertArrayList(ArrayList <String> list) {
+        String[] tab = new String[list.size()];
         
         int i = 0;
-        for (String current : choices) {
-            list[i++] = current;
+        for (String current : list) {
+            tab[i++] = current;
         }
         
-        return list;
+        return tab;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Main menu of the game
      */ 
     public void gameMenu() {
         boolean exitGame = false;
@@ -148,7 +148,7 @@ public class Game {
     }
    
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Initialization of a new investigation
      */ 
     public void newInvestigation() {
         //etape 1 : nom perso (nom fichier)

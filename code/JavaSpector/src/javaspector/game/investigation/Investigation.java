@@ -12,7 +12,7 @@ import javaspector.game.character.suspect.Suspect;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contain the investigation
  * @author Clara BOMY
  */ 
 public class Investigation {
@@ -25,11 +25,11 @@ public class Investigation {
 
     /** 
      * Constructor of the class
-     * @param player        explications
-     * @param suspectsList  explications
-     * @param corpse        explications
-     * @param weapon        explications
-     * @param scene         explications
+     * @param player        the investigator
+     * @param suspectsList  a list with all the suspects : 1 Murderer, 1 CrimePartner and Innocents
+     * @param corpse        the victim
+     * @param weapon        the investigation element 1
+     * @param scene         the investigation element 2
      */ 
     public Investigation(Investigator player, ArrayList <Suspect> suspectsList, Victim corpse, InvestElement weapon, InvestElement scene) {
         m_player = player;
@@ -42,7 +42,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return genderJob    explications
+     * @return genderJob    "Enquêteur" or "Enquêtrice" according to the player's sex
      */ 
     public static String getGenderJob() {
         return m_genderJob;
@@ -50,7 +50,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return investigator explications
+     * @return investigator     the current instance of the player
      */ 
     public Investigator getInvestigator() {
         return m_player;
@@ -58,7 +58,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return suspectsNameList explications
+     * @return suspectsNameList     a list with all the name's suspects
      */ 
     public static ArrayList <String> getSuspectsNameList() {
         ArrayList <String> listName = new ArrayList();
@@ -70,7 +70,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return suspectsList explications
+     * @return suspectsList     a list of the suspects
      */ 
     public ArrayList <Suspect> getSuspectsList() {
         return m_suspectsList;
@@ -78,7 +78,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return victim   explications
+     * @return victim   the current instance of the Victim
      */ 
     public Victim getVictim() {
         return m_victim;
@@ -86,7 +86,7 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return crimeWeapon  explications
+     * @return crimeWeapon  the current instance of the InvestElement
      */ 
     public InvestElement getCrimeWeapon() {
         return m_crimeWeapon;
@@ -94,14 +94,14 @@ public class Investigation {
     
     /** 
      * Getter of the class
-     * @return crimeScene   explications
+     * @return crimeScene   the current instance of the InvestElement
      */ 
     public InvestElement getCrimeScene() {
         return m_crimeScene;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Main menu of the investigation
      */ 
     public void investigationMenu() {
         boolean previousMenu = false;
@@ -144,7 +144,7 @@ public class Investigation {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Submenu of the investigation for the elements
      */ 
     public void elementsMenu() {
         boolean previousMenu = false;
@@ -175,7 +175,7 @@ public class Investigation {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Submenu of the investigation for the suspects
      */ 
     public void suspectsMenu() {
         getConsole().clean();

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Game user interface manager
  * @author Clara BOMY
  */ 
 public class UserInterface {
@@ -14,9 +14,9 @@ public class UserInterface {
     protected static final int M_CONSOLE_SIZE = 50;
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param choicesList   explications
-     * @return stringList   explications
+     * Formats a string array
+     * @param choicesList   string array to format
+     * @return stringList   text to display
      */ 
     private String concatList(String[] choicesList) {
         //afficher choix => crée le string d'affichage
@@ -31,7 +31,7 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Cleans the console by passing lines
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface clean() {
@@ -46,8 +46,8 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param text      explications
+     * Formatted display 1
+     * @param text      message to display
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface display(String text){//version 1
@@ -58,9 +58,9 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param text      explications
-     * @param choices   explications
+     * Formatted display 2
+     * @param text      text to display
+     * @param choices   message of the possible choices
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface display(String text, String[] choices){//version 2
@@ -70,9 +70,9 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param speaker   explications
-     * @param text      explications
+     * Formatted display 3
+     * @param speaker   speaker designation
+     * @param text      message to display
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface display(String speaker, String text){//version 3
@@ -83,10 +83,10 @@ public class UserInterface {
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param speaker   explications
-     * @param text      explications
-     * @param choices   explications
+     * Formatted display 4
+     * @param speaker   speaker designation
+     * @param text      message to display
+     * @param choices   list of the possible choices
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface display(String speaker, String text, String[] choices){//version 4
@@ -96,8 +96,8 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param text      explications
+     * Pause the game
+     * @param text      message to display
      * @return console  sends the reference to chain the calls
      */ 
     public UserInterface execContinue(String text) {
@@ -114,8 +114,8 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @return choice   explications
+     * Recovers the player's choice
+     * @return choice   index of the choiceList printed before. Between 1 and m_nbChoices
      */ 
     public int execChoice() {
         Scanner keyboard = new Scanner(System.in);
@@ -140,8 +140,8 @@ public class UserInterface {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @return inputText    explications
+     * Recovers the player's text
+     * @return inputText    text entered by the player
      */ 
     public String execInput() {
         System.out.print(" - ");
