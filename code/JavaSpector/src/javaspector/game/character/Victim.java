@@ -14,7 +14,7 @@ import javaspector.game.investigation.Proof;
 public class Victim extends Character implements NoticeClues {
     protected String m_deathDate;
     protected String m_deathCause;
-    protected ArrayList <Proof> m_proofList; //proofs on the investigation element
+    protected ArrayList <Proof> m_proofList; //proofs present on the victim
 
     /** 
      * Constructor of the class Victim
@@ -50,7 +50,7 @@ public class Victim extends Character implements NoticeClues {
 
     /** 
      * Getter of the ArrayList of proofs present on the victim
-     * @return proofList    explications
+     * @return proofList    proofs present on the victim
      */ 
     public ArrayList<Proof> getProofList() {
         return m_proofList;
@@ -67,7 +67,7 @@ public class Victim extends Character implements NoticeClues {
 
     /** 
      * Get the proofs present on the victim
-     * @param player    explications
+     * @param player    investigator
      */ 
     @Override
     public void analyse(Investigator player) { //autopsy

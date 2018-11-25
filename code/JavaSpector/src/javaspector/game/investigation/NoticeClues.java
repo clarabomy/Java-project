@@ -5,13 +5,13 @@ import javaspector.game.character.Investigator;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Allows an element to be analysed
  * @author Clara BOMY
  */ 
 public interface NoticeClues {
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param player        explications
+     * Get the proofs present on the investigation element
+     * @param player    investigator
      */ 
     abstract void analyse(Investigator player);
 }

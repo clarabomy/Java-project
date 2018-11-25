@@ -3,7 +3,7 @@ package javaspector.game.investigation;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of a clue
  * @author Clara BOMY
  */ 
 public abstract class Clue {

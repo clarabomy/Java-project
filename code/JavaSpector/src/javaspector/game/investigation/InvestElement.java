@@ -7,17 +7,17 @@ import javaspector.game.character.Investigator;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of an investigation element
  * @author Clara BOMY
  */ 
 public class InvestElement implements NoticeClues {
-    protected ArrayList<Proof> m_proofList;//preuves savent d'ou elles proviennent
+    protected ArrayList<Proof> m_proofList; //proofs present on the investigation element
     protected String m_type;
 
     /** 
-     * Constructor of the class
-     * @param type      explications
-     * @param proofList explications
+     * Constructor of the class InvestElement
+     * @param type      type of the investigation element
+     * @param proofList proofs on the investigation element
      */ 
     public InvestElement(String type, ArrayList<Proof> proofList) {
         m_type = type;
@@ -25,24 +25,24 @@ public class InvestElement implements NoticeClues {
     }
 
     /** 
-     * Getter of the class
-     * @return type explications
+     * Getter of the type of the investigation element
+     * @return type   type of the investigation element
      */ 
     public String getType() {
         return m_type;
     }
     
     /** 
-     * Getter of the class
-     * @return proofList    explications
+     * Getter of the ArrayList of proofs present on the investigation element
+     * @return proofList    proofs present on the investigation element
      */ 
     public ArrayList<Proof> getProofList() {
         return m_proofList;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param player    explications
+     * Get the proofs present on the investigation element
+     * @param player    investigator
      */ 
     @Override
     public void analyse(Investigator player) {
@@ -59,10 +59,11 @@ public class InvestElement implements NoticeClues {
         }
         getConsole().display(analyseText + proofText);
         
-        for (Proof currentProof : m_proofList) {//parcours tout m_proofList en mettant élément courant dans currentProof
+        //go throw the m_proofList list by putting current element into currentProof
+        for (Proof currentProof : m_proofList) {
             currentProof.display();
-            if (!player.getClueList().contains(currentProof)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
-                player.setClue((Clue) currentProof);//ajoute preuves à la liste d'indices
+            if (!player.getClueList().contains(currentProof)) {// add everything that was found to the list of found clues at once
+                player.setClue((Clue) currentProof);// add proofs to the list of found clues
             }
         }
     }

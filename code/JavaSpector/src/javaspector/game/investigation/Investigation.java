@@ -24,7 +24,7 @@ public class Investigation {
     protected static String m_genderJob;
 
     /** 
-     * Constructor of the class
+     * Constructor of the class Investigation
      * @param player        the investigator
      * @param suspectsList  a list with all the suspects : 1 Murderer, 1 CrimePartner and Innocents
      * @param corpse        the victim

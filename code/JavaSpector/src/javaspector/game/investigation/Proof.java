@@ -5,16 +5,16 @@ import static javaspector.game.Game.getConsole;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of a deposition
  * @author Clara BOMY
  */ 
 public class Proof extends Clue {
-    protected String m_origin;//garde une trace de là ou est trouvé l'indice
+    protected String m_origin;// keep track of where the proof is
 
     /** 
-     * Constructor of the class
-     * @param origin    explications
-     * @param content   explications
+     * Constructor of the class Proof
+     * @param origin    origin of the proof
+     * @param content   content of the proof
      */ 
     public Proof(String origin, String content) {
         super(content);
@@ -22,15 +22,15 @@ public class Proof extends Clue {
     }
         
     /** 
-     * Getter of the class
-     * @return origin   explications
+     * Getter of the origin of the proof
+     * @return origin   origin of the proof
      */ 
     public String getOrigin() {
         return m_origin;
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays the content of the proof
      */ 
     @Override
     public void display() {
