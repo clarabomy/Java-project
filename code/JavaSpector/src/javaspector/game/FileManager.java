@@ -19,7 +19,7 @@ import static javaspector.game.Game.m_console;
  * @author Clara BOMY
  */ 
 public class FileManager {
-    protected static String m_saveFolderPath = ".\\savesGame\\";//path to the saves folder
+    protected static String m_saveFolderPath = ".\\src\\javaspector\\savesGame\\";//path to the saves folder
     protected static String m_saveFileExtension = ".spt";//house extension to limit external modifications
     protected String m_currentFileName = null;
     

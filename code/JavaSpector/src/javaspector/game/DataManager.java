@@ -57,7 +57,9 @@ public class DataManager {
                                        "avec mes amis", 
                                        "avec mes collègues de bureau"}; 
           
-                text = activity[(int) (Math.random() * activity.length)] + " " + place[(int) (Math.random() * place.length)] + " " + company[(int) (Math.random() * company.length)]; 
+                text = activity[(int) (Math.random() * activity.length)] + " " 
+                        + place[(int) (Math.random() * place.length)] + " " 
+                        + company[(int) (Math.random() * company.length)]; 
                 break; 
                  
             case SEEN: 
@@ -138,13 +140,13 @@ public class DataManager {
         
         String fullName;
         do {
-        String surname = (genre == Sex.HOMME? m_manList : m_whomanList)[(int) (Math.random() * (genre == Sex.HOMME? m_manList : m_whomanList).length)];
-        fullName = surname + ' ' + m_nameList[(int) (Math.random() * m_nameList.length)];
-        } while (m_namesGenerated.contains(fullName));
-        m_namesGenerated.add(fullName);
+            String surname = (genre == Sex.HOMME? m_manList : m_whomanList)[(int) (Math.random() * (genre == Sex.HOMME? m_manList : m_whomanList).length)];
+            fullName = surname + ' ' + m_nameList[(int) (Math.random() * m_nameList.length)];
+        } while (m_namesGenerated.contains(fullName));//compare to other names
+        m_namesGenerated.add(fullName);//add to other names
         return fullName;
     } 
-     
+    
     /** 
      * Randomly initializes an investigation according to difficulty
      * @param fullName          full name choosen by the player
@@ -152,7 +154,7 @@ public class DataManager {
      * @return investigation    instance of playable investigation
      */ 
     public Investigation createGame(String fullName, Sex gender) { 
-        dropClueList(); 
+        dropClueList();//regenerates the list
         
         
         String[] lookList = { 
@@ -175,39 +177,41 @@ public class DataManager {
         }; 
         
         
-        //variables 
+        //common variables 
         Sex genre; 
         int age, stress, coop, manip, intel; 
         String look, aspect, motivation, deathDate, deathCause; 
         ArrayList<Suspect> suspectsList = new ArrayList(); 
         ArrayList <Proof> proofList; 
  
-        //criminel 
+        //murderer 
         String[] mobileList = { 
             "par folie", 
             "pour l'argent", 
             "pour l'adrénaline", 
             "pour le pouvoir" 
         }; 
-        genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
-        age = (int) (m_ageMin + Math.random() * m_ageMax); 
-        stress = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20)); 
-        look        = lookList[(int) (Math.random() * lookList.length)]; 
-        aspect      = aspectList[(int) (Math.random() * aspectList.length)]; 
-        motivation  = mobileList[(int) (Math.random() * mobileList.length)]; 
+        genre   = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
+        age     = (int) (m_ageMin + Math.random() * m_ageMax); 
+        //balancing according to difficulty : base points + interval
+        stress  = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20));
+        look    = lookList[(int) (Math.random() * lookList.length)]; 
+        aspect  = aspectList[(int) (Math.random() * aspectList.length)]; 
+        motivation = mobileList[(int) (Math.random() * mobileList.length)]; 
         Murderer criminal = new Murderer(createFullName(genre), genre, age, stress, look, aspect, motivation); 
         suspectsList.add(criminal); 
  
-        //partenaire de crime 
-        genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME; 
-        age = (int) (m_ageMin + Math.random() * m_ageMax); 
+        //crimePartner
+        genre   = Math.random() < 0.5? Sex.HOMME : Sex.FEMME; 
+        age     = (int) (m_ageMin + Math.random() * m_ageMax); 
+        //balancing according to difficulty : base points + interval
         stress  = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20)); 
         coop    = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20)); 
-        look        = lookList[(int) (Math.random() * lookList.length)]; 
-        aspect      = aspectList[(int) (Math.random() * aspectList.length)]; 
+        look    = lookList[(int) (Math.random() * lookList.length)]; 
+        aspect  = aspectList[(int) (Math.random() * aspectList.length)]; 
         suspectsList.add(new CrimePartner(createFullName(genre), genre, age, stress, coop, look, aspect, createDeposition(DepositionType.ALIBI, criminal), criminal.getFullName())); 
  
-        //victime 
+        //victim 
         String[] causeList = { 
             "d'hémorragie interne", 
             "de blessures profondes", 
@@ -223,7 +227,7 @@ public class DataManager {
         } 
         Victim corpse = new Victim(createFullName(genre), genre, age, deathDate, deathCause, proofList); 
  
-        //arme 
+        //weapon
         String[] weaponList = { 
             "couteau", 
             "batte de baseball", 
@@ -237,7 +241,7 @@ public class DataManager {
         } 
         InvestElement weapon = new InvestElement(weaponList[(int) (Math.random() * weaponList.length)], proofList); 
  
-        //scene de crime 
+        //scene 
         proofList = new ArrayList(); 
         for (int i = 0; i < (int) (Math.random() * proofContentList.length + 1); i++) {//nbProofScene 
             proofList.add(new Proof("Scène de crime", proofContentList[(int) (Math.random() * proofContentList.length)])); 
@@ -249,6 +253,7 @@ public class DataManager {
         for (int i = 0; i < nbInnocents; i++) { 
             genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
             age = (int) (m_ageMin + Math.random() * m_ageMax); 
+            //balancing according to difficulty : base points - interval
             stress  = (int) (m_levelChoice == Difficulty.SIMPLE? 80 - Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 70 - Math.random() * 30 : 60 - Math.random() * 30)); 
             coop    = (int) (m_levelChoice == Difficulty.SIMPLE? 80 - Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 70 - Math.random() * 30 : 60 - Math.random() * 30)); 
             look        = lookList[(int) (Math.random() * lookList.length)]; 
@@ -256,14 +261,128 @@ public class DataManager {
             suspectsList.add(new Innocent(createFullName(genre), genre, age, stress, coop, look, aspect, false, createDeposition(DepositionType.ALIBI, criminal), createDeposition(DepositionType.HEARD, criminal), createDeposition(DepositionType.SEEN, criminal))); 
         } 
  
-        //enquêteur 
+        //investigator 
+        //balancing according to difficulty : base points + interval
         manip   = (int) (m_levelChoice == Difficulty.SIMPLE? 60 + Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 20 + Math.random() * 50)); 
         intel   = (int) (m_levelChoice == Difficulty.SIMPLE? 60 + Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 20 + Math.random() * 50)); 
         Investigator player = new Investigator(fullName, gender, manip, intel, null); 
          
-        //enquête 
-        Collections.shuffle(suspectsList);//melanger tableau 
+        //investigation 
+        Collections.shuffle(suspectsList); 
         return new Investigation(player, suspectsList, corpse, weapon, scene); 
+    } 
+     
+    /** 
+     * Constitute a table of data from the instances of the game
+     * @param currentInvestigation  instance of played investigation
+     * @return gameData             String array that contains the data
+     */ 
+    public ArrayList <String> exportGame(Investigation currentInvestigation) { 
+        ArrayList <String> gameData = new ArrayList(); 
+         
+        Investigator investigator       = currentInvestigation.getInvestigator(); 
+        ArrayList<Suspect> suspectsList = currentInvestigation.getSuspectsList(); 
+        Victim victim                   = currentInvestigation.getVictim(); 
+         
+         
+        //GLOBAL 
+        gameData.add("GLOBAL"); 
+        gameData.add("gameDifficulty:" + m_levelChoice.toString()); 
+        //END GLOBAL 
+         
+         
+        //SUSPECTS 
+        gameData.add("SUSPECTS"); 
+        for (Suspect currentSuspect : suspectsList) { 
+            //common to all 
+            gameData.add("classSuspect:" + currentSuspect.getClass().getSimpleName()); 
+            gameData.add("fullNameSuspect:" + currentSuspect.getFullName()); 
+            gameData.add("ageSuspect     :" + currentSuspect.getAge()); 
+            gameData.add("sexSuspect     :" + currentSuspect.getSex()); 
+            gameData.add("lookSuspect    :" + currentSuspect.getLook()); 
+            gameData.add("aspectSuspect  :" + currentSuspect.getAspect()); 
+            gameData.add("stressSuspect     :" + currentSuspect.getStress()); 
+            gameData.add("cooperationSuspect:" + currentSuspect.getCooperation()); 
+            gameData.add("innocentSuspect   :" + currentSuspect.isConsideredInnocent()); 
+ 
+            //if doesn't go depositions : display null. else, cut the part who is add in the constructor
+            gameData.add("alibiSuspect:" + (currentSuspect.getAlibi() != null? currentSuspect.getAlibi().getContent() : "null")); 
+            gameData.add("seenSuspect :" + (currentSuspect.getSeen() != null? currentSuspect.getSeen().getContent().replace("Je me souviens avoir vu ", "") : "null")); 
+            gameData.add("heardSuspect:" + (currentSuspect.getHeard() != null? currentSuspect.getHeard().getContent().replace("Je me souviens avoir entendu ", "") : "null")); 
+ 
+            if (currentSuspect instanceof Murderer) { //specific string
+                gameData.add("motiveMurderer:" + ((Murderer) currentSuspect).getMotive()); 
+            } 
+        } 
+        //END SUSPECTS 
+         
+         
+        //VICTIM 
+        gameData.add("VICTIM"); 
+        gameData.add("fullNameVictim:" + victim.getFullName()); 
+        gameData.add("sexVictim     :" + victim.getSex()); 
+        gameData.add("ageVictim     :" + victim.getAge()); 
+        gameData.add("deathDateVictim :" + victim.getDeathDate()); 
+        gameData.add("deathCauseVictim:" + victim.getDeathCause()); 
+         
+        gameData.add("VICTIMPROOF"); 
+        for (Proof currentProof : victim.getProofList()) { 
+            gameData.add("contentProofVictim:" + currentProof.getContent()); 
+        } 
+        //END VICTIM 
+         
+         
+        //WEAPON 
+        gameData.add("WEAPON"); 
+        gameData.add("typeWeapon:" + currentInvestigation.getCrimeWeapon().getType()); 
+         
+        gameData.add("WEAPONPROOF"); 
+        for (Proof currentProof : currentInvestigation.getCrimeWeapon().getProofList()) { 
+            gameData.add("contentProofWeapon:" + currentProof.getContent()); 
+        } 
+        //END WEAPON 
+         
+         
+        //SCENE 
+        gameData.add("SCENE"); 
+        gameData.add("typeScene:" + currentInvestigation.getCrimeScene().getType()); 
+         
+        gameData.add("SCENEPROOF"); 
+        for (Proof currentProof : currentInvestigation.getCrimeScene().getProofList()) { 
+            gameData.add("contentProofScene:" + currentProof.getContent()); 
+        } 
+        //END SCENE 
+         
+         
+        //INVESTIGATOR 
+        gameData.add("INVESTIGATOR"); 
+        gameData.add("nameInvestigator:" + currentInvestigation.getInvestigator().getFullName()); 
+        gameData.add("sexInvestigator:" + investigator.getSex()); 
+        gameData.add("manipulationInvestigator:" + investigator.getManipulation()); 
+        gameData.add("intelligenceInvestigator:" + investigator.getIntelligence()); 
+        //END INVESTIGATOR 
+         
+         
+        //CLUES 
+        gameData.add("CLUES"); 
+        for (Clue currentClue : investigator.getClueList()) { 
+            //different content according to the class
+            if (currentClue instanceof Proof) { 
+                gameData.add("classClue :proof"); 
+                gameData.add("originClue:" + ((Proof) currentClue).getOrigin()); 
+            } 
+            else {
+                gameData.add("classClue :deposition"); 
+                gameData.add("isLie     :" + ((Deposition) currentClue).isLie()); 
+                gameData.add("category  :" + ((Deposition) currentClue).getCategory()); 
+                gameData.add("depositor :" + ((Deposition) currentClue).getDepositor()); 
+            } 
+            gameData.add("contentClue:" + currentClue.getContent()); 
+        } 
+        //END CLUES 
+         
+         
+        return gameData; 
     } 
      
     /** 
@@ -271,19 +390,19 @@ public class DataManager {
      * @param saveData          String array that contains the data
      * @return investigation    instance of playable investigation
      */ 
-    public Investigation importGame(ArrayList <String> saveData) {//charger 
-        dropClueList(); 
+    public Investigation importGame(ArrayList <String> saveData) {
+        dropClueList();//regenerates the list
          
         Investigator player = null; 
         ArrayList<Suspect> suspectsList = null; 
         Victim corpse = null; 
         InvestElement weapon = null, scene = null; 
          
-        //découpe en bloc pour limiter les comparaisons (derniers éléments) 
+        //bulk cutting to limit comparisons (especially the last elements)
         int index = 0; 
         String key, value; 
-        do {//parcourir tous les blocs 
-            switch (saveData.get(index++)) {//rentrer dans le bloc 
+        do {//browse all the blocks
+            switch (saveData.get(index++)) {//enter the block
                 case "GLOBAL": 
                     value = saveData.get(index).split(":")[1]; 
                     m_levelChoice = value.equals("SIMPLE")? Difficulty.SIMPLE : value.equals("MEDIUM")? Difficulty.MEDIUM: Difficulty.DIFFICULT; 
@@ -292,8 +411,8 @@ public class DataManager {
                     suspectsList = new ArrayList(); 
                     int indexPartner = 0, indexMurderer = 0; 
                          
-                    do {//s'occuper de tout le bloc SUSPECTS 
-                        String classSuspect = saveData.get(index++).split(":")[1]; 
+                    do {//take care of the whole block SUSPECTS
+                        String classSuspect = saveData.get(index++).split(":")[1];//value of the "class" key
                          
                         String name = "", look = "", aspect = "", motive = ""; 
                         int age = 0, stress = 0, coop = 0; 
@@ -302,9 +421,9 @@ public class DataManager {
                         String alibi = null, seen = null, heard = null; 
  
                         do { 
-                            value = saveData.get(index).split(":")[1]; 
+                            value = saveData.get(index).split(":")[1]; //get the value
                              
-                            switch(saveData.get(index).split(":")[0]) { 
+                            switch(saveData.get(index).split(":")[0]) { //test the key
                                 case "fullNameSuspect": 
                                     name = value; 
                                     break; 
@@ -342,9 +461,9 @@ public class DataManager {
                                     motive = value; 
                                     break; 
                             } 
-                        } while (!saveData.get(++index).split(":")[0].equals("classSuspect") && !saveData.get(index).equals("VICTIM")); 
+                        } while (!saveData.get(++index).split(":")[0].equals("classSuspect") && !saveData.get(index).equals("VICTIM")); //while it's not the next block
                          
-                        switch (classSuspect) { 
+                        switch (classSuspect) { //value recovered at the begin of the do while (suspectList is mixed : random order)
                             case "Murderer": 
                                 indexMurderer = suspectsList.size(); 
                                 suspectsList.add(new Murderer(name, gender, age, stress, look, aspect, innocent, motive, alibi, heard, seen)); 
@@ -357,9 +476,9 @@ public class DataManager {
                                 suspectsList.add(new Innocent(name, gender, age, stress, coop, look, aspect, innocent, alibi, heard, seen)); 
                                 break; 
                         } 
-                    } while (!saveData.get(index).equals("VICTIM"));//atteint prochain bloc? 
-                    ((CrimePartner) suspectsList.get(indexPartner)).setMurdererName(suspectsList.get(indexMurderer).getFullName()); 
-                    index--;//revient juste avant pour le swith de bloc 
+                    } while (!saveData.get(index).equals("VICTIM"));//while it's not the next block
+                    ((CrimePartner) suspectsList.get(indexPartner)).setMurdererName(suspectsList.get(indexMurderer).getFullName()); //complete crimePartner
+                    index--;//returns just before VICTIM for the block switch
                     break; 
                 case "VICTIM": 
                     String name = null, deathDate = null, deathCause = null; 
@@ -396,7 +515,7 @@ public class DataManager {
                     corpse = new Victim(name, gender, age, deathDate, deathCause, victimProofs); 
                     break; 
                 case "WEAPON": 
-                    String typeWeapon = saveData.get(index++).split(":")[1];//incrémente pour bloc suivant 
+                    String typeWeapon = saveData.get(index++).split(":")[1];//increment for next block
                      
                     ArrayList<Proof> weaponProofs = new ArrayList(); 
                     while (!saveData.get(++index).equals("SCENE")) { 
@@ -407,7 +526,7 @@ public class DataManager {
                     weapon = new InvestElement(typeWeapon, weaponProofs); 
                     break; 
                 case "SCENE": 
-                    String typeScene = saveData.get(index++).split(":")[1];//incrémente pour bloc suivant 
+                    String typeScene = saveData.get(index++).split(":")[1];//increment for next block
                      
                     ArrayList<Proof> sceneProofs = new ArrayList(); 
                     while (!saveData.get(++index).equals("INVESTIGATOR")) { 
@@ -467,120 +586,7 @@ public class DataManager {
                     break; 
             } 
         } while (index < saveData.size());//ENDFILE 
-         
-        Collections.shuffle(suspectsList);//melanger tableau 
+
         return new Investigation(player, suspectsList, corpse, weapon, scene); 
     } 
-     
-    /** 
-     * Constitute a table of data from the instances of the game
-     * @param currentInvestigation  instance of played investigation
-     * @return gameData             String array that contains the data
-     */ 
-    public ArrayList <String> exportGame(Investigation currentInvestigation) {//sauvegarder 
-        ArrayList <String> gameData = new ArrayList(); 
-         
-        Investigator investigator       = currentInvestigation.getInvestigator(); 
-        ArrayList<Suspect> suspectsList = currentInvestigation.getSuspectsList(); 
-        Victim victim                   = currentInvestigation.getVictim(); 
-         
-         
-        //GLOBAL 
-        gameData.add("GLOBAL"); 
-        gameData.add("gameDifficulty:" + m_levelChoice.toString()); 
-        //END GLOBAL 
-         
-         
-        //SUSPECTS 
-        gameData.add("SUSPECTS"); 
-        for (Suspect currentSuspect : suspectsList) { 
-            //common to all 
-            gameData.add("classSuspect:" + currentSuspect.getClass().getSimpleName()); 
-            gameData.add("fullNameSuspect:" + currentSuspect.getFullName()); 
-            gameData.add("ageSuspect     :" + currentSuspect.getAge()); 
-            gameData.add("sexSuspect     :" + currentSuspect.getSex()); 
-            gameData.add("lookSuspect    :" + currentSuspect.getLook()); 
-            gameData.add("aspectSuspect  :" + currentSuspect.getAspect()); 
-            gameData.add("stressSuspect     :" + currentSuspect.getStress()); 
-            gameData.add("cooperationSuspect:" + currentSuspect.getCooperation()); 
-            gameData.add("innocentSuspect   :" + currentSuspect.isConsideredInnocent()); 
- 
-            gameData.add("alibiSuspect:" + (currentSuspect.getAlibi() != null? currentSuspect.getAlibi().getContent() : "null")); 
-            gameData.add("seenSuspect :" + (currentSuspect.getSeen() != null? currentSuspect.getSeen().getContent().replace("Je me souviens avoir vu ", "") : "null")); 
-            gameData.add("heardSuspect:" + (currentSuspect.getHeard() != null? currentSuspect.getHeard().getContent().replace("Je me souviens avoir entendu ", "") : "null")); 
- 
-            if (currentSuspect instanceof Murderer) { 
-                gameData.add("motiveMurderer:" + ((Murderer) currentSuspect).getMotive()); 
-            } 
-        } 
-        //END SUSPECTS 
-         
-         
-        //VICTIM 
-        gameData.add("VICTIM"); 
-        gameData.add("fullNameVictim:" + victim.getFullName()); 
-        gameData.add("sexVictim     :" + victim.getSex()); 
-        gameData.add("ageVictim     :" + victim.getAge()); 
-        gameData.add("deathDateVictim :" + victim.getDeathDate()); 
-        gameData.add("deathCauseVictim:" + victim.getDeathCause()); 
-         
-        gameData.add("VICTIMPROOF"); 
-        for (Proof currentProof : victim.getProofList()) { 
-            gameData.add("contentProofVictim:" + currentProof.getContent()); 
-        } 
-        //END VICTIM 
-         
-         
-        //WEAPON 
-        gameData.add("WEAPON"); 
-        gameData.add("typeWeapon:" + currentInvestigation.getCrimeWeapon().getType()); 
-         
-        gameData.add("WEAPONPROOF"); 
-        for (Proof currentProof : currentInvestigation.getCrimeWeapon().getProofList()) { 
-            gameData.add("contentProofWeapon:" + currentProof.getContent()); 
-        } 
-        //END WEAPON 
-         
-         
-        //SCENE 
-        gameData.add("SCENE"); 
-        gameData.add("typeScene:" + currentInvestigation.getCrimeScene().getType()); 
-         
-        gameData.add("SCENEPROOF"); 
-        for (Proof currentProof : currentInvestigation.getCrimeScene().getProofList()) { 
-            gameData.add("contentProofScene:" + currentProof.getContent()); 
-        } 
-        //END SCENE 
-         
-         
-        //INVESTIGATOR 
-        gameData.add("INVESTIGATOR"); 
-        gameData.add("nameInvestigator:" + currentInvestigation.getInvestigator().getFullName()); 
-        gameData.add("sexInvestigator:" + investigator.getSex()); 
-        gameData.add("manipulationInvestigator:" + investigator.getManipulation()); 
-        gameData.add("intelligenceInvestigator:" + investigator.getIntelligence()); 
-        //END INVESTIGATOR 
-         
-         
-        //CLUES 
-        gameData.add("CLUES"); 
-        for (Clue currentClue : investigator.getClueList()) { 
-            if (currentClue instanceof Proof) { 
-                gameData.add("classClue :proof"); 
-                gameData.add("originClue:" + ((Proof) currentClue).getOrigin()); 
-            } 
-            else { 
-                gameData.add("classClue :deposition"); 
-                gameData.add("isLie     :" + ((Deposition) currentClue).isLie()); 
-                gameData.add("category  :" + ((Deposition) currentClue).getCategory()); 
-                gameData.add("depositor :" + ((Deposition) currentClue).getDepositor()); 
-            } 
-            gameData.add("contentClue:" + currentClue.getContent()); 
-        } 
-        //END CLUES 
-         
-         
-         
-        return gameData; 
-    } 
-} 
+}
