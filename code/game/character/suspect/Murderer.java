@@ -7,9 +7,9 @@ import project.game.character.Sex;
 import static project.game.character.suspect.Lie.M_COHERENCE_VALID;
 import static project.game.character.suspect.Lie.M_CREDIBILITY_VALID;
 import project.game.investigation.Clue;
-import static project.game.investigation.Investigation.suspectsNameList;
 import project.game.investigation.Deposition;
 import project.game.investigation.DepositionType;
+import static project.game.investigation.Investigation.getSuspectsNameList;
 
 /**
  *
@@ -30,9 +30,9 @@ public class Murderer extends Suspect implements Lie {
     }
     //chargement partie
     public Murderer(String fullName, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean consideredInnocent, String motive, String falseAlibi, String falseHeard, String falseSeen) {
-        super(fullName, sex, age, stressLevel, 0, look, physicalAspect, consideredInnocent);
-        m_motive = motive;
+        this(fullName, sex, age, stressLevel, look, physicalAspect, motive);
         
+        m_consideredInnocent = consideredInnocent;
         m_alibi = new Deposition(m_fullName, falseAlibi, DepositionType.ALIBI, true);
         m_heardTestimony = new Deposition(m_fullName, falseHeard, DepositionType.HEARD, true);
         m_seenTestimony = new Deposition(m_fullName, falseSeen, DepositionType.SEEN, true);
@@ -125,7 +125,7 @@ public class Murderer extends Suspect implements Lie {
     
     @Override
     public void createFalse(DepositionType category) {//crée témoigage bidon avec aléatoire
-        ArrayList <String> suspect = suspectsNameList();
+        ArrayList <String> suspect = getSuspectsNameList();
         suspect.remove(m_fullName);
                 
         String text;

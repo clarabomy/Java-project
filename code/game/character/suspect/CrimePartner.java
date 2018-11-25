@@ -8,9 +8,9 @@ package project.game.character.suspect;
 import java.util.ArrayList;
 import project.game.character.Sex;
 import project.game.investigation.Clue;
-import static project.game.investigation.Investigation.suspectsNameList;
 import project.game.investigation.Deposition;
 import project.game.investigation.DepositionType;
+import static project.game.investigation.Investigation.getSuspectsNameList;
 
 /**
  *
@@ -135,7 +135,7 @@ public class CrimePartner extends Suspect implements Lie {
             case SEEN:
                 String[] object = {"une pipe", "un homme qui avait une forte carrure", "un homme qui avait une canne", "une femme de petite taille", "une femme classe"};
                 
-                ArrayList <String> suspect = suspectsNameList();
+                ArrayList <String> suspect = getSuspectsNameList();
                 suspect.remove(m_fullName);
                 suspect.remove(m_murdererName);
                 

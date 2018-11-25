@@ -43,7 +43,7 @@ public class Investigation {
     
     
     /*$ GETTERS & SETTERS $*/
-    public static ArrayList <String> suspectsNameList() {
+    public static ArrayList <String> getSuspectsNameList() {
         ArrayList <String> listName = new ArrayList();
         for (Suspect currentSuspect : m_suspectsList) {//parcours tout m_suspectsList en mettant élément courant dans currentSuspect
             listName.add(currentSuspect.getFullName());
