@@ -5,7 +5,7 @@ import javaspector.game.investigation.DepositionType;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Allows a character to lie during the interrogation 
  * @author Clara BOMY
  */ 
 public interface Lie {
@@ -13,8 +13,8 @@ public interface Lie {
     final int[] M_COHERENCE_VALID     = {60, 75, 90};//same
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param category  explications
+     * Generates a false deposition
+     * @param category  type of the deposition
      */ 
     abstract void createFalse(DepositionType category);
 }

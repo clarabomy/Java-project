@@ -13,44 +13,43 @@ import static javaspector.game.investigation.Investigation.getSuspectsNameList;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of the murderer
  * @author Clara BOMY
  */ 
 public class Murderer extends Suspect implements Lie {
     protected String m_motive;
     
     /** 
-     * Constructor of the class - for new investigation
-     * @param fullName              explications
-     * @param sex                   explications
-     * @param age                   explications
-     * @param stressLevel           explications
-     * @param look                  explications
-     * @param physicalAspect        explications
-     * @param motive                explications
+     * Constructor of the class Murderer - for new investigation
+     * @param fullName              full name of the murderer
+     * @param sex                   sex of the murderer
+     * @param age                   age of the murderer
+     * @param stressLevel           stress level of the murderer
+     * @param look                  look of the murderer
+     * @param physicalAspect        physical aspect of the murderer
+     * @param motive                motive of the murderer
      */ 
     public Murderer(String fullName, Sex sex, int age, int stressLevel, String look, String physicalAspect, String motive) {
         super(fullName, sex, age, stressLevel, 0, look, physicalAspect, false);
         m_motive = motive;
-        
         m_heardTestimony = null;
         m_seenTestimony = null;
         m_alibi = null;
     }
     
     /** 
-     * Constructor of the class - for loaded investigation
-     * @param fullName              explications
-     * @param sex                   explications
-     * @param age                   explications
-     * @param stressLevel           explications
-     * @param look                  explications
-     * @param physicalAspect        explications
+     * Constructor of the class Murderer - for loaded investigation
+     * @param fullName              full name of the murderer
+     * @param sex                   sex of the murderer
+     * @param age                   age of the murderer
+     * @param stressLevel           stress level of the murderer
+     * @param look                  look of the murderer
+     * @param physicalAspect        physical aspect of the murderer
      * @param consideredInnocent    explications
-     * @param motive                explications
-     * @param falseAlibi            explications
-     * @param falseHeard            explications
-     * @param falseSeen             explications
+     * @param motive                motive of the murderer
+     * @param falseAlibi            false alibi of the murderer
+     * @param falseHeard            false heard testimony of the murderer
+     * @param falseSeen             false seen testimony of the murderer
      */ 
     public Murderer(String fullName, Sex sex, int age, int stressLevel, String look, String physicalAspect, boolean consideredInnocent, String motive, String falseAlibi, String falseHeard, String falseSeen) {
         this(fullName, sex, age, stressLevel, look, physicalAspect, motive);
@@ -62,15 +61,15 @@ public class Murderer extends Suspect implements Lie {
     }
 
     /** 
-     * Getter of the class
-     * @return motive   explications
+     * Getter of the motive
+     * @return motive   motive of the murderer
      */ 
     public String getMotive() {
         return m_motive;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the alibi to display based on the results of rolls of dice
      */ 
     @Override
     public void giveAlibi() {
@@ -80,7 +79,7 @@ public class Murderer extends Suspect implements Lie {
                 textLawyer();
                 break;
             case SUCCESS:
-                //crée alibi s'il n'en a pas
+                // create alibi if there is not
                 if (m_alibi == null) {
                     createFalse(DepositionType.ALIBI);
                 }
@@ -95,8 +94,6 @@ public class Murderer extends Suspect implements Lie {
                 textForget();
                 break;
             case CRITIC_FAILURE:
-                //String part1 = "Vous voulez savoir ce que je faisais, ce " + "soir" + "-là? Vraiment? Bien, je vais vous le dire : ",
-                //       part2 = "j'étais occupé à assassiner " + "nameVictim" + " !";
                 Deposition declaration = new Deposition(m_fullName, " le criminel que vous recherchez", DepositionType.ROLE, false);
                 declaration.display();
                 
@@ -108,11 +105,11 @@ public class Murderer extends Suspect implements Lie {
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the testimony to display based on the results of rolls of dice
      */ 
     @Override
     public void giveTestimony() {
-        //crée temoignage si n'en a pas
+        //create testimony if there is not
         if (m_heardTestimony == null) {
             createFalse(DepositionType.HEARD);
         }
@@ -126,7 +123,7 @@ public class Murderer extends Suspect implements Lie {
                 m_seenTestimony.display();
                 m_heardTestimony.display();
                 
-                //l'inspecteur enregistre ce qu'il entend de nouveau
+                // create a testimony if there is not
                 if (!m_clueList.contains(m_heardTestimony)) {
                     m_clueList.add(m_heardTestimony);
                 }
@@ -135,7 +132,8 @@ public class Murderer extends Suspect implements Lie {
                 }
                 break;
             case SUCCESS:
-                boolean tellSeen = Math.random() < 0.5;//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
+                //a fifty-fifty chance: either what he saw or what he heard
+                boolean tellSeen = Math.random() < 0.5;
                 (tellSeen? m_seenTestimony : m_heardTestimony).display();
                 
                 if (!m_clueList.contains((Clue)(tellSeen? m_seenTestimony : m_heardTestimony))) {
@@ -155,11 +153,11 @@ public class Murderer extends Suspect implements Lie {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param category  explications
+     * Generates a false deposition
+     * @param category  type of the deposition
      */ 
     @Override
-    public void createFalse(DepositionType category) {//crée témoigage bidon avec aléatoire
+    public void createFalse(DepositionType category) {
         ArrayList <String> suspect = getSuspectsNameList();
         suspect.remove(m_fullName);
                 
@@ -191,7 +189,7 @@ public class Murderer extends Suspect implements Lie {
                 
                 text = activity[(int) (Math.random() * activity.length)] + " " + place[(int) (Math.random() * place.length)];
                
-                int nbSuspectsIncluded = (int) (Math.random() * 3); //entre 0 et 3
+                int nbSuspectsIncluded = (int) (Math.random() * 3); //between 0 and 3
                 if (nbSuspectsIncluded == 0) {
                     text += ", seul";
                 }
@@ -219,7 +217,7 @@ public class Murderer extends Suspect implements Lie {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays the confessions of the murderer
      */ 
     public void confess(){
         String part1 = "le coupable. Eh oui, c'est MOI ! AH AH AH AH AH ! ",
