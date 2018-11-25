@@ -33,13 +33,12 @@ public class DataManager {
     protected final int m_ageMax = 80 - m_ageMin;
     
     
-    protected static ArrayList<String> m_victimList = new ArrayList();//victimes à l'initialisation
     protected static String[] m_weaponList = {
         "couteau",
-        "poison",
+        "batte de baseball",
         "revolver",
-        "corde",
-        "poings"
+        "pelle",
+        "pioche"
     };
     protected static String[] m_mobileList = {
         "la folie",
@@ -49,7 +48,7 @@ public class DataManager {
     };
     protected String[] m_manList = {
         "Antoine",
-        "Jean",
+        "Thomas",
         "Luc",
         "Paul",
         "Pierre",
@@ -58,60 +57,115 @@ public class DataManager {
     };
     protected String[] m_whomanList = {
         "Claire",
-        "Jeanne",
+        "Lucie",
         "Alice",
-        "Mathilde",
+        "Morgane",
         "Camille",
         "Laure",
-        "Marion"
+        "Marine"
     };
     protected String[] m_nameList = {
         "Juzeau",
-        "Bomy",
+        "Dael",
+        "Dang",
+        "Morelle",
         "Deolivera",
         "Pasquier",
         "Fourmond",
         "Cordier",
         "Boore"
     };
-    protected String[] m_appearanceList = {
-        "look1",
-        "look2"
+    protected String[] m_lookList = {
+        "classe",
+        "casual",
+        "négligé",
+        "gothique"                  
     };
     protected String[] m_aspectList = {
-        "aspect1",
-        "aspect2"
+        "grand",
+        "petit",
+        "mince",
+        "corpulent"
     };
     protected String[] m_causeList = {
-        "strangulation",
-        "noyade",
-        "blessure à l'arme blanche",
-        "blessure par balle",
-        "empoisonnement",
-        "lynchage",
-        "défenestration"
+        "hémorragie interne",
+        "blessures profondes",
+        "arrêt cardiaque"
+    };
+    protected String[] m_proofContentList = {
+        "tâches de sang",
+        "empreintes digital",
+        "mégot de cigarette",
+        "ticket de métro"
     };
     
     public DataManager() {
-        for (int i = 0; i < 9; i++) {
-            m_victimList.add(createFullName(Math.random() < 0.5? Sex.HOMME : Sex.FEMME));
+    }
+    
+    
+    public static String createDeposition(DepositionType type, Murderer murderer) {
+        String text = "";
+        switch(type) {
+            case ALIBI:
+                String[] activity   = {"J'ai travaillé", 
+                                        "Je me suis reposé(e)", 
+                                        "J'ai mangé", 
+                                        "Je suis sorti(e)", 
+                                        "J'étais"},
+                           place   = {"au restaurant", 
+                                        "à l'hotel", 
+                                        "chez moi", 
+                                        "dans un café", 
+                                        "dans un parc"},
+                           company = {"avec ma femme", 
+                                       "avec mes enfants",
+                                       "avec mes parents",
+                                       "avec mes amis",
+                                       "avec mes collègues de bureau"};
+         
+                text = activity[(int) (Math.random() * activity.length)] + " " + place[(int) (Math.random() * place.length)] + " " + company[(int) (Math.random() * company.length)] + ".";
+                break;
+                
+            case SEEN:
+                String[] seen = {"une personne ayant un look",
+                                 "une personne qui était",
+                                 "une personne"}; 
+                String[] uselessSeen = {"un chat trop mignon",
+                                    "un mec trop beau",
+                                    "un camion de pompier"};
+                
+                int indexSeen = (int) (Math.random() * seen.length);
+                
+                text += " " + (Math.random() < 0.5? seen[indexSeen] : uselessSeen[indexSeen]) + " ";
+                switch (indexSeen) {
+                    case 0:
+                        text += murderer.getLook();
+                        break;
+                    case 1:
+                        text += murderer.getAspect();
+                        break;
+                    case 2:
+                        text += murderer.getAge() < 40 ? "jeune" : "âgée";
+                        break;
+                }
+                break;
+                
+            case HEARD:
+                String[] heard = {"une voix de",
+                                 "un coup de feu",
+                                 "des cris"}; 
+                String[] uselessHeard = {"un enfant pleurer",
+                                    "un chien aboyer",
+                                    "des rires"};
+                int indexHeard = (int) (Math.random() * heard.length);
+                
+                text += " " + (Math.random() < 0.5? heard[indexHeard] : uselessHeard[indexHeard]) + " ";
+                if (indexHeard == 0) { text += murderer.getSex().toString(); }
+                break;
         }
+        text += ".";
+        return text;
     }
-    
-    
-    
-    public static ArrayList<String> getVictimList() {
-        return m_victimList;
-    }
-    
-    public static String[] getWeaponList() {
-        return m_weaponList;
-    }
-    
-    public static String[] getMobileList() {
-        return m_mobileList;
-    }
-    
     
     private String createFullName(Sex genre) {
         String surname = (genre == Sex.HOMME? m_manList : m_whomanList)[(int) (Math.random() * (genre == Sex.HOMME? m_manList : m_whomanList).length)];
@@ -129,17 +183,11 @@ public class DataManager {
         ArrayList<Suspect> suspectsList = new ArrayList();
         ArrayList <Proof> proofList;
 
-
-        //commencer par générer les noms pour les alibis
-
-
-
-
         //criminel
         genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
         age = (int) (m_ageMin + Math.random() * m_ageMax);
         stress = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20));
-        look        = m_appearanceList[(int) (Math.random() * m_appearanceList.length)];
+        look        = m_lookList[(int) (Math.random() * m_lookList.length)];
         aspect      = m_aspectList[(int) (Math.random() * m_aspectList.length)];
         motivation  = m_mobileList[(int) (Math.random() * m_mobileList.length)];
         Murderer criminal = new Murderer(createFullName(genre), genre, age, stress, look, aspect, motivation);
@@ -150,9 +198,9 @@ public class DataManager {
         age = (int) (m_ageMin + Math.random() * m_ageMax);
         stress  = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20));
         coop    = (int) (m_levelChoice == Difficulty.SIMPLE? 20 + Math.random() * 40 : (m_levelChoice == Difficulty.MEDIUM? 40 + Math.random() * 30 : 60 + Math.random() * 20));
-        look        = m_appearanceList     [(int) (Math.random() * m_appearanceList.length)];
+        look        = m_lookList     [(int) (Math.random() * m_lookList.length)];
         aspect      = m_aspectList[(int) (Math.random() * m_aspectList.length)];
-        suspectsList.add(new CrimePartner(createFullName(genre), genre, age, stress, coop, look, aspect, "alibi", criminal.getFullName()));
+        suspectsList.add(new CrimePartner(createFullName(genre), genre, age, stress, coop, look, aspect, createDeposition(DepositionType.ALIBI, criminal), criminal.getFullName()));
 
         //victime
         genre = Math.random() < 0.5? Sex.HOMME : Sex.FEMME;
@@ -161,24 +209,23 @@ public class DataManager {
         deathCause = m_causeList[(int) (Math.random() * m_causeList.length)];
         proofList = new ArrayList();
         for (int i = 0; i < (int) (Math.random() * 6); i++) {//nbProofVictim
-            proofList.add(new Proof("victime", "contenu"));
+            proofList.add(new Proof("Victime", m_proofContentList[i]));
         }
         Victim corpse = new Victim(createFullName(genre), genre, age, deathDate, deathCause, proofList);
-        m_victimList.add(corpse.getFullName());
 
         //arme
         proofList = new ArrayList();
         for (int i = 0; i < (int) (Math.random() * 6 + 1); i++) {//nbProofWeapon
-            proofList.add(new Proof("arme du crime", "contenu"));
+            proofList.add(new Proof("Arme du crime", m_proofContentList[i]));
         }
-        InvestElement weapon = new InvestElement("type d'arme", proofList);
+        InvestElement weapon = new InvestElement(m_weaponList[(int) (Math.random() * m_weaponList.length)], proofList);
 
         //scene de crime
         proofList = new ArrayList();
         for (int i = 0; i < (int) (Math.random() * 6 + 1); i++) {//nbProofScene
-            proofList.add(new Proof("scène de crime", "contenu"));
+            proofList.add(new Proof("Scène de crime", m_proofContentList[i]));
         }
-        InvestElement scene = new InvestElement("type d'endroit", proofList);
+        InvestElement scene = new InvestElement("Scène de crime", proofList);
 
         //innocents
         int nbInnocents = m_nbInnocentsByLevel * (m_levelChoice == Difficulty.SIMPLE? 1 : (m_levelChoice == Difficulty.MEDIUM? 2 : 3));
@@ -187,9 +234,9 @@ public class DataManager {
             age = (int) (m_ageMin + Math.random() * m_ageMax);
             stress  = (int) (m_levelChoice == Difficulty.SIMPLE? 80 - Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 70 - Math.random() * 30 : 60 - Math.random() * 30));
             coop    = (int) (m_levelChoice == Difficulty.SIMPLE? 80 - Math.random() * 20 : (m_levelChoice == Difficulty.MEDIUM? 70 - Math.random() * 30 : 60 - Math.random() * 30));
-            look        = m_appearanceList     [(int) (Math.random() * m_appearanceList.length)];
+            look        = m_lookList     [(int) (Math.random() * m_lookList.length)];
             aspect      = m_aspectList[(int) (Math.random() * m_aspectList.length)];
-            suspectsList.add(new Innocent(createFullName(genre), genre, age, stress, coop, look, aspect, false, "alibi", "entendu", "vu"));
+            suspectsList.add(new Innocent(createFullName(genre), genre, age, stress, coop, look, aspect, false, createDeposition(DepositionType.ALIBI, criminal), createDeposition(DepositionType.HEARD, criminal), createDeposition(DepositionType.SEEN, criminal)));
         }
 
         //enquêteur
@@ -261,19 +308,13 @@ public class DataManager {
                                     innocent = Boolean.parseBoolean(value);
                                     break;
                                 case "alibiSuspect":
-                                    if (!value.equals("null")) {
-                                        alibi = value.equals("null")? null : value;
-                                    }
+                                    alibi = value.equals("null")? null : value;
                                     break;
                                 case "seenSuspect ":
-                                    if (!value.equals("null")) {
-                                        seen = value.equals("null")? null : value;
-                                    }
+                                    seen = value.equals("null")? null : value;
                                     break;
                                 case "heardSuspect":
-                                    if (!value.equals("null")) {
-                                        heard = value.equals("null")? null : value;;
-                                    }
+                                    heard = value.equals("null")? null : value;;                                  
                                     break;
                                 case "motiveMurderer":
                                     motive = value;
@@ -331,7 +372,6 @@ public class DataManager {
                     index--;
                     
                     corpse = new Victim(name, gender, age, deathDate, deathCause, victimProofs);
-                    m_victimList.add(corpse.getFullName());
                     break;
                 case "WEAPON":
                     String typeWeapon = saveData.get(index++).split(":")[1];//incrémente pour bloc suivant
@@ -439,8 +479,8 @@ public class DataManager {
             gameData.add("innocentSuspect   :" + currentSuspect.isConsideredInnocent());
 
             gameData.add("alibiSuspect:" + (currentSuspect.getAlibi() != null? currentSuspect.getAlibi().getContent() : "null"));
-            gameData.add("seenSuspect :" + (currentSuspect.getSeen() != null? currentSuspect.getSeen().getContent().replace("J'ai vu ", "") : "null"));
-            gameData.add("heardSuspect:" + (currentSuspect.getHeard() != null? currentSuspect.getHeard().getContent().replace("J'ai entendu ", "") : "null"));
+            gameData.add("seenSuspect :" + (currentSuspect.getSeen() != null? currentSuspect.getSeen().getContent().replace("Je me souviens avoir vu ", "") : "null"));
+            gameData.add("heardSuspect:" + (currentSuspect.getHeard() != null? currentSuspect.getHeard().getContent().replace("Je me souviens avoir entendu ", "") : "null"));
 
             if (currentSuspect instanceof Murderer) {
                 gameData.add("motiveMurderer:" + ((Murderer) currentSuspect).getMotive());
