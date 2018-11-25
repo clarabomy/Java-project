@@ -8,22 +8,22 @@ import javaspector.game.investigation.Proof;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of the victim
  * @author Clara BOMY
  */ 
 public class Victim extends Character implements NoticeClues {
     protected String m_deathDate;
     protected String m_deathCause;
-    protected ArrayList <Proof> m_proofList;//preuves sur l'élément d'enquête
+    protected ArrayList <Proof> m_proofList; //proofs on the investigation element
 
     /** 
-     * Constructor of the class
-     * @param fullName      explications
-     * @param sex           explications
-     * @param age           explications
-     * @param deathDate     explications
-     * @param deathCause    explications
-     * @param proofList     explications
+     * Constructor of the class Victim
+     * @param fullName      full name of the victim
+     * @param sex           sex of the victim
+     * @param age           age of the victim
+     * @param deathDate     date of the death
+     * @param deathCause    cause of the death
+     * @param proofList     proofs on the victim
      */ 
     public Victim(String fullName, Sex sex, int age, String deathDate, String deathCause, ArrayList <Proof> proofList) {
         super(fullName, sex, age);
@@ -33,23 +33,23 @@ public class Victim extends Character implements NoticeClues {
     }
 
     /** 
-     * Getter of the class
-     * @return deathDate   explications
+     * Getter of the date of the death
+     * @return deathDate   date of the death
      */ 
     public String getDeathDate() {
         return m_deathDate;
     }
 
     /** 
-     * Getter of the class
-     * @return deathCause   explications
+     * Getter of the cause of the death
+     * @return deathCause   cause of the death
      */ 
     public String getDeathCause() {
         return m_deathCause;
     }
 
     /** 
-     * Getter of the class
+     * Getter of the ArrayList of proofs present on the victim
      * @return proofList    explications
      */ 
     public ArrayList<Proof> getProofList() {
@@ -57,7 +57,7 @@ public class Victim extends Character implements NoticeClues {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a presentation sentence
      */ 
     @Override
     public void presentCharacter() {
@@ -66,19 +66,19 @@ public class Victim extends Character implements NoticeClues {
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Get the proofs present on the victim
      * @param player    explications
      */ 
     @Override
-    public void analyse(Investigator player) { //autopsie
+    public void analyse(Investigator player) { //autopsy
         presentCharacter();
         String analyseText = "Les médecins légistes ont réalisé une autopsie du corps. La victime serait morte " + m_deathDate + " pour cause " + getDeathCause() + ".\n";
         String proofText = "De plus, ils y ont trouvé les indices suivants :";
         getConsole().display(analyseText + proofText);
         for (Proof currentProof : m_proofList) {
             getConsole().display("   - " + currentProof.getContent());
-            if (!player.getClueList().contains(currentProof)) {//ajoute tout ce qui a été trouvé à la liste d'indices d'un coup
-                player.setClue((Proof) currentProof);//ajoute preuves à la liste d'indices
+            if (!player.getClueList().contains(currentProof)) {//add everything that was found to the list of clues found at once
+                player.setClue((Proof) currentProof);//add proofs to the clues found list
             }
         }
     }

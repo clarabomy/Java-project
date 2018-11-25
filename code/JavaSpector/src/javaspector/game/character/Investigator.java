@@ -9,20 +9,20 @@ import javaspector.game.investigation.Proof;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of the investigator
  * @author Clara BOMY
  */ 
 public class Investigator extends LiveCharacter {
-    protected int m_manipulation;
-    protected int m_intelligence;
+    protected int m_manipulation; //manipulation level 
+    protected int m_intelligence; //intelligence level
     
     /** 
-     * Constructor of the class
-     * @param fullName          explications
-     * @param gender            explications
-     * @param manipulationLevel explications
-     * @param intelligenceLevel explications
-     * @param clueList          explications
+     * Constructor of the class Investigator
+     * @param fullName          name of the investigator
+     * @param gender            sex of the investigator
+     * @param manipulationLevel manipulation level of the investigator
+     * @param intelligenceLevel intelligence level of the investigator
+     * @param clueList          list of clues and depositions
      */ 
     public Investigator(String fullName, Sex gender, int manipulationLevel, int intelligenceLevel, ArrayList<Clue> clueList) {
         super(fullName, gender, 30);
@@ -34,23 +34,23 @@ public class Investigator extends LiveCharacter {
     }
 
     /** 
-     * Getter of the class
-     * @return intelligence explications
+     * Getter of the intelligence level
+     * @return intelligence intelligence level of the investigator
      */ 
     public int getIntelligence() {
         return m_intelligence;
     }
     
     /** 
-     * Getter of the class
-     * @return manipulation explications
+     * Getter of the manipulation level
+     * @return manipulation manipulation level of the investigator
      */ 
     public int getManipulation() {
         return m_manipulation;
     }
        
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a presentation sentence
      */ 
     @Override
     public void presentCharacter() {
@@ -61,8 +61,8 @@ public class Investigator extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @return investigator sends the reference to chain the calls
+     * Displays intelligence and manipulation levels of the investigator
+     * @return investigator : sends the reference to chain the calls
      */ 
     @Override
     public Investigator displayStats() {
@@ -74,7 +74,7 @@ public class Investigator extends LiveCharacter {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays all the clues found by the investigator
      * @return investigator sends the reference to chain the calls
      */ 
     public Investigator consultClues(){

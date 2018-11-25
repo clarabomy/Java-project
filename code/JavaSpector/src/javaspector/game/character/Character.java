@@ -3,7 +3,7 @@ package javaspector.game.character;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes common to all characters
  * @author Clara BOMY
  */ 
 public abstract class Character {
@@ -12,10 +12,10 @@ public abstract class Character {
     protected int m_age;
 
     /** 
-     * Constructor of the class
-     * @param fullName  explications
-     * @param sex       explications
-     * @param age       explications
+     * Constructor of the class character
+     * @param fullName :  full name of the character
+     * @param sex      :  sex of the character
+     * @param age      :  age of the character
      */ 
     public Character(String fullName, Sex sex, int age) {
         m_fullName = fullName;
@@ -24,31 +24,31 @@ public abstract class Character {
     }
     
     /** 
-     * Getter of the class
-     * @return fullName explications
+     * Getter of the full name
+     * @return fullName full name of the character
      */ 
     public String getFullName() {
         return m_fullName;
     }
 
     /** 
-     * Getter of the class
-     * @return sex  explications
+     * Getter of the sex
+     * @return sex : sex of the character
      */ 
     public Sex getSex() {
         return m_sex;
     }
 
     /** 
-     * Getter of the class
-     * @return age  explications
+     * Getter of the age
+     * @return age : age o fthe character
      */ 
     public int getAge() {
         return m_age;
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Displays a presentation sentence
      */ 
     public abstract void presentCharacter();
 }

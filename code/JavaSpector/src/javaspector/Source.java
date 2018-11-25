@@ -5,16 +5,16 @@ import javaspector.game.Game;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Main class of the program: it contains the entry point of the program
  * @author Clara BOMY
  */ 
 public class Source {
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param args  explications
+     * Main function
+     * @param args  command line arguments
      */ 
     public static void main(String[] args) {
-        //Exécution du jeu
+        //Game execution
         Game JavaSpector = new Game();
         JavaSpector.gameMenu();
     }

@@ -10,7 +10,7 @@ import static javaspector.game.investigation.Investigation.getSuspectsNameList;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Contains the methods and attributes of the crime partner
  * @author Clara BOMY
  */ 
 public class CrimePartner extends Suspect implements Lie {
@@ -18,16 +18,16 @@ public class CrimePartner extends Suspect implements Lie {
     protected String m_murdererName;
 
     /** 
-     * Constructor of the class - for new investigation
-     * @param fullName          explications
-     * @param sex               explications
-     * @param age               explications
-     * @param stressLevel       explications
-     * @param cooperationLevel  explications
-     * @param look              explications
-     * @param physicalAspect    explications
-     * @param alibi             explications
-     * @param murdererName      explications
+     * Constructor of the class CrimePartner
+     * @param fullName          full name of the crime partner
+     * @param sex               sex of the crime partner
+     * @param age               age of the crime partner
+     * @param stressLevel       stress level of the crime partner
+     * @param cooperationLevel  cooperation level of the crime partner
+     * @param look              look of the crime partner
+     * @param physicalAspect    physical aspect of the crime partner
+     * @param alibi             alibi of the crime partner
+     * @param murdererName      full name of the murderer
      */ 
     public CrimePartner(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, String alibi, String murdererName) {
         super(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, false);
@@ -40,18 +40,18 @@ public class CrimePartner extends Suspect implements Lie {
     }
     
     /** 
-     * Constructor of the class - for loaded investigation
-     * @param fullName              explications
-     * @param sex                   explications
-     * @param age                   explications
-     * @param stressLevel           explications
-     * @param cooperationLevel      explications
-     * @param look                  explications
-     * @param physicalAspect        explications
-     * @param consideredInnocent    explications
-     * @param alibi                 explications
-     * @param falseHeard            explications
-     * @param falseSeen             explications
+     * Constructor of the class CrimePartner - for loaded investigation
+     * @param fullName          full name of the crime partner
+     * @param sex               sex of the crime partner
+     * @param age               age of the crime partner
+     * @param stressLevel       stress level of the crime partner
+     * @param cooperationLevel  cooperation level of the crime partner
+     * @param look              look of the crime partner
+     * @param physicalAspect    physical aspect of the crime partner
+     * @param consideredInnocent    if the crime partner is considered innocent by the investigator
+     * @param alibi                 alibi of the crime partner
+     * @param falseHeard            false heard testimony
+     * @param falseSeen             false seen testimony
      */ 
     public CrimePartner(String fullName, Sex sex, int age, int stressLevel, int cooperationLevel, String look, String physicalAspect, boolean consideredInnocent, String alibi, String falseHeard, String falseSeen) {
         this(fullName, sex, age, stressLevel, cooperationLevel, look, physicalAspect, alibi, null);
@@ -62,15 +62,15 @@ public class CrimePartner extends Suspect implements Lie {
     }
 
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param fullName  explications
+     * Defines the name of the murderer
+     * @param fullName  full name of the murderer
      */ 
     public void setMurdererName(String fullName) {
         m_murdererName = fullName;
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the alibi to display based on the results of rolls of dice
      */ 
     @Override
     public void giveAlibi() {
@@ -97,8 +97,6 @@ public class CrimePartner extends Suspect implements Lie {
                 }
                 break;
             case CRITIC_FAILURE:
-                //String part1 = "Ce soir là, j'ai participé à ce meurtre. Voilà. Vous êtes content ? ",
-                //        part2 = "Maintenant, vous pouvez arrêter avec vos questions : je n'en dirai pas plus.";
                 Deposition declaration = new Deposition(m_fullName, " complice de ce crime", DepositionType.ROLE, false);
                 declaration.display();
                 
@@ -110,11 +108,11 @@ public class CrimePartner extends Suspect implements Lie {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
+     * Determines the testimony to display based on the results of rolls of dice
      */ 
     @Override
     public void giveTestimony() {
-        //crée temoignage si n'en a pas
+        // create a testimony if there is not
         if (m_heardTestimony == null) {
             createFalse(DepositionType.HEARD);
         }
@@ -128,7 +126,7 @@ public class CrimePartner extends Suspect implements Lie {
                 m_seenTestimony.display();
                 m_heardTestimony.display();
                 
-                //l'inspecteur enregistre ce qu'il entend de nouveau
+                // the inspector records what he hears again
                 if (!m_clueList.contains(m_heardTestimony)) {
                     m_clueList.add(m_heardTestimony);
                 }
@@ -137,7 +135,8 @@ public class CrimePartner extends Suspect implements Lie {
                 }
                 break;
             case SUCCESS:
-                boolean tellSeen = Math.random() < 0.5;//1 chance sur 2 : soit ce qu'il a vu, soit ce qu'il a entendu
+                //a fifty-fifty chance: either what he saw or what he heard
+                boolean tellSeen = Math.random() < 0.5;
                 (tellSeen? m_seenTestimony : m_heardTestimony).display();
                 
                 if (!m_clueList.contains((Clue)(tellSeen? m_seenTestimony : m_heardTestimony))) {
@@ -157,11 +156,11 @@ public class CrimePartner extends Suspect implements Lie {
     }
     
     /** 
-     * Utilité / fonctionnement de la méthode
-     * @param category  explications
+     * Generates a false deposition
+     * @param category  type of the deposition
      */ 
     @Override
-    public void createFalse(DepositionType category) {//crée témoigage bidon avec aléatoire
+    public void createFalse(DepositionType category) {
         String text;
         switch (category) {
             case SEEN:

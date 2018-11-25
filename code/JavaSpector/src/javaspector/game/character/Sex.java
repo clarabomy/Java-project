@@ -3,7 +3,7 @@ package javaspector.game.character;
 
 /**
  *
- * Utilité / fonctionnement de la classe
+ * Possible values of the sex of a character
  * @author Clara BOMY
  */ 
 public enum Sex {FEMME, HOMME;
