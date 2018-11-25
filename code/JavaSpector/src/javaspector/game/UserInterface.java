@@ -19,15 +19,13 @@ public class UserInterface {
      * @return stringList   text to display
      */ 
     private String concatList(String[] choicesList) {
-        //afficher choix => crée le string d'affichage
-        
-        m_nbChoices = 0;
+        m_nbChoices = 0;//reinitialize the number of choices
         String list = "\n\t";
         for (String choice : choicesList) {
             list += "(Choix "+ (++m_nbChoices) + ") " + choice + "\n\t";
         }
     
-        return list.substring(0, list.length() - 1);//retire dernier \n
+        return list.substring(0, list.length() - 1);//remove the last \n
     }
     
     /** 
@@ -36,12 +34,12 @@ public class UserInterface {
      */ 
     public UserInterface clean() {
         String swipe = "";
-        for (int i = 0; i < M_CONSOLE_SIZE; i++) {//concatène tous les retours à la ligne
+        for (int i = 0; i < M_CONSOLE_SIZE; i++) {//concatenates all the line breaks
             swipe += "\n";
         }
-        System.out.print(swipe);//affiche tout d'un coup
+        System.out.print(swipe);//shows all of a sudden
         
-        m_nbChoices = 0;
+        m_nbChoices = 0;//reinitialize the number of choices
         return this;
     }
     
@@ -50,10 +48,10 @@ public class UserInterface {
      * @param text      message to display
      * @return console  sends the reference to chain the calls
      */ 
-    public UserInterface display(String text){//version 1
+    public UserInterface display(String text){
         System.out.println(text + "\n");
 
-        m_nbChoices = 0;
+        m_nbChoices = 0;//no choice
         return this;
     }
     
@@ -63,7 +61,7 @@ public class UserInterface {
      * @param choices   message of the possible choices
      * @return console  sends the reference to chain the calls
      */ 
-    public UserInterface display(String text, String[] choices){//version 2
+    public UserInterface display(String text, String[] choices){
         System.out.println(text + "\n" + concatList(choices));//concatList compte nb de choix
         
         return this;
@@ -75,7 +73,7 @@ public class UserInterface {
      * @param text      message to display
      * @return console  sends the reference to chain the calls
      */ 
-    public UserInterface display(String speaker, String text){//version 3
+    public UserInterface display(String speaker, String text){
         System.out.println("(" + speaker + ") " + text + "\n");
         
         m_nbChoices = 0;
@@ -89,8 +87,8 @@ public class UserInterface {
      * @param choices   list of the possible choices
      * @return console  sends the reference to chain the calls
      */ 
-    public UserInterface display(String speaker, String text, String[] choices){//version 4
-        System.out.println("(" + speaker + ") " + text + "\n" + concatList(choices));//concatList compte nb de choix
+    public UserInterface display(String speaker, String text, String[] choices){
+        System.out.println("(" + speaker + ") " + text + "\n" + concatList(choices));
         
         return this;
     }
@@ -106,7 +104,7 @@ public class UserInterface {
         try {
             System.in.read();
         } 
-        catch(IOException e){
+        catch(IOException e){//no execution on readed : no possible error
         }
         System.out.println();
         
@@ -131,7 +129,7 @@ public class UserInterface {
                 }
             } 
             catch (Exception e) {
-                keyboard.next(); 
+                keyboard.next();//if incorrect : try again
             }
         } while (correctChoice == false);
         System.out.println("\n");

@@ -72,11 +72,11 @@ public class Game {
     public void gameMenu() {
         boolean exitGame = false;
         do {
-            boolean gotSaves = m_files.getSavesName().length != 0;
-            boolean gotInvest = m_currentInvestigation != null;
+            boolean gotSaves = m_files.getSavesName().length != 0;//true if there is saves files in save folder
+            boolean gotInvest = m_currentInvestigation != null;//true if the game run an investigation
             
             ArrayList choicesList = new ArrayList();
-            {
+            {//menu constitution
                 choicesList.add("Commencer une nouvelle enquête" + (gotSaves || gotInvest? "" : "\n\n"));
                 if (m_currentInvestigation != null) {
                     choicesList.add("Continuer l'enquête en cours");
@@ -92,10 +92,10 @@ public class Game {
         
             
             int choix = m_console.clean().display("Standardiste", "Bienvenue à JavaSpector. Que puis-je pour vous?", convertArrayList(choicesList)).execChoice();
-            if (!gotSaves && !gotInvest && choix >= 2) {
+            if (!gotSaves && !gotInvest && choix >= 2) {//choices 2, 3, 4, 5 not displayed : must increment for matching unser choice
                 choix += 4;
             }
-            else if ((!gotInvest && choix >=2) || (!gotSaves && gotInvest && choix >= 4)) {
+            else if ((!gotInvest && choix >=2) || (!gotSaves && gotInvest && choix >= 4)) {//choices 2, 3 or 4, 5 not displayed : must increment for matching unser choice
                 choix += 2;
             }
             switch (choix) {
@@ -110,15 +110,15 @@ public class Game {
                 case 3:
                     //saveCurrentInvestigation
                     ArrayList <String> gameData = m_dataSave.exportGame(m_currentInvestigation);
-                    m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());
+                    m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());//memorize filename in case of ending game
                     m_files.writeSaveFile(m_currentInvestigation.getInvestigator().getFullName(), convertArrayList(gameData));
                     break;
                 case 4:
                     //loadInvestigation
-                    ArrayList<String> contentFile = m_files.readSaveFile(m_files.selectFile("charger"));
-                    if (contentFile != null) {
+                    ArrayList<String> contentFile = m_files.readSaveFile(m_files.selectFile("charger"));//constitute data tab of selected file
+                    if (contentFile != null) {//if selected file is "cancel" option, contentFile == null and we go on
                         m_currentInvestigation = m_dataSave.importGame(contentFile);
-                        m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());
+                        m_files.setCurrentFileName(m_currentInvestigation.getInvestigator().getFullName());//memorize filename in case of ending game
                         m_currentInvestigation.investigationMenu();
                     }
                     break;
@@ -140,25 +140,26 @@ public class Game {
                     break;
             }
             
-            if (m_endedGame && m_files.getCurrentFileName() != null) {//s'il y a un fichier chargé, on le supprime
+            if (m_endedGame && m_files.getCurrentFileName() != null) {//at the ending game, if we got a file, we delete it
                 m_files.deleteSaveFile(m_files.getCurrentFileName());
                 m_currentInvestigation = null;
             }
-        } while (!exitGame);//quitte le jeu en choisissant l'option dédiée
+        } while (!exitGame);
     }
    
     /** 
      * Initialization of a new investigation
      */ 
     public void newInvestigation() {
-        //etape 1 : nom perso (nom fichier)
+        //step 1 : player name (determines savefile name)
         String fullName = null;
         m_console.clean();
         do {
             String name = m_console.display("Standardiste", "Veuillez entrer votre nom :").execInput();
             String surname = m_console.display("Standardiste", "Et maintenant votre prénom :").execInput();
             fullName = surname + ' ' + name;
-            if (Arrays.asList(m_files.getSavesName()).contains(fullName) || //si nom déjà utilisé (nom enquêteur = nom fichier save)
+            if (Arrays.asList(m_files.getSavesName()).contains(fullName) || //if already used
+                    //if contains an incorrect file symbol
                     fullName.contains("\\") ||
                     fullName.contains("/") ||
                     fullName.contains(":") ||
@@ -174,20 +175,13 @@ public class Game {
         } while (fullName == null);
         
         
-        //etape 2 : sexe perso
+        //step 2 : player sex
         Sex gender = null;
         String[] sexList = {"Un talentueux inspecteur !", "Une talentueuse inspectrice !"};
-        switch (m_console.display("Vous", "Croyez moi, je suis", sexList).execChoice()) {
-            case 1:
-                gender = Sex.HOMME;
-                break;
-            case 2:
-                gender = Sex.FEMME;
-                break;
-        }
+        gender = m_console.display("Vous", "Croyez moi, je suis", sexList).execChoice() == 1? Sex.HOMME : Sex.FEMME;
         
         
-        //etape 3 : difficulté enquête
+        //step 3 : investigation difficulty
         String[] diffList = {"Basiques.", "Classiques.", "Avancées."};
         switch (m_console.display("Vous", "Et je suis tout à fait capable de résoudre des enquêtes", diffList).execChoice()) {
             case 1:
@@ -203,11 +197,11 @@ public class Game {
         m_console.display("Standardiste", "Mmmh. Votre futur supérieur vous attend à l'intérieur.").execContinue("Vous quittez la récéption");
         
         
-        //etape 4 : initialisation
+        //step 4 : initialization
         m_currentInvestigation = m_dataSave.createGame(fullName, gender);
         m_currentInvestigation.getInvestigator().presentCharacter();
         
-        //etape 5 : lancement du jeu
+        //step 5 : launch game
         m_console.display("Votre supérieur", "Voici des enquêtes à votre niveau, je vous laisse en choisir une.").execContinue("Vous choisissez une affaire");
         m_currentInvestigation.investigationMenu();
     }

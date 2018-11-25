@@ -62,7 +62,7 @@ public class Investigation {
      */ 
     public static ArrayList <String> getSuspectsNameList() {
         ArrayList <String> listName = new ArrayList();
-        for (Suspect currentSuspect : m_suspectsList) {//parcours tout m_suspectsList en mettant élément courant dans currentSuspect
+        for (Suspect currentSuspect : m_suspectsList) {//route all m_suspectsList by putting current element in currentSuspect
             listName.add(currentSuspect.getFullName());
         }
         return listName;
@@ -105,11 +105,12 @@ public class Investigation {
      */ 
     public void investigationMenu() {
         boolean previousMenu = false;
+        //menu choices won't change with time
         String[] choicesList = {"Revoir mon test d'aptitude\n",
                                 "Passer en revue les éléments de l'enquête.",
                                 "Consulter mes indices.",
                                 "Appeler un suspect.\n", 
-                                "Retourner au bureau."}; //menu du jeu
+                                "Retourner au bureau."};
         
         do {
             switch (getConsole().clean().display(m_player.getFullName(), "Aujourd'hui, je vais...", choicesList).execChoice()) {
@@ -132,7 +133,7 @@ public class Investigation {
                     break;
                 case 4:
                     suspectsMenu();
-                    if (isEndedGame()) {
+                    if (isEndedGame()) {//if player arrest somebody...
                         previousMenu = true;
                     }
                     break;
@@ -151,7 +152,7 @@ public class Investigation {
         String[] choicesList = {"Autopsier la victime.", 
                                 "Analyser l'arme du crime.", 
                                 "Fouiller la scène du crime.\n",
-                                "Retourner à l'enquête."};  //menu principal
+                                "Retourner à l'enquête."};
         
         do {
             switch(getConsole().clean().display(m_genderJob, "Voyons voir les éléments de l'enquête...", choicesList).execChoice()) {
@@ -168,7 +169,7 @@ public class Investigation {
                     previousMenu = true;
                     break;
             }
-            if (!previousMenu) {
+            if (!previousMenu) {//if execute action, display result (and stop process)
                 getConsole().execContinue("Vous relevez les indices");
             }
         } while (!previousMenu);
@@ -182,6 +183,7 @@ public class Investigation {
         boolean previousMenu = false;
         
         do {
+            //suspects list can evolve with time (set innocent)
             String[] suspectsList = new String[m_suspectsList.size() + 1];
             for (int i = 0; i < m_suspectsList.size(); i++) {
                 String text = m_suspectsList.get(i).getFullName();
@@ -196,12 +198,13 @@ public class Investigation {
             suspectsList[m_suspectsList.size()] = "Annuler";
             
             int target = getConsole().clean().display(m_genderJob, "Je veux voir", suspectsList).execChoice() - 1;
-            if (target == m_suspectsList.size()) {
+            if (target == m_suspectsList.size()) {//last option : leave
                 previousMenu = true;
             }
             else {
                 m_suspectsList.get(target).displayStats().presentCharacter();
                 
+                //choice of list depend on player choices
                 ArrayList <String> choicesList = new ArrayList();
                 choicesList.add("L'interroger.");
                 if (!m_suspectsList.get(target).isConsideredInnocent()) {
@@ -211,7 +214,7 @@ public class Investigation {
                 choicesList.add("Retourner à l'enquête.");
                 
                 int choice = getConsole().display("Que voulez vous faire?", convertArrayList(choicesList)).execChoice();
-                if (m_suspectsList.get(target).isConsideredInnocent() && choice >= 2) {
+                if (m_suspectsList.get(target).isConsideredInnocent() && choice >= 2) {//if already innocented, is not displayed : must increment to match user choice
                     choice++;
                 }
                 switch(choice) {
